@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Wallet UI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="nav-bar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor" />
+            </svg>
+            <span class="logo-text">Wallet.</span>
+        </div>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="icon-button-circular" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <div class="network-badge">Ethereum Mainnet</div>
+            <div class="address-pill">0x71C...976F</div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <section class="hero-band">
+            <div class="mesh-gradient"></div>
+            <div class="hero-content">
+                <span class="eyebrow">TOTAL BALANCE</span>
+                <h1 class="balance-display">$14,523.00 <span class="eth-balance">4.2 ETH</span></h1>
+                <div class="action-buttons">
+                    <button class="button-primary">Send</button>
+                    <button class="button-secondary">Receive</button>
+                    <button class="button-secondary">Swap</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-grid">
+            <div class="card-marketing assets-card">
+                <div class="card-header">
+                    <h2>Assets</h2>
+                </div>
+                <div class="assets-list">
+                    <div class="asset-item">
+                        <div class="asset-info">
+                            <div class="asset-icon eth-icon"></div>
+                            <div class="asset-details">
+                                <span class="asset-name">Ethereum</span>
+                                <span class="asset-symbol">ETH</span>
+                            </div>
+                        </div>
+                        <div class="asset-value">
+                            <span class="fiat-value">$12,400.00</span>
+                            <span class="crypto-value">3.5 ETH</span>
+                        </div>
+                    </div>
+                    <div class="asset-item">
+                        <div class="asset-info">
+                            <div class="asset-icon usdc-icon"></div>
+                            <div class="asset-details">
+                                <span class="asset-name">USD Coin</span>
+                                <span class="asset-symbol">USDC</span>
+                            </div>
+                        </div>
+                        <div class="asset-value">
+                            <span class="fiat-value">$2,123.00</span>
+                            <span class="crypto-value">2123.00 USDC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-marketing activity-card">
+                <div class="card-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <div class="activity-icon icon-receive">↓</div>
+                            <div class="activity-details">
+                                <span class="activity-type">Received ETH</span>
+                                <span class="activity-date">Today at 10:24 AM</span>
+                            </div>
+                        </div>
+                        <div class="activity-amount positive">
+                            +0.5 ETH
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <div class="activity-icon icon-send">↑</div>
+                            <div class="activity-details">
+                                <span class="activity-type">Sent USDC</span>
+                                <span class="activity-date">Yesterday at 4:12 PM</span>
+                            </div>
+                        </div>
+                        <div class="activity-amount">
+                            -50.00 USDC
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <div class="activity-icon icon-swap">⇄</div>
+                            <div class="activity-details">
+                                <span class="activity-type">Swapped ETH to USDC</span>
+                                <span class="activity-date">Oct 12 at 2:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="activity-amount">
+                            -0.2 ETH
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+
+        // Check for saved theme preference, otherwise default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            if (isDark) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
