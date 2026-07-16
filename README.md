@@ -58,8 +58,11 @@ I created this repository to document my journey of becoming a Blockchain Develo
 
 ## 📂 Projects
 
-- Hello Blockchain
-- Student Record Smart Contract
+- **Hello Blockchain**
+- **Student Record Smart Contract**
+- **[Wallet UI](mini-projects/wallet-UI)**: A premium, minimalist blockchain wallet UI built using only pure HTML and CSS. It implements a Vercel-inspired design system, complete with a dark/light mode toggle, balance mesh gradients, and a responsive layout.
+  - 📂 [Project Folder](mini-projects/wallet-UI)
+  - 📖 [Project README](mini-projects/wallet-UI/README.md)
 
 More projects coming soon... 🚀
 
@@ -73,6 +76,12 @@ Blockchain-Journey/
 ├── contracts/
 │   ├── HelloBlockchain.sol
 │   └── StudentRecord.sol
+│
+├── mini-projects/
+│   └── wallet-UI/
+│       ├── index.html
+│       ├── styles.css
+│       └── README.md
 │
 └── README.md
 ```
