@@ -63,6 +63,9 @@ I created this repository to document my journey of becoming a Blockchain Develo
 - **[Wallet UI](mini-projects/wallet-UI)**: A premium, minimalist blockchain wallet UI built using only pure HTML and CSS. It implements a Vercel-inspired design system, complete with a dark/light mode toggle, balance mesh gradients, and a responsive layout.
   - 📂 [Project Folder](mini-projects/wallet-UI)
   - 📖 [Project README](mini-projects/wallet-UI/README.md)
+- **[Password Hasher](mini-projects/password-Hasher)**: A sleek, lightweight, single-page web application that computes SHA-256 cryptographic hashes in real-time as you type, using the browser's native Web Crypto API.
+  - 📂 [Project Folder](mini-projects/password-Hasher)
+  - 📖 [Project README](mini-projects/password-Hasher/README.md)
 
 More projects coming soon... 🚀
 
@@ -78,6 +81,10 @@ Blockchain-Journey/
 │   └── StudentRecord.sol
 │
 ├── mini-projects/
+│   ├── password-Hasher/
+│   │   ├── index.html
+│   │   └── README.md
+│   │
 │   └── wallet-UI/
 │       ├── index.html
 │       ├── styles.css
