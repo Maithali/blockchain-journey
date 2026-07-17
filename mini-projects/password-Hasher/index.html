@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Password Hasher</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(29, 29, 36);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background: rgb(43, 31, 31);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(214, 208, 208, 0.875);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .output-box {
+        background: #e0a39d;
+        padding: 15px;
+        border-radius: 5px;
+        word-break: break-all;
+        font-family: monospace;
+        min-height: 40px;
+        border: 1px solid #ddd;
+      }
+
+      h2 {
+        margin-top: 0;
+        color: #50df45;
+      }
+
+      label {
+        font-weight: bold;
+        color: #d0c3c3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Text Hasher (SHA-256)</h2>
+
+      <label for="passwordInput">Input Text:</label>
+      <input
+        type="text"
+        id="passwordInput"
+        placeholder="Type something (e.g., Hello Blockchain)"
+      />
+
+      <label>Generated Hash:</label>
+      <div id="hashOutput" class="output-box">
+        Type text above to see hash...
+      </div>
+    </div>
+
+    <script>
+      // 1. Function to handle the cryptographic hashing
+      async function hashText(text) {
+        // Encode the string into an array of bytes (Uint8Array)
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+
+        // Hash the data using the SHA-256 algorithm
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+        // Convert the ArrayBuffer to a Hexadecimal string
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+
+        return hashHex;
+      }
+
+      // 2. Event listener to update the output in real-time
+      const input = document.getElementById("passwordInput");
+      const output = document.getElementById("hashOutput");
+
+      input.addEventListener("input", async (e) => {
+        const val = e.target.value;
+        if (val === "") {
+          output.innerText = "Type text above to see hash...";
+          return;
+        }
+
+        // Get the hash and display it
+        const hash = await hashText(val);
+        output.innerText = hash;
+      });
+    </script>
+  </body>
+</html>
