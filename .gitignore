@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Hardhat / build artifacts
+artifacts/
+cache/
+
+# Local environment files
+.env
+.env.*
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

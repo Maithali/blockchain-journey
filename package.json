@@ -1,0 +1,24 @@
+{
+  "name": "blockchain-journey",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">   <img src=\"https://img.shields.io/badge/Status-Learning-brightgreen?style=for-the-badge&logo=blockchaindotcom\" alt=\"Status\"/>   <img src=\"https://img.shields.io/badge/Solidity-%5E0.8.0-blue?style=for-the-badge&logo=solidity\" alt=\"Solidity\"/>   <img src=\"https://img.shields.io/badge/Tech-Web3-orange?style=for-the-badge\" alt=\"Web3\"/> </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maithali/blockchain-journey.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maithali/blockchain-journey/issues"
+  },
+  "homepage": "https://github.com/Maithali/blockchain-journey#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.2",
+    "hardhat": "^2.28.6"
+  }
+}
