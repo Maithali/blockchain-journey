@@ -2,25 +2,27 @@
 
 Hi, I'm **Maithili** 👋
 
-Welcome to my Blockchain learning repository!
+Welcome to my Blockchain Journey repository.
 
-This repository documents my journey to becoming a Blockchain Developer. My goal is to understand blockchain from first principles, build real-world projects, and continuously improve through hands-on practice.
+This repository documents my journey from learning blockchain fundamentals to building production-ready smart contracts and decentralized applications (DApps).
+
+My goal is simple: **learn by building, stay consistent, and become a Blockchain Developer.**
 
 ---
 
-# 🎯 Goals
+## 🎯 Goals
 
-- Become a Blockchain Developer
-- Master Solidity & Smart Contracts
-- Build Full Stack DApps
+- Learn Blockchain Fundamentals
+- Master Solidity
+- Build Smart Contracts
 - Learn Ethereum & Web3
-- Create production-ready blockchain projects
-- Build a strong GitHub portfolio
+- Build Full Stack DApps
+- Strengthen Git & GitHub skills
 - Land my first Blockchain Developer role
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 - Solidity
 - Ethereum
@@ -30,151 +32,91 @@ This repository documents my journey to becoming a Blockchain Developer. My goal
 - Hardhat
 - Ethers.js
 - MetaMask
-- Git & GitHub
+- Git
+- GitHub
 
 ---
 
-# 📚 Learning Progress
-
-## ✅ Day 1 – Blockchain Fundamentals
-
-- What is Blockchain?
-- Decentralization
-- Distributed Ledger
-- Blockchain vs Traditional Database
-- Hashing
-- Immutability
-- Blockchain Use Cases
-
----
-
-## ✅ Day 2 – Wallets & Keys
-
-- Public Key
-- Private Key
-- Wallet Address
-- Seed Phrase
-- Digital Signature
-- Transaction Verification
-
----
-
-## ✅ Day 3 – Cryptography
-
-- Cryptography Basics
-- Symmetric Encryption
-- Asymmetric Encryption
-- Hash Functions
-- Hashing vs Encryption
-- Digital Signatures
-- Transaction Lifecycle
-
----
-
-## ✅ Day 4 – Blocks & Consensus
-
-- Block Structure
-- Block Header
-- Block Body
-- Previous Hash
-- Nonce
-- Transaction Lifecycle
-- Mempool
-- Mining
-- Validators
-- Proof of Work (PoW)
-- Proof of Stake (PoS)
-- Gas Fees
-
----
-
-# 📂 Projects
-
-### Solidity
-
-- ✅ Hello Blockchain
-- ✅ Student Record Smart Contract
-- 🚧 Piggy Bank Smart Contract
-
-### JavaScript
-
-- 🚧 Blockchain Transaction Simulator
-
-More projects coming soon...
-
----
-
-# 📁 Repository Structure
+## 📂 Repository Structure
 
 ```text
-Blockchain-Journey/
-
-│── contracts/
-│   ├── HelloBlockchain.sol
-│   ├── StudentRecord.sol
-│   └── PiggyBank.sol
-
-│── javascript/
-│   └── TransactionSimulator/
-
-│── notes/
-│   ├── Day1.md
-│   ├── Day2.md
-│   ├── Day3.md
-│   └── Day4.md
-
-│── README.md
+blockchain-journey/
+│
+├── contracts/        # Solidity smart contracts
+├── notes/            # Daily learning notes
+├── javascript/       # JavaScript practice projects
+├── diagrams/         # Blockchain diagrams and flowcharts
+└── README.md
 ```
 
 ---
 
-# 🚀 Upcoming Projects
+## 📚 Learning Progress
 
-- Voting Smart Contract
-- Lottery Smart Contract
-- Bank Smart Contract
-- Crowdfunding DApp
-- Escrow Smart Contract
-- NFT Marketplace
-- ERC-20 Token
-- DAO Voting System
-- Supply Chain Tracker
+| Day   | Topic                              | Status |
+| ----- | ---------------------------------- | ------ |
+| Day 1 | Blockchain Fundamentals            | ✅     |
+| Day 2 | Wallets, Keys & Digital Signatures | ✅     |
+| Day 3 | Cryptography & Hashing             | ✅     |
+| Day 4 | Blocks, Transactions & Consensus   | ✅     |
+| Day 5 | Ethereum, EVM & Smart Contracts    | 🚧     |
 
 ---
 
-# 📈 Current Progress
+## 💻 Projects
 
-- Blockchain Fundamentals ✅
-- Wallet Concepts ✅
-- Cryptography ✅
-- Transaction Lifecycle ✅
-- Consensus Mechanisms ✅
+### Solidity
 
-Next Up:
+- Hello Blockchain
+- Student Record Smart Contract
 
-- Solidity Deep Dive
-- Smart Contract Development
-- Hardhat
-- DApp Development
+### JavaScript
+
+- Blockchain Transaction Simulator _(In Progress)_
+
+More projects will be added as I continue my learning journey.
 
 ---
 
-# 🌱 Why This Repository?
+## 🎯 Current Focus
 
-I'm documenting everything I learn while exploring Blockchain and Web3 development. Every project represents a concept I've understood and implemented.
-
-My focus is not just completing tutorials but learning by building.
+Learning Ethereum fundamentals and preparing to build my first real smart contracts using Solidity.
 
 ---
 
-# 📌 Connect With Me
+## 📈 Roadmap
 
-**LinkedIn:** https://www.linkedin.com/in/maithali-gharde-77aa29191
-
-**GitHub:** _(Add your GitHub profile link here)_
+- ✅ Blockchain Fundamentals
+- ✅ Cryptography
+- ✅ Consensus Mechanisms
+- 🚧 Ethereum Fundamentals
+- ⬜ Solidity
+- ⬜ Smart Contracts
+- ⬜ Hardhat
+- ⬜ Testing
+- ⬜ DApp Development
+- ⬜ Deployment
 
 ---
 
-> "Consistency beats intensity. One commit every day is better than one hundred commits in a week."
+## 🌱 About This Repository
 
-⭐ If you find this repository helpful, feel free to star it!
+This repository is a collection of my notes, projects, and experiments as I learn Blockchain and Web3 development.
+
+Every commit represents a step forward in my learning journey.
+
+---
+
+## 📌 Connect With Me
+
+**LinkedIn:**  
+https://www.linkedin.com/in/maithali-gharde-77aa29191
+
+**GitHub:**  
+https://github.com/Maithali
+
+---
+
+> **"Consistency over perfection. One step every day."**
+
+⭐ Thank you for visiting my repository!
