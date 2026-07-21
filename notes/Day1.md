@@ -448,6 +448,165 @@ Customer
 
 ---
 
+# What is a Block?
+
+Blockchain is made of blocks, so it's important to understand what's inside one.
+
+A Block is a container that stores a group of verified transactions along with metadata that links it to the previous block.
+
+```text
+┌──────────────────────────┐
+│ Block Header             │
+│--------------------------│
+│ Previous Block Hash      │
+│ Merkle Root              │
+│ Timestamp                │
+│ Nonce                    │
+│ Block Number             │
+└──────────────────────────┘
+│ Transactions             │
+│ Transaction 1            │
+│ Transaction 2            │
+│ Transaction 3            │
+└──────────────────────────┘
+```
+
+---
+
+What is a Node?
+
+A Node is any computer connected to the blockchain network.
+
+Nodes:
+
+-Store blockchain data
+-Verify transactions
+-Validate blocks
+-Share information with other nodes
+
+##Types
+
+```
+Blockchain Network
+       │
+ ┌─────┼─────┐
+ ▼     ▼     ▼
+Full  Light Validator
+Node  Node    Node
+```
+
+---
+
+3️⃣ Transactions
+
+A Transaction is a request to transfer value or execute an operation on the blockchain.
+
+Example
+
+```
+Alice
+   │
+Send 2 ETH
+   │
+   ▼
+Bob
+```
+
+Transaction Flow
+
+```
+User
+
+↓
+
+Sign Transaction
+
+↓
+
+Broadcast
+
+↓
+
+Validate
+
+↓
+
+Included in Block
+
+↓
+
+Confirmed
+```
+
+---
+
+# Consensus Mechanism
+
+Consensus is the process through which all nodes agree on the correct version of the blockchain.
+
+Popular Algorithms
+
+- Proof of Work (PoW)
+- Proof of Stake (PoS)
+- Delegated Proof of Stake
+- PBFT
+
+Simple Flow
+
+```
+Transactions
+
+↓
+
+Validators / Miners
+
+↓
+
+Consensus
+
+↓
+
+Block Added
+```
+
+---
+
+Wallets
+
+Users interact with blockchain using wallets.
+
+Types
+
+- Hot Wallet
+- Cold Wallet
+- Custodial Wallet
+- Non-Custodial Wallet
+
+Remember
+
+Wallet stores keys, not coins.
+
+Coins remain on the blockchain.
+
+---
+
+4. Ethereum Account Types
+
+Interview favorite.
+
+Explain:
+
+Externally Owned Account (EOA)
+Contract Account
+
+Comparison:
+
+| Feature              | EOA                    | Contract             |
+| -------------------- | ---------------------- | -------------------- |
+| Private key          | Has private key        | No private key       |
+| Control              | Controlled by user     | Controlled by code   |
+| Transaction behavior | Initiates transactions | Executes when called |
+
 # 💼 Blockchain Fundamentals — Interview Questions & Answers
 
 > 🎯 **Goal:** These are the most frequently asked Blockchain interview questions for freshers and junior Blockchain developers.
