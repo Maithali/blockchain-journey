@@ -607,3 +607,501 @@ Symmetric  Asymmetric
 - 📡 **Every blockchain transaction must be digitally signed before it is broadcast.**
 - 🤝 **Consensus ensures only valid transactions become part of the blockchain.**
 - ⛓️ **Hashes link blocks together, making the blockchain tamper-resistant.**
+
+# 💼 Cryptography Fundamentals — Interview Questions & Answers
+
+> 🎯 **Goal:** Master the cryptographic concepts used in blockchain and confidently answer interview questions.
+
+---
+
+# 🔐 Topic 1 — Cryptography Basics
+
+### Q1. What is Cryptography?
+
+**Answer:**
+
+Cryptography is the science of protecting information using mathematical algorithms so that only authorized users can access or modify it.
+
+---
+
+### Q2. Why is Cryptography important in Blockchain?
+
+**Answer:**
+
+It provides:
+
+- Confidentiality
+- Data Integrity
+- Authentication
+- Non-Repudiation
+- Security
+
+Without cryptography, blockchain would not be secure.
+
+---
+
+### Q3. What are the four main goals of Cryptography?
+
+**Answer:**
+
+- 🔒 Confidentiality
+- ✅ Integrity
+- 👤 Authentication
+- 🚫 Non-Repudiation
+
+---
+
+### Q4. What are the main types of Cryptography?
+
+**Answer:**
+
+- Symmetric Encryption
+- Asymmetric Encryption
+- Hash Functions
+
+---
+
+### Q5. Give a real-world example of Cryptography.
+
+**Answer:**
+
+Online banking, HTTPS websites, WhatsApp messages, digital signatures, and cryptocurrency wallets all use cryptography.
+
+---
+
+# 🔑 Topic 2 — Symmetric Encryption
+
+### Q6. What is Symmetric Encryption?
+
+**Answer:**
+
+Symmetric Encryption uses **one secret key** for both encryption and decryption.
+
+---
+
+### Q7. How does Symmetric Encryption work?
+
+**Answer:**
+
+```text
+Plain Text
+      │
+      ▼
+Encrypt
+      │
+ Secret Key
+      │
+      ▼
+Cipher Text
+      │
+      ▼
+Decrypt
+      │
+Same Secret Key
+      │
+      ▼
+Original Data
+```
+
+---
+
+### Q8. What are the advantages of Symmetric Encryption?
+
+**Answer:**
+
+- Very Fast
+- Efficient
+- Low Computational Cost
+
+---
+
+### Q9. What are the disadvantages?
+
+**Answer:**
+
+- Secure key sharing is difficult.
+- If the key leaks, all encrypted data is compromised.
+
+---
+
+### Q10. Name some Symmetric Encryption algorithms.
+
+**Answer:**
+
+- AES
+- DES
+- Triple DES
+- ChaCha20
+
+---
+
+# 🔑🔑 Topic 3 — Asymmetric Encryption
+
+### Q11. What is Asymmetric Encryption?
+
+**Answer:**
+
+Asymmetric Encryption uses **two mathematically related keys**:
+
+- Public Key
+- Private Key
+
+One key encrypts or verifies, while the other decrypts or signs.
+
+---
+
+### Q12. Why is Asymmetric Encryption used in Blockchain?
+
+**Answer:**
+
+It enables:
+
+- Wallet creation
+- Ownership verification
+- Digital signatures
+- Secure transactions
+
+---
+
+### Q13. What is the difference between Public Key and Private Key?
+
+**Answer:**
+
+| Public Key          | Private Key        |
+| ------------------- | ------------------ |
+| Can be shared       | Must remain secret |
+| Receives funds      | Controls funds     |
+| Verifies signatures | Creates signatures |
+
+---
+
+### Q14. Which algorithms are commonly used?
+
+**Answer:**
+
+- RSA
+- ECC (Elliptic Curve Cryptography)
+- Diffie-Hellman (key exchange)
+
+Ethereum and Bitcoin primarily use **ECC**.
+
+---
+
+### Q15. Which is faster: Symmetric or Asymmetric Encryption?
+
+**Answer:**
+
+Symmetric Encryption is much faster because it uses only one key.
+
+---
+
+# #️⃣ Topic 4 — Hash Functions
+
+### Q16. What is a Hash Function?
+
+**Answer:**
+
+A Hash Function converts data of any size into a fixed-length unique value called a **Hash**.
+
+---
+
+### Q17. Why are Hash Functions important in Blockchain?
+
+**Answer:**
+
+They are used for:
+
+- Block linking
+- Transaction IDs
+- Password storage
+- Digital signatures
+- Data integrity
+
+---
+
+### Q18. What are the properties of a good Hash Function?
+
+**Answer:**
+
+- Deterministic
+- Fixed Output Length
+- Fast Computation
+- One-Way
+- Collision Resistant
+- Avalanche Effect
+
+---
+
+### Q19. What is the Avalanche Effect?
+
+**Answer:**
+
+A tiny change in the input results in a completely different hash output.
+
+---
+
+### Q20. Which hash algorithms are used in Blockchain?
+
+**Answer:**
+
+- Bitcoin → SHA-256
+- Ethereum → Keccak-256
+
+---
+
+# 🔄 Topic 5 — Hashing vs Encryption
+
+### Q21. What is the difference between Hashing and Encryption?
+
+| Hashing            | Encryption               |
+| ------------------ | ------------------------ |
+| One-Way Process    | Two-Way Process          |
+| Cannot be reversed | Can be decrypted         |
+| No Key Required    | Uses Key(s)              |
+| Used for Integrity | Used for Confidentiality |
+| Output is Hash     | Output is Ciphertext     |
+
+---
+
+### Q22. Can a Hash be decrypted?
+
+**Answer:**
+
+❌ No.
+
+Hashing is a one-way function.
+
+---
+
+### Q23. Can encrypted data be decrypted?
+
+**Answer:**
+
+✅ Yes.
+
+Using the correct key, encrypted data can be converted back to its original form.
+
+---
+
+### Q24. Why doesn't Blockchain encrypt every transaction?
+
+**Answer:**
+
+Because blockchain data must be transparent and verifiable. Instead of encrypting transaction data, blockchain relies on **hashing** for integrity and **digital signatures** for authentication.
+
+---
+
+# ✍️ Topic 6 — Digital Signatures
+
+### Q25. What is a Digital Signature?
+
+**Answer:**
+
+A Digital Signature is a cryptographic proof created using a Private Key that verifies the authenticity and integrity of a transaction.
+
+---
+
+### Q26. Which key creates a Digital Signature?
+
+**Answer:**
+
+Private Key.
+
+---
+
+### Q27. Which key verifies a Digital Signature?
+
+**Answer:**
+
+Public Key.
+
+---
+
+### Q28. Why are Digital Signatures important?
+
+**Answer:**
+
+They provide:
+
+- Authentication
+- Integrity
+- Non-Repudiation
+
+---
+
+### Q29. Explain the Digital Signature process.
+
+**Answer:**
+
+```text
+Transaction
+      │
+      ▼
+Hash Created
+      │
+      ▼
+Sign with Private Key
+      │
+      ▼
+Digital Signature
+      │
+      ▼
+Verify with Public Key
+```
+
+---
+
+### Q30. Can someone forge a Digital Signature?
+
+**Answer:**
+
+Practically no.
+
+Without the correct Private Key, creating a valid signature is computationally infeasible.
+
+---
+
+# 🔄 Topic 7 — Transaction Lifecycle
+
+### Q31. What is the Transaction Lifecycle?
+
+**Answer:**
+
+The Transaction Lifecycle is the complete journey of a blockchain transaction from creation until it becomes permanently stored on the blockchain.
+
+---
+
+### Q32. What are the steps in a blockchain transaction?
+
+**Answer:**
+
+```text
+Create Transaction
+        │
+        ▼
+Sign with Private Key
+        │
+        ▼
+Broadcast
+        │
+        ▼
+Mempool
+        │
+        ▼
+Verification
+        │
+        ▼
+Consensus
+        │
+        ▼
+Block Creation
+        │
+        ▼
+Confirmation
+```
+
+---
+
+### Q33. What happens during Transaction Verification?
+
+**Answer:**
+
+Nodes verify:
+
+- Digital Signature
+- Account Balance
+- Nonce
+- Transaction Format
+- Consensus Rules
+
+---
+
+### Q34. What is the Mempool?
+
+**Answer:**
+
+The Mempool is a temporary storage area where pending transactions wait before being included in a block.
+
+---
+
+### Q35. What determines transaction priority?
+
+**Answer:**
+
+Generally, transactions with higher gas fees are prioritized for inclusion in a block (especially on Ethereum).
+
+---
+
+# ⭐ Rapid Fire Interview Questions
+
+### Q36. What is Cryptography?
+
+Protecting information using mathematical algorithms.
+
+---
+
+### Q37. Which encryption uses one key?
+
+Symmetric Encryption.
+
+---
+
+### Q38. Which encryption uses two keys?
+
+Asymmetric Encryption.
+
+---
+
+### Q39. Which key signs transactions?
+
+Private Key.
+
+---
+
+### Q40. Which key verifies signatures?
+
+Public Key.
+
+---
+
+### Q41. What is a Hash?
+
+A fixed-length digital fingerprint of data.
+
+---
+
+### Q42. Can hashing be reversed?
+
+No.
+
+---
+
+### Q43. Can encryption be reversed?
+
+Yes, with the correct key.
+
+---
+
+### Q44. What secures blockchain transactions?
+
+Hashing + Digital Signatures + Consensus.
+
+---
+
+### Q45. What happens after a transaction enters the mempool?
+
+It is verified, included in a block, and confirmed after consensus.
+
+---
+
+# 🎯 Interview Tips
+
+- Start every answer with a **clear one-line definition**, then explain the concept.
+- Remember these associations:
+  - 🔑 **Symmetric = One Key**
+  - 🔑🔑 **Asymmetric = Public + Private Keys**
+  - #️⃣ **Hash = Digital Fingerprint**
+  - ✍️ **Private Key Signs → Public Key Verifies**
+  - 🔄 **Transaction = Create → Sign → Broadcast → Verify → Consensus → Confirm**
+- If asked **"Why does blockchain use hashing instead of encryption?"**, answer:
+  - **Hashing ensures data integrity and immutability. Encryption hides data, but blockchain is designed to keep transaction data verifiable while proving authenticity with digital signatures.**
