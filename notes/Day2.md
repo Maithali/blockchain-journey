@@ -6,7 +6,7 @@
 
 # 🔑 1. Public Key Cryptography (Asymmetric Cryptography)
 
-## 📌 Definition
+Public-key cryptography is an encryption technique that uses a pair of keys—a public key and a private key—to securely exchange information and verify identities without sharing a secret key beforehand.
 
 Public Key Cryptography is an encryption system that uses **two mathematically related keys**:
 
