@@ -53,13 +53,16 @@ blockchain-journey/
 
 ## 📚 Learning Progress
 
-| Day   | Topic                              | Status |
-| ----- | ---------------------------------- | ------ |
-| Day 1 | Blockchain Fundamentals            | ✅     |
-| Day 2 | Wallets, Keys & Digital Signatures | ✅     |
-| Day 3 | Cryptography & Hashing             | ✅     |
-| Day 4 | Blocks, Transactions & Consensus   | ✅     |
-| Day 5 | Ethereum, EVM & Smart Contracts    | 🚧     |
+| Day   | Topic                               | Status |
+| ----- | ----------------------------------- | ------ |
+| Day 1 | Blockchain Fundamentals             | ✅     |
+| Day 2 | Wallets, Keys & Digital Signatures  | ✅     |
+| Day 3 | Cryptography & Hashing              | ✅     |
+| Day 4 | Blocks, Transactions & Consensus    | ✅     |
+| Day 5 | Ethereum, EVM & Smart Contracts     | ✅     |
+| Day 6 | Solidity Basics:Into,File Structure | ✅     |
+| Day 7 | Variables in Solidity               | 🚧     |
+| Day 8 | Functions in solidity               | 🚧     |
 
 ---
 
