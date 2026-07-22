@@ -479,10 +479,10 @@ A Node is any computer connected to the blockchain network.
 
 Nodes:
 
--Store blockchain data
--Verify transactions
--Validate blocks
--Share information with other nodes
+- Store blockchain data
+- Verify transactions
+- Validate blocks
+- Share information with other nodes
 
 ##Types
 
