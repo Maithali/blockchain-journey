@@ -570,8 +570,7 @@ Block Added
 ```
 
 ---
-
-Wallets
+# Wallets
 
 Users interact with blockchain using wallets.
 
