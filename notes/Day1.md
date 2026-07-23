@@ -473,16 +473,16 @@ A Block is a container that stores a group of verified transactions along with m
 
 ---
 
-What is a Node?
+# What is a Node?
 
 A Node is any computer connected to the blockchain network.
 
-Nodes:
+ Nodes:
 
--Store blockchain data
--Verify transactions
--Validate blocks
--Share information with other nodes
+- Store blockchain data
+- Verify transactions
+- Validate blocks
+- Share information with other nodes
 
 ##Types
 
@@ -497,7 +497,7 @@ Node  Node    Node
 
 ---
 
-3️⃣ Transactions
+# 3️⃣ Transactions
 
 A Transaction is a request to transfer value or execute an operation on the blockchain.
 
@@ -570,8 +570,7 @@ Block Added
 ```
 
 ---
-
-Wallets
+# Wallets
 
 Users interact with blockchain using wallets.
 
@@ -590,11 +589,7 @@ Coins remain on the blockchain.
 
 ---
 
-4. Ethereum Account Types
-
-Interview favorite.
-
-Explain:
+# 4. Ethereum Account Types
 
 Externally Owned Account (EOA)
 Contract Account
@@ -607,6 +602,7 @@ Comparison:
 | Control              | Controlled by user     | Controlled by code   |
 | Transaction behavior | Initiates transactions | Executes when called |
 
+---
 # 💼 Blockchain Fundamentals — Interview Questions & Answers
 
 > 🎯 **Goal:** These are the most frequently asked Blockchain interview questions for freshers and junior Blockchain developers.
