@@ -4,122 +4,211 @@ Hi, I'm **Maithili** 👋
 
 Welcome to my Blockchain Journey repository.
 
-This repository documents my journey from learning blockchain fundamentals to building production-ready smart contracts and decentralized applications (DApps).
+This repository documents my journey from learning Blockchain fundamentals to building production-ready Smart Contracts and Full Stack DApps.
 
-My goal is simple: **learn by building, stay consistent, and become a Blockchain Developer.**
+My goal is to become a **Full Stack Blockchain Developer** by learning one concept at a time and building projects every day.
 
 ---
 
-## 🎯 Goals
+# 🎯 Goals
 
 - Learn Blockchain Fundamentals
 - Master Solidity
+- Learn Ethereum & EVM
 - Build Smart Contracts
-- Learn Ethereum & Web3
+- Learn Hardhat
+- Learn Ethers.js
 - Build Full Stack DApps
-- Strengthen Git & GitHub skills
-- Land my first Blockchain Developer role
+- Learn Web3 Security
+- Build Production Projects
+- Land my first Blockchain Developer Job
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tech Stack (Learning)
+
+### Blockchain
+
+- Blockchain Fundamentals
+- Ethereum
+- EVM
+
+### Smart Contract
 
 - Solidity
-- Ethereum
-- JavaScript
-- React
-- Node.js
-- Hardhat
-- Ethers.js
-- MetaMask
+
+### Tools
+
+- Remix IDE
 - Git
 - GitHub
 
+### Upcoming
+
+- Hardhat
+- Foundry
+- Ethers.js
+- React
+- Node.js
+- Express
+- MongoDB
+- IPFS
+- OpenZeppelin
+
 ---
 
-## 📂 Repository Structure
+# 📂 Repository Structure
 
-```text
+```
 blockchain-journey/
 │
-├── contracts/        # Solidity smart contracts
-├── notes/            # Daily learning notes
-├── javascript/       # JavaScript practice projects
-├── diagrams/         # Blockchain diagrams and flowcharts
-└── README.md
+├── contracts/
+├── notes/
+├── diagrams/
+├── javascript/
+├── README.md
 ```
 
 ---
 
-## 📚 Learning Progress
+# 📚 Learning Progress
 
-| Day   | Topic                               | Status |
-| ----- | ----------------------------------- | ------ |
-| Day 1 | Blockchain Fundamentals             | ✅     |
-| Day 2 | Wallets, Keys & Digital Signatures  | ✅     |
-| Day 3 | Cryptography & Hashing              | ✅     |
-| Day 4 | Blocks, Transactions & Consensus    | ✅     |
-| Day 5 | Ethereum, EVM & Smart Contracts     | ✅     |
-| Day 6 | Solidity Basics:Into,File Structure | ✅     |
-| Day 7 | Variables in Solidity               | 🚧     |
-| Day 8 | Functions in solidity               | 🚧     |
+| Day    | Topic                              | Status |
+| ------ | ---------------------------------- | ------ |
+| Day 1  | Blockchain Fundamentals            | ✅     |
+| Day 2  | Wallets, Keys & Digital Signatures | ✅     |
+| Day 3  | Cryptography & Hashing             | ✅     |
+| Day 4  | Blocks, Transactions & Consensus   | ✅     |
+| Day 5  | Ethereum, EVM & Smart Contracts    | ✅     |
+| Day 6  | Solidity Basics                    | ✅     |
+| Day 7  | Variables                          | ✅     |
+| Day 8  | Functions                          | ✅     |
+| Day 9  | Data Types                         | ✅     |
+| Day 10 | Visibility & State Mutability      | ✅     |
+| Day 11 | Constructors                       | ✅     |
+| Day 12 | Operators & Conditional Statements | ✅     |
+| Day 13 | Arrays                             | ✅     |
 
 ---
 
-## 💻 Projects
+# 💻 Projects Completed
+
+### Blockchain Fundamentals
+
+- Blockchain Notes
+- Hashing Notes
+- Wallet Notes
+- Ethereum Notes
+- Consensus Notes
 
 ### Solidity
 
-- Hello Blockchain
-- Student Record Smart Contract
-
-### JavaScript
-
-- Blockchain Transaction Simulator _(In Progress)_
-
-More projects will be added as I continue my learning journey.
+- HelloBlockchain
+- StudentRecord
+- Bank
+- Voting
+- Variables
+- StudentProfile
+- EmployeeProfile
+- Functions
+- StudentInformation
+- Employee
+- DataTypes
+- EmployeeRecord
+- BookRecord
+- VisibilityDemo
+- StateMutability
+- MyWallet
+- Calculator
+- AgeChecker
+- StudentGrade
+- LoanEligibility
+- ConstructorDemo
+- ConstructorParameter
+- BookStore
+- FixedArray
+- DynamicArray
+- FavoriteBooks
+- FavoriteMovies
 
 ---
 
-## 🎯 Current Focus
+# 🚀 Current Focus
 
-Learning Ethereum fundamentals and preparing to build my first real smart contracts using Solidity.
+Learning Solidity fundamentals and building small projects to strengthen core concepts before moving to advanced Smart Contract development.
 
 ---
 
-## 📈 Roadmap
+# 🛣️ Roadmap Progress
 
 - ✅ Blockchain Fundamentals
-- ✅ Cryptography
-- ✅ Consensus Mechanisms
-- 🚧 Ethereum Fundamentals
-- ⬜ Solidity
-- ⬜ Smart Contracts
-- ⬜ Hardhat
-- ⬜ Testing
-- ⬜ DApp Development
-- ⬜ Deployment
+- ✅ Ethereum & EVM
+- ✅ Solidity Basics
+- ✅ Variables
+- ✅ Functions
+- ✅ Data Types
+- ✅ Visibility
+- ✅ State Mutability
+- ✅ Constructors
+- ✅ Operators
+- ✅ Conditional Statements
+- ✅ Arrays
+- ⏳ Structs
+- ⏳ Loops
+- ⏳ Mappings
+- ⏳ Enums
+- ⏳ Events
+- ⏳ Error Handling
+- ⏳ Modifiers
+- ⏳ Inheritance
+- ⏳ Libraries
+- ⏳ Interfaces
+- ⏳ ERC-20
+- ⏳ ERC-721
+- ⏳ Hardhat
+- ⏳ Testing
+- ⏳ Deployment
+- ⏳ React + Ethers.js
+- ⏳ Full Stack DApps
 
 ---
 
-## 🌱 About This Repository
+# 📈 GitHub Commit History
 
-This repository is a collection of my notes, projects, and experiments as I learn Blockchain and Web3 development.
+Daily commits include:
 
-Every commit represents a step forward in my learning journey.
+- 📖 Notes
+- 💻 Solidity Contracts
+- 🚀 Mini Projects
+- 📝 Assignments
 
 ---
 
-## 📌 Connect With Me
+# 🌱 About This Repository
 
-**LinkedIn:**  
-https://www.linkedin.com/in/maithali-gharde-77aa29191
+This repository is a collection of my notes, Solidity smart contracts, mini projects, and assignments as I progress through a structured Full Stack Blockchain Developer Bootcamp.
 
-**GitHub:**  
+Each day's work follows the same format:
+
+- Theory
+- Notes
+- Coding Task
+- Mini Project
+- Assignment
+- Interview Questions
+- GitHub Commit
+- Revision
+
+---
+
+# 📌 Connect With Me
+
+**GitHub**
 https://github.com/Maithali
 
+**LinkedIn**
+https://www.linkedin.com/in/maithali-gharde-77aa29191
+
 ---
 
-> **"Consistency over perfection. One step every day."**
-
-⭐ Thank you for visiting my repository!
+> **"Consistency beats intensity. One commit every day."** 🚀
