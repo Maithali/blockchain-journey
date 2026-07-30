@@ -778,7 +778,7 @@ Because it provides:
 
 **Answer:**
 
-Yes.
+No. It depends on the type of node.
 
 A full node stores the complete blockchain and verifies transactions independently.
 
