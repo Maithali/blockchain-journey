@@ -1,4 +1,4 @@
-````md
+
 # ⚡ Solidity Functions — One Page Revision
 
 > 🎯 **Goal:** Learn what functions are, how they are declared, how parameters and return values work, and how functions are called. Functions are one of the most frequently asked Solidity interview topics.
@@ -689,4 +689,4 @@ Yes.
 - Understand the difference between **parameters (inputs)** and **return values (outputs)**.
 - Remember that calling a function with `this` creates an external call and usually costs more gas.
 - In interviews, distinguish between **calling a function within the same contract** and **calling a function on another contract**.
-````
+
