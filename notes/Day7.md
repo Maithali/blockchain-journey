@@ -1,159 +1,256 @@
-# 📦 Solidity Variables — One Page Revision
+# 📦 Solidity Variables — Complete One Page Revision
 
-> 🎯 **Goal:** Understand Solidity variables, where they are stored, their lifetime, value types, and default values. These are among the most common Solidity interview topics.
+> 🎯 **Goal:** Learn everything about Solidity variables including **State Variables, Local Variables, Global Variables**, their differences, lifetime, storage location, gas cost, and practical coding examples. Variables are the foundation of every Solidity smart contract.
 
 ---
 
-# 📦 1. What are Variables in Solidity?
+# 📦 1. What is a Variable?
 
 ## 📌 Definition
 
-A **Variable** is a named storage location that holds data.
+A **Variable** is a named storage location used to **store data** inside a smart contract.
 
-Variables allow smart contracts to store and manipulate information such as numbers, addresses, strings, and boolean values.
+Variables allow contracts to remember information such as:
+
+- User balances
+- Owner address
+- Student names
+- Token supply
+- Boolean status
+
+Without variables, smart contracts cannot store or process data.
 
 ---
 
 ## 🧒 Explain Like I'm 10
 
-Imagine you have labeled boxes.
+Imagine you have three boxes.
 
 ```text
-📦 Age      → 25
-📦 Name     → Alice
-📦 Balance  → 100 ETH
+📦 Box 1
+
+Name
+
+↓
+
+Alice
+
+------------------
+
+📦 Box 2
+
+Age
+
+↓
+
+20
+
+------------------
+
+📦 Box 3
+
+Balance
+
+↓
+
+100 ETH
 ```
 
-Each box stores one piece of information.
+Each box stores different information.
 
-A variable is simply one of these labeled boxes.
-
----
-
-## Example
-
-```solidity
-uint256 age = 25;
-bool isActive = true;
-address owner;
-string name = "Alice";
-```
-
----
-
-## Why Variables?
-
-Variables are used to:
-
-- Store blockchain data
-- Track balances
-- Store addresses
-- Save contract state
-- Perform calculations
+Variables work exactly like these boxes.
 
 ---
 
 ## 💡 Remember
 
-> **Variable = Named container that stores data.**
+> **Variable = Named Storage Location for Data**
 
 ---
 
-# 🏛️ 2. Types of Variables
+# 🏗️ Types of Variables in Solidity
 
-Solidity has three main types of variables.
+Solidity has **three main types of variables**:
 
 ```text
-Variables
-     │
- ┌───┼───────────┐
- ▼   ▼           ▼
-State Local   Global
+             Variables
+                  │
+      ┌───────────┼───────────┐
+      ▼           ▼           ▼
+ State      Local      Global
+ Variables Variables Variables
 ```
 
 ---
 
-## State Variables
+# 📌 2. State Variables
 
-Stored permanently on the blockchain.
+## Definition
 
----
-
-## Local Variables
-
-Exist only while a function executes.
-
----
-
-## Global Variables
-
-Provided automatically by Solidity.
-
-Examples:
-
-- msg.sender
-- msg.value
-- block.timestamp
-- block.number
-- tx.origin
-
----
-
-## 💡 Remember
-
-> State = Permanent
-
-> Local = Temporary
-
-> Global = Built into Solidity
-
----
-
-# 🏠 3. State Variables
-
-## 📌 Definition
-
-State variables are declared **inside a contract but outside functions**.
+State variables are declared **inside a contract but outside all functions**.
 
 They are stored permanently on the blockchain.
 
+Every function inside the contract can access them.
+
 ---
 
-## Example
+## Characteristics
+
+- Permanent
+- Stored in Storage
+- Lives until contract is destroyed
+- Costs gas to modify
+- Accessible by all contract functions
+
+---
+
+## Syntax
 
 ```solidity
-contract Bank {
+contract Demo {
 
-    uint256 public balance;
-
-    address public owner;
-
-    bool public paused;
+    uint public age;
 
 }
 ```
 
 ---
 
-## Characteristics
+## Example
 
-- Stored on blockchain
-- Persistent
-- Gas required to modify
-- Shared by every function
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Student {
+
+    string public name = "Alice";
+
+    uint public age = 20;
+
+}
+```
 
 ---
 
-## Memory Layout
+## Memory Representation
 
 ```text
 Blockchain Storage
 
-┌─────────────────────┐
-│ balance = 500       │
-│ owner = 0x123...    │
-│ paused = false      │
-└─────────────────────┘
+------------------
+
+name
+
+↓
+
+Alice
+
+------------------
+
+age
+
+↓
+
+20
+```
+
+---
+
+## Example with Update
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Student {
+
+    uint public age = 20;
+
+    function updateAge(uint _age) public {
+
+        age = _age;
+
+    }
+
+}
+```
+
+---
+
+## Explanation
+
+Initially
+
+```text
+Age = 20
+```
+
+After
+
+```text
+updateAge(25)
+```
+
+Result
+
+```text
+Age = 25
+```
+
+The value is permanently stored.
+
+---
+
+## Common Uses
+
+- Owner Address
+- Token Supply
+- User Balance
+- Student Data
+- Contract Settings
+
+---
+
+## 💡 Remember
+
+> **State Variables = Permanent Blockchain Data**
+
+---
+
+# 📌 3. Local Variables
+
+## Definition
+
+Local variables are declared **inside a function**.
+
+They exist only while that function is executing.
+
+After the function finishes,
+
+they are automatically removed.
+
+---
+
+## Characteristics
+
+- Temporary
+- Stored in Memory
+- Cannot be accessed outside the function
+- Cheaper than state variables
+- Destroyed after execution
+
+---
+
+## Syntax
+
+```solidity
+function demo() public {
+
+    uint number = 100;
+
+}
 ```
 
 ---
@@ -161,9 +258,307 @@ Blockchain Storage
 ## Example
 
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Calculator {
+
+    function add()
+        public
+        pure
+        returns(uint)
+    {
+
+        uint a = 10;
+
+        uint b = 20;
+
+        uint sum = a + b;
+
+        return sum;
+
+    }
+
+}
+```
+
+---
+
+## Flow
+
+```text
+Function Starts
+
+↓
+
+Create Local Variables
+
+↓
+
+Perform Calculation
+
+↓
+
+Return Result
+
+↓
+
+Variables Deleted
+```
+
+---
+
+## Explanation
+
+Variables
+
+```text
+a
+
+b
+
+sum
+```
+
+exist only during function execution.
+
+---
+
+## Common Uses
+
+- Temporary Calculations
+- Loops
+- Intermediate Results
+- Function Logic
+
+---
+
+## 💡 Remember
+
+> **Local Variables = Temporary Variables**
+
+---
+
+# 🌍 4. Global Variables
+
+## Definition
+
+Global variables are **built-in variables provided by Solidity**.
+
+They provide information about:
+
+- Blockchain
+- Transaction
+- Block
+- Message Sender
+- Gas
+- Timestamp
+
+You do not declare them.
+
+They already exist.
+
+---
+
+## Characteristics
+
+- Built into Solidity
+- Available everywhere
+- Read blockchain information
+- Do not need declaration
+
+---
+
+# Most Important Global Variables
+
+---
+
+## 🔹 msg.sender
+
+Returns the address of the account that called the function.
+
+### Example
+
+```solidity
+address public sender;
+
+function saveSender() public {
+
+    sender = msg.sender;
+
+}
+```
+
+Suppose Alice calls the function.
+
+```text
+msg.sender
+
+↓
+
+Alice Wallet Address
+```
+
+---
+
+## 🔹 msg.value
+
+Returns the amount of Ether sent with the transaction.
+
+### Example
+
+```solidity
+function deposit()
+    public
+    payable
+{
+
+    uint amount = msg.value;
+
+}
+```
+
+If user sends
+
+```text
+2 ETH
+```
+
+Then
+
+```text
+msg.value = 2 ETH
+```
+
+---
+
+## 🔹 msg.data
+
+Contains the complete calldata (encoded function selector and arguments) sent with the call.
+
+Example
+
+```text
+Function Signature
+
++
+
+Arguments
+```
+
+---
+
+## 🔹 block.timestamp
+
+Returns the timestamp of the current block (set by the block producer within protocol constraints).
+
+Example
+
+```solidity
+uint public currentTime;
+
+function getTime() public {
+
+    currentTime = block.timestamp;
+
+}
+```
+
+---
+
+## 🔹 block.number
+
+Returns the current block number.
+
+Example
+
+```solidity
+uint public currentBlock;
+
+function getBlock() public {
+
+    currentBlock = block.number;
+
+}
+```
+
+---
+
+## 🔹 block.chainid
+
+Returns the blockchain network ID.
+
+Example
+
+```text
+Ethereum Mainnet
+
+↓
+
+1
+```
+
+```text
+Sepolia
+
+↓
+
+11155111
+```
+
+---
+
+## 🔹 tx.origin
+
+Returns the original externally owned account (EOA) that started the transaction.
+
+⚠️ **Security Note:** Avoid using `tx.origin` for authorization checks. Prefer `msg.sender`.
+
+---
+
+## Common Global Variables
+
+| Variable          | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| `msg.sender`      | Address of function caller                                |
+| `msg.value`       | Ether sent with the call                                  |
+| `msg.data`        | Complete calldata                                         |
+| `block.timestamp` | Current block timestamp                                   |
+| `block.number`    | Current block number                                      |
+| `block.chainid`   | Current chain ID                                          |
+| `tx.origin`       | Original transaction initiator (avoid for access control) |
+
+---
+
+## 💡 Remember
+
+> **Global Variables = Blockchain Information**
+
+---
+
+# 📊 State vs Local vs Global Variables
+
+| Feature       | State Variable  | Local Variable       | Global Variable            |
+| ------------- | --------------- | -------------------- | -------------------------- |
+| Declared By   | Developer       | Developer            | Solidity                   |
+| Location      | Contract        | Function             | Built-in                   |
+| Lifetime      | Permanent       | Temporary            | Available during execution |
+| Storage       | Storage         | Memory (typically)   | Provided by EVM            |
+| Gas to Modify | High            | Low                  | Depends on usage           |
+| Accessible    | Entire Contract | Only Inside Function | Anywhere applicable        |
+| Example       | `balance`       | `sum`                | `msg.sender`               |
+
+---
+
+# 🧩 Example 1 – State Variable
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
 contract Counter {
 
-    uint256 public count;
+    uint public count = 0;
 
     function increment() public {
 
@@ -174,414 +569,128 @@ contract Counter {
 }
 ```
 
-Calling `increment()` changes the stored value forever.
+### Explanation
+
+`count` is permanently stored on the blockchain.
 
 ---
 
-## 💡 Remember
-
-> **State Variables = Permanent Contract Storage**
-
----
-
-# 🧮 4. Local Variables
-
-## 📌 Definition
-
-Local variables are declared **inside functions**.
-
-They exist only while that function executes.
-
----
-
-## Example
+# 🧩 Example 2 – Local Variable
 
 ```solidity
-function add() public pure returns(uint256){
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-    uint256 a = 5;
+contract Math {
 
-    uint256 b = 10;
+    function multiply()
+        public
+        pure
+        returns(uint)
+    {
 
-    uint256 sum = a + b;
+        uint a = 5;
 
-    return sum;
+        uint b = 10;
+
+        uint result = a * b;
+
+        return result;
+
+    }
 
 }
 ```
 
----
+### Explanation
 
-## Characteristics
-
-- Temporary
-- Stored in memory or stack
-- Destroyed after execution
-- Cheaper than state variables
+`a`, `b`, and `result` exist only while the function executes.
 
 ---
 
-## Lifetime
-
-```text
-Function Starts
-
-↓
-
-Variable Created
-
-↓
-
-Used
-
-↓
-
-Function Ends
-
-↓
-
-Variable Destroyed
-```
-
----
-
-## 💡 Remember
-
-> **Local Variables disappear after the function finishes.**
-
----
-
-# 💎 5. Value Types
-
-## 📌 Definition
-
-Value types store their own value directly.
-
-When copied, an entirely new copy is created.
-
----
-
-## Value Types
-
-- bool
-- uint
-- int
-- address
-- bytes1 - bytes32
-- enum
-
----
-
-## Example
+# 🧩 Example 3 – Global Variable
 
 ```solidity
-uint256 a = 10;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-uint256 b = a;
+contract User {
 
-b = 20;
-```
+    address public lastCaller;
 
-Result
+    function saveCaller() public {
 
-```text
-a = 10
+        lastCaller = msg.sender;
 
-b = 20
-```
-
-Because a copy was made.
-
----
-
-## Diagram
-
-```text
-a
-
-↓
-
-10
-
-Copy
-
-↓
-
-b
-
-↓
-
-10
-
-↓
-
-20
-```
-
----
-
-## 💡 Remember
-
-> **Value Types are copied.**
-
----
-
-# 📝 6. Reference Types (Preview)
-
-Reference types store the location of data instead of the data itself.
-
-Examples:
-
-- string
-- bytes
-- array
-- struct
-- mapping
-
----
-
-## Example
-
-```solidity
-string public name = "Alice";
-```
-
-Reference types require a data location.
-
-```solidity
-memory
-
-storage
-
-calldata
-```
-
-You'll study these in depth later.
-
----
-
-## 💡 Remember
-
-> **Reference Types store references, not direct values.**
-
----
-
-# 🔄 7. Default Values
-
-Every variable automatically gets a default value if one isn't assigned.
-
----
-
-## Examples
-
-| Type    | Default                                    |
-| ------- | ------------------------------------------ |
-| bool    | false                                      |
-| uint    | 0                                          |
-| int     | 0                                          |
-| address | 0x0000000000000000000000000000000000000000 |
-| string  | ""                                         |
-| bytes   | empty                                      |
-| enum    | First Value                                |
-
----
-
-## Example
-
-```solidity
-uint256 public age;
-
-bool public active;
-
-address public owner;
-```
-
-Stored values
-
-```text
-age = 0
-
-active = false
-
-owner = 0x0000000000000000000000000000000000000000
-```
-
----
-
-## 💡 Remember
-
-> Solidity never leaves variables uninitialized.
-
----
-
-# 💾 8. Storage of Variables
-
-Variables are stored in different places.
-
-```text
-Variables
-     │
- ┌───┼──────────────┐
- ▼   ▼              ▼
-Storage Memory   Calldata
-```
-
----
-
-## Storage
-
-Permanent blockchain storage.
-
-```solidity
-uint256 public balance;
-```
-
-Characteristics
-
-- Permanent
-- Expensive
-- Persistent
-
----
-
-## Memory
-
-Temporary memory.
-
-```solidity
-function test() public pure {
-
-    string memory name = "Alice";
+    }
 
 }
 ```
 
-Characteristics
+### Explanation
 
-- Temporary
-- Deleted after execution
-- Cheaper
-
----
-
-## Calldata
-
-Read-only function input.
-
-```solidity
-function setName(string calldata name) external {
-
-}
-```
-
-Characteristics
-
-- Read-only
-- Cannot modify
-- Cheapest
-- External functions only
-
----
-
-## Comparison
-
-| Feature  | Storage    | Memory    | Calldata       |
-| -------- | ---------- | --------- | -------------- |
-| Lifetime | Permanent  | Temporary | Temporary      |
-| Mutable  | Yes        | Yes       | No             |
-| Gas Cost | High       | Medium    | Low            |
-| Location | Blockchain | RAM       | Function Input |
-
----
-
-## 💡 Remember
-
-> Storage = Permanent
-
-> Memory = Temporary
-
-> Calldata = Read-only
+Whenever someone calls `saveCaller()`, their wallet address is stored in `lastCaller`.
 
 ---
 
 # 🔄 Complete Concept Flow
 
 ```text
-               Variables
-                    │
-      ┌─────────────┼─────────────┐
-      ▼             ▼             ▼
-  State         Local         Global
-      │             │
-      ▼             ▼
- Blockchain     Function
-   Storage       Memory
-      │             │
-      └─────────────┼─────────────┐
-                    ▼
-              Data Types
-          ┌─────────┴─────────┐
-          ▼                   ▼
-     Value Types       Reference Types
-          │                   │
-          └─────────┬─────────┘
-                    ▼
-             Default Values
-                    │
-                    ▼
-          Storage Locations
-       ┌────────┼─────────┐
-       ▼        ▼         ▼
-   Storage   Memory   Calldata
+                 Variables
+                      │
+        ┌─────────────┼─────────────┐
+        ▼             ▼             ▼
+     State         Local         Global
+        │             │             │
+ Permanent      Temporary      Built-in
+        │             │             │
+ Storage        Memory      Blockchain Info
+        │             │             │
+        └─────────────┼─────────────┘
+                      ▼
+              Smart Contract Logic
 ```
 
 ---
 
 # 🧠 60-Second Revision
 
-| Topic               | One-Line Summary                                               |
-| ------------------- | -------------------------------------------------------------- |
-| 📦 Variables        | Named containers for storing data.                             |
-| 🏛️ State Variables  | Permanently stored on blockchain.                              |
-| 🧮 Local Variables  | Exist only during function execution.                          |
-| 🌍 Global Variables | Built-in blockchain information.                               |
-| 💎 Value Types      | Store their own values and are copied.                         |
-| 📝 Reference Types  | Store references to data.                                      |
-| 🔄 Default Values   | Automatically assigned if not initialized.                     |
-| 💾 Storage          | Storage = Permanent, Memory = Temporary, Calldata = Read-only. |
+| Topic              | One-Line Summary                                       |
+| ------------------ | ------------------------------------------------------ |
+| 📦 Variable        | Named storage location for data.                       |
+| 🏗️ State Variable  | Permanent data stored on the blockchain.               |
+| 📌 Local Variable  | Temporary variable inside functions.                   |
+| 🌍 Global Variable | Built-in variables providing blockchain information.   |
+| ⚡ Storage         | State variables live in storage.                       |
+| 🧠 Memory          | Local variables typically use memory during execution. |
 
 ---
 
 # 🎯 Golden Rules
 
-- 📦 Variables store contract data.
-- 🏛️ State variables live on the blockchain.
-- 🧮 Local variables disappear after function execution.
-- 🌍 Global variables are provided by Solidity.
-- 💎 Value types are copied by value.
-- 📝 Reference types require a data location.
-- 🔄 Every variable has a default value.
-- 💾 Storage is expensive but permanent.
-- 🧠 Memory is temporary.
-- 📥 Calldata is read-only and efficient.
+- 📦 Variables store data.
+- 🏗️ State variables are stored permanently on the blockchain.
+- 📌 Local variables exist only during function execution.
+- 🌍 Global variables are built into Solidity.
+- 🔹 Use `msg.sender` to identify the caller.
+- 💰 Use `msg.value` to get Ether sent.
+- ⏰ Use `block.timestamp` for time-related logic (with care).
+- 🔒 Avoid using `tx.origin` for authorization.
+- ⛽ Writing to state variables is expensive because it updates blockchain storage.
 
 ---
 
 # 💼 Solidity Variables — Interview Questions & Answers
 
-> 🎯 **Goal:** Frequently asked Solidity variable interview questions.
-
----
-
 ## Q1. What is a variable in Solidity?
 
 **Answer:**
 
-A variable is a named storage location used to store data such as numbers, addresses, strings, and booleans within a smart contract.
+A variable is a named storage location used to store data in a smart contract.
 
 ---
 
-## Q2. What are the types of variables in Solidity?
+## Q2. What are the three main types of variables?
 
 **Answer:**
 
@@ -595,7 +704,7 @@ A variable is a named storage location used to store data such as numbers, addre
 
 **Answer:**
 
-A state variable is declared inside a contract but outside functions. It is stored permanently on the blockchain and retains its value between transactions.
+A state variable is declared outside functions and stored permanently on the blockchain.
 
 ---
 
@@ -603,7 +712,7 @@ A state variable is declared inside a contract but outside functions. It is stor
 
 **Answer:**
 
-A local variable is declared inside a function. It exists only during that function call and is destroyed after execution.
+A local variable is declared inside a function and exists only while the function executes.
 
 ---
 
@@ -611,122 +720,119 @@ A local variable is declared inside a function. It exists only during that funct
 
 **Answer:**
 
-Global variables are built-in variables provided by Solidity, such as `msg.sender`, `msg.value`, `block.timestamp`, and `block.number`.
+Global variables are built-in variables provided by Solidity to access blockchain and transaction information.
 
 ---
 
-## Q6. What are value types?
+## Q6. What does `msg.sender` return?
 
 **Answer:**
 
-Value types store their own data directly. Assigning one value type variable to another creates an independent copy.
+The address of the account that called the function.
 
 ---
 
-## Q7. What are reference types?
+## Q7. What does `msg.value` return?
 
 **Answer:**
 
-Reference types store references to data rather than the data itself. Examples include arrays, strings, structs, mappings, and bytes.
+The amount of Ether sent with the transaction.
 
 ---
 
-## Q8. What is the default value of a `uint`?
+## Q8. What does `block.timestamp` return?
 
 **Answer:**
 
-`0`
+The timestamp of the current block.
 
 ---
 
-## Q9. What is the default value of a `bool`?
+## Q9. Which variable type is stored permanently?
 
 **Answer:**
-
-`false`
-
----
-
-## Q10. What is the default value of an `address`?
-
-**Answer:**
-
-`0x0000000000000000000000000000000000000000`
-
----
-
-## Q11. What is storage in Solidity?
-
-**Answer:**
-
-Storage is the permanent data area of a smart contract. State variables are stored here and persist on the blockchain.
-
----
-
-## Q12. What is memory?
-
-**Answer:**
-
-Memory is temporary storage used during function execution. It is erased when the function finishes.
-
----
-
-## Q13. What is calldata?
-
-**Answer:**
-
-Calldata is a read-only data location used for external function parameters. It is gas-efficient because it avoids unnecessary copying.
-
----
-
-## ⚡ Rapid Fire Interview Questions
-
-### Q14. Which variables are stored permanently?
 
 State variables.
 
 ---
 
-### Q15. Which variables disappear after execution?
+## Q10. Which variable type exists only during function execution?
+
+**Answer:**
 
 Local variables.
 
 ---
 
-### Q16. Which storage location is the most expensive?
+## ⚡ Rapid Fire Interview Questions
+
+### Q11. Where are state variables stored?
 
 Storage.
 
 ---
 
-### Q17. Which storage location is read-only?
+### Q12. Where are local variables stored?
 
-Calldata.
-
----
-
-### Q18. Are value types copied or referenced?
-
-Copied.
+Memory (for reference types) or on the stack for simple value types.
 
 ---
 
-### Q19. Which variables require gas to modify?
+### Q13. Which variable gives the caller's address?
+
+`msg.sender`
+
+---
+
+### Q14. Which variable gives the Ether amount sent?
+
+`msg.value`
+
+---
+
+### Q15. Which variable returns the current block number?
+
+`block.number`
+
+---
+
+### Q16. Which variable returns the chain ID?
+
+`block.chainid`
+
+---
+
+### Q17. Can local variables be accessed outside a function?
+
+No.
+
+---
+
+### Q18. Can state variables be accessed by multiple functions?
+
+Yes.
+
+---
+
+### Q19. Which variable type is the most gas expensive to modify?
 
 State variables.
 
 ---
 
-### Q20. Which keyword stores data permanently?
+### Q20. Why should `tx.origin` generally not be used for access control?
 
-Storage.
+Because it can introduce security vulnerabilities through intermediary contract calls; `msg.sender` is the recommended choice.
 
 ---
 
 # 🎯 Interview Tips
 
-- Always explain the difference between **State**, **Local**, and **Global** variables.
-- Don't confuse **value types** with **reference types**.
-- Mention that **state variables persist across transactions**, while **local variables exist only during function execution**.
-- Remember the default values for `uint`, `bool`, and `address`.
-- Know the differences between **storage**, **memory**, and **calldata**, as they are among the most frequently asked Solidity interview topics.
+- Start with: **"Variables are named storage locations used to store data inside a smart contract."**
+- Explain the three categories clearly:
+  - **State Variables** → Permanent contract data.
+  - **Local Variables** → Temporary function data.
+  - **Global Variables** → Built-in blockchain and transaction information.
+- Mention common global variables like **`msg.sender`**, **`msg.value`**, **`block.timestamp`**, and **`block.number`**.
+- Remember that **state variables consume storage gas**, while **local variables are temporary and cheaper**.
+- Mention the security best practice: **use `msg.sender` instead of `tx.origin` for authorization**.
