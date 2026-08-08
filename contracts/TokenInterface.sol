@@ -14,3 +14,14 @@ contract SimpleToken{
         return balances[user];
     }
 }
+
+interface ISimpleToken{
+    function balanceOf(address user) external view returns(uint);
+}
+
+contract TokenChecker{
+    function checkBalance(address tokenAddress, address user) external view returns(uint){
+        ISimpleToken token = ISimpleToken(tokenAddress);
+        return token.balanceOf(user);
+    }
+}
