@@ -14,3 +14,14 @@ contract StudentRegistry {
     }
 
 }
+
+interface IStudentRegistry {
+    function getStudent(uint id) external  view returns(string memory);
+}
+
+contract StudentChecker {
+    function checkStudent( address registryAddress, uint id) external view returns(string memory){
+        IStudentRegistry registry = IStudentRegistry(registryAddress);
+        return registry.getStudent(id);
+    }
+}
