@@ -15,6 +15,6 @@ abstract contract Employee {
 
 contract Developer is Employee {
     function getRole() public pure override returns(string memory){
-        return "Blockchain Developer"
+        return "Blockchain Developer";
     }
 }
