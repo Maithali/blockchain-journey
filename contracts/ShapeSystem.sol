@@ -8,6 +8,12 @@ abstract contract Shape{
 
 contract Square is Shape {
     function area(uint value) public pure override returns(uint){
-        return value + value;
+        return value * value;
+    }
+}
+
+contract Cube is Shape{
+    function area(uint value) public pure override returns(uint) {
+        return value * value * value;
     }
 }
