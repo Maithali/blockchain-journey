@@ -1,0 +1,1527 @@
+# 💰 Payable & Ether Handling in Solidity — One Page Revision
+
+> 🎯 **Goal:** Understand how Solidity contracts receive and manage Ether using `payable`, `msg.value`, `address(this).balance`, `msg.sender`, and simple deposit/withdraw functions.
+
+---
+
+# 💰 1. What is Ether Handling in Solidity?
+
+Solidity allows smart contracts to **receive, store, and send Ether**.
+
+Ether can be sent to a contract through:
+
+- 💰 `payable` functions
+- 📥 `receive()`
+- 🔄 `fallback()`
+- 🔗 Other contract calls
+
+A contract can hold Ether just like an Ethereum account.
+
+---
+
+## 🧠 Basic Flow
+
+```text
+User
+ │
+ │ Sends ETH
+ │
+ ▼
+Smart Contract
+ │
+ ├── msg.sender → Who sent it?
+ │
+ ├── msg.value  → How much ETH?
+ │
+ ▼
+Contract Balance
+```
+
+---
+
+# 💡 Remember
+
+> **`payable` allows ETH to enter a function.**
+
+> **`msg.sender` tells WHO sent the ETH.**
+
+> **`msg.value` tells HOW MUCH ETH was sent.**
+
+---
+
+# 💵 2. What Does `payable` Mean?
+
+## 📌 Definition
+
+`payable` is a Solidity keyword that allows a function or address to **receive Ether**.
+
+Example:
+
+```solidity
+function deposit() external payable {
+
+}
+```
+
+Because the function is:
+
+```solidity
+payable
+```
+
+the caller can send Ether along with the function call.
+
+---
+
+## Without `payable`
+
+```solidity
+function deposit() external {
+
+}
+```
+
+If someone tries:
+
+```text
+deposit() + 1 ETH
+```
+
+the transaction will:
+
+```text
+❌ Revert
+```
+
+---
+
+## With `payable`
+
+```solidity
+function deposit() external payable {
+
+}
+```
+
+Now:
+
+```text
+deposit() + 1 ETH
+        │
+        ▼
+     Accepted
+        │
+        ▼
+Contract receives ETH
+```
+
+---
+
+# 🧠 Easy Memory
+
+```text
+payable
+   ↓
+"ETH is allowed here"
+```
+
+---
+
+# 💰 3. What is `msg.value`?
+
+`msg.value` contains the amount of **Ether sent with the current function call**.
+
+Example:
+
+```solidity
+function deposit() external payable {
+
+    uint amount = msg.value;
+
+}
+```
+
+If the user sends:
+
+```text
+2 ETH
+```
+
+then:
+
+```solidity
+msg.value
+```
+
+represents:
+
+```text
+2 ETH
+```
+
+---
+
+## Example
+
+```solidity
+function deposit() external payable {
+
+    if (msg.value > 0) {
+
+        // ETH was sent
+
+    }
+
+}
+```
+
+---
+
+# 📌 `msg.value` Unit
+
+Solidity internally works with **wei**.
+
+```text
+1 ETH = 1,000,000,000,000,000,000 wei
+```
+
+You can use Solidity units such as:
+
+```solidity
+1 ether
+```
+
+Example:
+
+```solidity
+require(msg.value >= 1 ether);
+```
+
+This means:
+
+```text
+User must send at least 1 ETH
+```
+
+---
+
+# 👤 4. What is `msg.sender`?
+
+`msg.sender` is the address that made the current call.
+
+Example:
+
+```solidity
+function deposit() external payable {
+
+    address user = msg.sender;
+
+}
+```
+
+If Alice calls:
+
+```text
+deposit()
+```
+
+then:
+
+```solidity
+msg.sender = Alice's address
+```
+
+---
+
+# 🧠 Easy Memory
+
+```text
+msg.sender
+     ↓
+WHO called?
+
+msg.value
+     ↓
+HOW MUCH ETH?
+```
+
+---
+
+# 💰 5. Why `msg.sender + msg.value` Matter
+
+When building a deposit function, we usually need to know:
+
+### WHO deposited?
+
+```solidity
+msg.sender
+```
+
+### HOW MUCH did they deposit?
+
+```solidity
+msg.value
+```
+
+Together:
+
+```text
+msg.sender + msg.value
+          │
+          ▼
+Record user's deposit
+```
+
+---
+
+# 🏦 6. Simple Deposit Function
+
+Let's create a basic Ether bank.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract SimpleBank {
+
+    mapping(address => uint256) public balances;
+
+    function deposit() external payable {
+
+        balances[msg.sender] += msg.value;
+
+    }
+
+}
+```
+
+---
+
+# 🔍 7. Understanding the Deposit Function
+
+The important line is:
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+Break it down.
+
+---
+
+## Step 1 — `msg.sender`
+
+```solidity
+msg.sender
+```
+
+means:
+
+```text
+Who sent the ETH?
+```
+
+Example:
+
+```text
+Alice
+```
+
+---
+
+## Step 2 — `msg.value`
+
+```solidity
+msg.value
+```
+
+means:
+
+```text
+How much ETH did Alice send?
+```
+
+Example:
+
+```text
+1 ETH
+```
+
+---
+
+## Step 3 — Update Mapping
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+becomes conceptually:
+
+```solidity
+balances[Alice] += 1 ETH;
+```
+
+---
+
+# 🔄 8. Deposit Flow
+
+Suppose Alice sends:
+
+```text
+1 ETH
+```
+
+to:
+
+```solidity
+deposit()
+```
+
+Flow:
+
+```text
+                 Alice
+                   │
+                   │ 1 ETH
+                   ▼
+             deposit()
+                   │
+        ┌──────────┴──────────┐
+        │                     │
+        ▼                     ▼
+  msg.sender             msg.value
+     Alice                  1 ETH
+        │                     │
+        └──────────┬──────────┘
+                   ▼
+        balances[Alice] += 1 ETH
+                   │
+                   ▼
+             User Balance
+                 1 ETH
+```
+
+---
+
+# 📊 9. User Balance vs Contract Balance
+
+This is extremely important.
+
+There are **two different balances** we need to understand.
+
+---
+
+## 👤 User Balance
+
+A user's Ethereum account has a native Ether balance.
+
+Conceptually:
+
+```text
+Alice
+ │
+ └── ETH Balance
+```
+
+In Solidity, for an address:
+
+```solidity
+address(user).balance
+```
+
+can be used to read that address's Ether balance.
+
+---
+
+## 🏦 Contract Balance
+
+A smart contract also has its own Ether balance.
+
+You can read it using:
+
+```solidity
+address(this).balance
+```
+
+Here:
+
+```text
+this
+ ↓
+Current contract
+```
+
+Therefore:
+
+```solidity
+address(this).balance
+```
+
+means:
+
+> The amount of Ether currently held by this contract.
+
+---
+
+# ⚖️ 10. User Balance vs Contract Balance
+
+| Balance                     | Solidity Expression     | Meaning                          |
+| --------------------------- | ----------------------- | -------------------------------- |
+| 👤 User ETH balance         | `address(user).balance` | ETH held by that address         |
+| 🏦 Contract ETH balance     | `address(this).balance` | ETH held by this contract        |
+| 💰 ETH sent in current call | `msg.value`             | ETH attached to the current call |
+| 👤 Caller                   | `msg.sender`            | Address making the current call  |
+
+---
+
+# 🧠 Important Difference
+
+Do not confuse:
+
+```solidity
+balances[msg.sender]
+```
+
+with:
+
+```solidity
+address(msg.sender).balance
+```
+
+They represent different things.
+
+---
+
+## `balances[msg.sender]`
+
+This is a value stored in our contract's mapping.
+
+```solidity
+mapping(address => uint256) public balances;
+```
+
+It represents:
+
+> How much this contract records that the user has deposited.
+
+---
+
+## `address(msg.sender).balance`
+
+This is the user's actual native Ether balance on the blockchain.
+
+It represents:
+
+> How much Ether that address currently owns.
+
+---
+
+# 🚨 Very Important
+
+Suppose:
+
+```text
+Alice deposits 2 ETH
+```
+
+Our contract may record:
+
+```text
+balances[Alice] = 2 ETH
+```
+
+But this does **not** mean:
+
+```text
+Alice's wallet balance = 2 ETH
+```
+
+Instead:
+
+```text
+Alice
+ │
+ ├── Personal ETH balance
+ │
+ └── 2 ETH deposited into Bank
+```
+
+The 2 ETH has moved to the contract.
+
+---
+
+# 🏦 11. Contract Balance
+
+We can create a function to check the contract's Ether balance.
+
+```solidity
+function getContractBalance()
+    external
+    view
+    returns(uint256)
+{
+    return address(this).balance;
+}
+```
+
+---
+
+## Example
+
+Suppose:
+
+```text
+Alice deposits 2 ETH
+Bob deposits 3 ETH
+```
+
+Then:
+
+```text
+Contract Balance = 5 ETH
+```
+
+Conceptually:
+
+```text
+Alice ──2 ETH──┐
+               │
+Bob ───3 ETH───┤
+               ▼
+        ┌──────────────┐
+        │   Contract   │
+        │              │
+        │   5 ETH      │
+        └──────────────┘
+```
+
+---
+
+# 🧩 12. Complete Simple Bank
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract SimpleBank {
+
+    mapping(address => uint256) public balances;
+
+    // Deposit ETH
+    function deposit() external payable {
+
+        balances[msg.sender] += msg.value;
+
+    }
+
+    // Get user's recorded deposit
+    function getMyBalance()
+        external
+        view
+        returns(uint256)
+    {
+        return balances[msg.sender];
+    }
+
+    // Get contract's actual ETH balance
+    function getContractBalance()
+        external
+        view
+        returns(uint256)
+    {
+        return address(this).balance;
+    }
+
+}
+```
+
+---
+
+# 🔍 13. How This Contract Works
+
+### Step 1
+
+Alice calls:
+
+```text
+deposit()
+```
+
+and sends:
+
+```text
+1 ETH
+```
+
+---
+
+### Step 2
+
+Solidity gives us:
+
+```text
+msg.sender = Alice
+msg.value  = 1 ETH
+```
+
+---
+
+### Step 3
+
+Contract executes:
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+Equivalent to:
+
+```solidity
+balances[Alice] += 1 ether;
+```
+
+---
+
+### Step 4
+
+The contract now holds:
+
+```text
+1 ETH
+```
+
+Therefore:
+
+```solidity
+address(this).balance
+```
+
+returns:
+
+```text
+1 ETH
+```
+
+---
+
+# 🔄 14. Complete Deposit Flow
+
+```text
+                    USER
+                     │
+                     │
+                Sends ETH
+                     │
+                     ▼
+              deposit() payable
+                     │
+            ┌────────┴────────┐
+            ▼                 ▼
+       msg.sender          msg.value
+            │                 │
+            │                 │
+            ▼                 ▼
+        User Address       ETH Amount
+            │                 │
+            └────────┬────────┘
+                     ▼
+        balances[msg.sender] += msg.value
+                     │
+                     ▼
+              Contract Balance
+                     │
+                     ▼
+          address(this).balance
+```
+
+---
+
+# 💸 15. Deposit vs Contract Balance
+
+This distinction is important.
+
+When a user sends:
+
+```text
+1 ETH
+```
+
+the contract receives the Ether.
+
+At the same time:
+
+```text
+msg.value = 1 ETH
+```
+
+and after the call:
+
+```text
+address(this).balance
+```
+
+includes that Ether.
+
+---
+
+## Example
+
+Before deposit:
+
+```text
+Contract balance = 0 ETH
+```
+
+Alice sends:
+
+```text
+1 ETH
+```
+
+During the call:
+
+```text
+msg.value = 1 ETH
+```
+
+After successful execution:
+
+```text
+Contract balance = 1 ETH
+```
+
+---
+
+# 💰 16. `msg.value` vs `address(this).balance`
+
+| `msg.value`                  | `address(this).balance`              |
+| ---------------------------- | ------------------------------------ |
+| ETH attached to current call | Total ETH currently held by contract |
+| Applies to current message   | Contract's current balance           |
+| Can be 0                     | Can be any available balance         |
+| Example: 1 ETH sent now      | Example: contract holds 10 ETH       |
+
+---
+
+## Example
+
+Suppose the contract already has:
+
+```text
+10 ETH
+```
+
+Alice sends:
+
+```text
+2 ETH
+```
+
+During the transaction:
+
+```text
+msg.value = 2 ETH
+```
+
+The contract's balance after receiving the ETH becomes:
+
+```text
+address(this).balance = 12 ETH
+```
+
+---
+
+# 💡 Remember
+
+> **`msg.value` = ETH coming in with THIS call**
+
+> **`address(this).balance` = ETH currently inside THIS contract**
+
+---
+
+# 💸 17. Sending Ether From a Contract
+
+A contract can also send Ether.
+
+For example:
+
+```solidity
+payable(msg.sender).transfer(amount);
+```
+
+However, modern Solidity applications commonly use low-level `call` for Ether transfers.
+
+Example:
+
+```solidity
+(bool success, ) = payable(msg.sender).call{value: amount}("");
+
+require(success, "Transfer failed");
+```
+
+---
+
+# 🏦 18. Deposit + Withdraw Example
+
+Here is a simple educational bank contract:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract SimpleBank {
+
+    mapping(address => uint256) public balances;
+
+    function deposit() external payable {
+
+        require(msg.value > 0, "Send ETH");
+
+        balances[msg.sender] += msg.value;
+
+    }
+
+    function withdraw(uint256 amount) external {
+
+        require(
+            balances[msg.sender] >= amount,
+            "Insufficient balance"
+        );
+
+        balances[msg.sender] -= amount;
+
+        (bool success, ) = payable(msg.sender).call{
+            value: amount
+        }("");
+
+        require(success, "Transfer failed");
+
+    }
+
+    function getMyBalance()
+        external
+        view
+        returns(uint256)
+    {
+        return balances[msg.sender];
+    }
+
+    function getContractBalance()
+        external
+        view
+        returns(uint256)
+    {
+        return address(this).balance;
+    }
+
+}
+```
+
+---
+
+# 🔍 19. Deposit + Withdraw Flow
+
+## Deposit
+
+```text
+User
+ │
+ │ 1 ETH
+ ▼
+deposit()
+ │
+ ├── msg.sender
+ │
+ ├── msg.value = 1 ETH
+ │
+ ▼
+balances[user] += 1 ETH
+ │
+ ▼
+Contract receives ETH
+```
+
+---
+
+## Withdraw
+
+```text
+User
+ │
+ │ withdraw(0.5 ETH)
+ ▼
+Check balance
+ │
+ ▼
+balances[user] -= 0.5 ETH
+ │
+ ▼
+Contract sends 0.5 ETH
+ │
+ ▼
+User receives ETH
+```
+
+---
+
+# ⚠️ 20. Important Security Consideration
+
+When writing withdrawal functions, always think about **reentrancy**.
+
+A common safe pattern is:
+
+```text
+1. Check
+2. Update state
+3. Make external call
+```
+
+Example:
+
+```solidity
+require(
+    balances[msg.sender] >= amount,
+    "Insufficient balance"
+);
+
+balances[msg.sender] -= amount;
+
+(bool success, ) = payable(msg.sender).call{
+    value: amount
+}("");
+
+require(success, "Transfer failed");
+```
+
+Notice:
+
+```text
+Balance updated
+        ↓
+ETH sent
+```
+
+The state change happens before the external call.
+
+For production contracts, use established security patterns and thoroughly test withdrawal logic.
+
+---
+
+# 📥 21. `payable` Function vs `receive()`
+
+Both can receive Ether, but they are used differently.
+
+---
+
+## Payable Function
+
+```solidity
+function deposit() external payable {
+
+}
+```
+
+User explicitly calls:
+
+```text
+deposit()
+```
+
+---
+
+## Receive Function
+
+```solidity
+receive() external payable {
+
+}
+```
+
+Triggered by a direct Ether transfer with empty calldata when `receive()` is available and payable.
+
+---
+
+## Comparison
+
+| Feature           | Payable Function    | `receive()`         |
+| ----------------- | ------------------- | ------------------- |
+| Called explicitly | ✅                  | ❌                  |
+| Can receive ETH   | ✅                  | ✅                  |
+| Has function name | ✅                  | ❌                  |
+| Has parameters    | Can have parameters | ❌                  |
+| Example           | `deposit()`         | Direct ETH transfer |
+| Purpose           | Specific operation  | Plain ETH reception |
+
+---
+
+# 🧠 22. Why `msg.sender` Matters in Deposits
+
+Imagine:
+
+```solidity
+mapping(address => uint256) public balances;
+```
+
+Suppose:
+
+```text
+Alice → 2 ETH
+Bob   → 5 ETH
+```
+
+We need to know which user owns which deposit.
+
+That's why we use:
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+The result becomes:
+
+```text
+balances[Alice] = 2 ETH
+balances[Bob]   = 5 ETH
+```
+
+---
+
+# 🧠 23. Why `msg.value` Matters in Deposits
+
+We need to know how much Ether the user sent.
+
+That's exactly what:
+
+```solidity
+msg.value
+```
+
+provides.
+
+Without `msg.value`, the contract would not know how much Ether was attached to the current payable call.
+
+---
+
+# 🎯 24. Why `msg.sender + msg.value` Are a Powerful Combination
+
+For a deposit:
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+means:
+
+```text
+WHO?
+  ↓
+msg.sender
+
+HOW MUCH?
+  ↓
+msg.value
+
+STORE IT
+  ↓
+balances[msg.sender]
+```
+
+---
+
+# 🔐 25. Important Ether-Handling Concepts
+
+```text
+                    ETHER HANDLING
+                          │
+          ┌───────────────┼───────────────┐
+          ▼               ▼               ▼
+       payable         msg.value       balance
+          │               │               │
+          ▼               ▼               ▼
+      Accept ETH       ETH sent       ETH held
+                          │
+                          ▼
+                    msg.sender
+                          │
+                          ▼
+                     Who sent it?
+```
+
+---
+
+# 🧠 26. Common Mistakes
+
+## ❌ Mistake 1 — Forgetting `payable`
+
+```solidity
+function deposit() external {
+
+}
+```
+
+Cannot receive ETH through the function.
+
+### Correct:
+
+```solidity
+function deposit() external payable {
+
+}
+```
+
+---
+
+## ❌ Mistake 2 — Using Contract Balance as User Balance
+
+Wrong assumption:
+
+```solidity
+address(this).balance
+```
+
+means user's balance.
+
+It doesn't.
+
+It means:
+
+```text
+Total ETH held by contract
+```
+
+---
+
+## ❌ Mistake 3 — Confusing Mapping Balance
+
+```solidity
+balances[msg.sender]
+```
+
+is a value stored in your contract.
+
+It is **not automatically the user's actual wallet balance**.
+
+---
+
+## ❌ Mistake 4 — Forgetting `msg.value`
+
+A deposit function needs to know the amount received.
+
+Usually:
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+---
+
+# 📊 27. Important Comparison Table
+
+| Concept                 | Meaning                               | Example                       |
+| ----------------------- | ------------------------------------- | ----------------------------- |
+| `payable`               | Allows function to receive ETH        | `deposit() payable`           |
+| `msg.sender`            | Current caller                        | `0xABC...`                    |
+| `msg.value`             | ETH sent with current call            | `1 ether`                     |
+| `balances[user]`        | Application-specific recorded balance | `5 ether`                     |
+| `address(user).balance` | User's actual native ETH balance      | `10 ether`                    |
+| `address(this).balance` | Contract's actual ETH balance         | `20 ether`                    |
+| `receive()`             | Handles plain ETH with empty calldata | `receive() external payable`  |
+| `fallback()`            | Handles unmatched calls               | `fallback() external payable` |
+
+---
+
+# 🔄 28. Complete Ether Handling Flow
+
+```text
+                         USER
+                          │
+                          │
+                       Sends ETH
+                          │
+                          ▼
+                  payable function
+                          │
+             ┌────────────┴────────────┐
+             ▼                         ▼
+        msg.sender                  msg.value
+             │                         │
+             ▼                         ▼
+        WHO SENT?                  HOW MUCH?
+             │                         │
+             └────────────┬────────────┘
+                          ▼
+              balances[msg.sender]
+                          │
+                          ▼
+                  Contract receives
+                       Ether
+                          │
+                          ▼
+               address(this).balance
+                          │
+                          ▼
+                 CONTRACT BALANCE
+```
+
+---
+
+# 🧠 29. 60-Second Revision
+
+| Topic               | One-Line Summary                                        |
+| ------------------- | ------------------------------------------------------- |
+| 💰 `payable`        | Allows a function/address interaction to receive Ether. |
+| 👤 `msg.sender`     | Address that made the current call.                     |
+| 💵 `msg.value`      | Amount of Ether sent with the current call.             |
+| 🏦 Contract Balance | `address(this).balance`                                 |
+| 👤 User Balance     | `address(user).balance`                                 |
+| 📊 Mapping Balance  | Application-specific value such as `balances[user]`.    |
+| 📥 Deposit          | Usually `balances[msg.sender] += msg.value`.            |
+| 📤 Withdraw         | Reduce recorded balance, then transfer Ether.           |
+| 📥 `receive()`      | Handles direct ETH with empty calldata.                 |
+| 🔄 `fallback()`     | Handles unmatched calls.                                |
+
+---
+
+# 🎯 Golden Rules
+
+- 💰 **`payable` = allows Ether to be received.**
+- 👤 **`msg.sender` = WHO called the function.**
+- 💵 **`msg.value` = HOW MUCH Ether was sent with the call.**
+- 🏦 **`address(this).balance` = Ether currently held by the contract.**
+- 👤 **`address(user).balance` = Ether currently held by that address.**
+- 📊 **`balances[user]` = application-specific accounting stored in your contract.**
+- 🏦 A contract has its own Ether balance.
+- 📥 A deposit function is normally declared `payable`.
+- 🧩 `balances[msg.sender] += msg.value` connects the caller with the amount they deposited.
+- ⚠️ Native ETH balance and an application's internal accounting are not automatically the same thing.
+- 🔐 Withdrawal functions must be designed carefully to avoid reentrancy and other security issues.
+
+---
+
+# 💼 Interview Questions & Answers
+
+## Q1. What does `payable` mean in Solidity?
+
+**Answer:**
+
+`payable` allows a function to receive Ether along with the call.
+
+Example:
+
+```solidity
+function deposit() external payable {
+
+}
+```
+
+---
+
+## Q2. What is `msg.value`?
+
+**Answer:**
+
+`msg.value` is the amount of Ether sent with the current message call.
+
+---
+
+## Q3. What is `msg.sender`?
+
+**Answer:**
+
+`msg.sender` is the address that made the current call.
+
+---
+
+## Q4. How do you check the Ether balance of a contract?
+
+```solidity
+address(this).balance
+```
+
+---
+
+## Q5. How do you check an address's native Ether balance?
+
+```solidity
+address(user).balance
+```
+
+---
+
+## Q6. What is the difference between `balances[msg.sender]` and `address(msg.sender).balance`?
+
+**Answer:**
+
+`balances[msg.sender]` is an application-specific value stored in the contract's mapping.
+
+```solidity
+balances[msg.sender]
+```
+
+Whereas:
+
+```solidity
+address(msg.sender).balance
+```
+
+represents the actual native Ether balance held by that address.
+
+---
+
+## Q7. Write a simple deposit function.
+
+```solidity
+mapping(address => uint256) public balances;
+
+function deposit() external payable {
+
+    balances[msg.sender] += msg.value;
+
+}
+```
+
+---
+
+## Q8. Why are `msg.sender` and `msg.value` important in a deposit?
+
+**Answer:**
+
+`msg.sender` identifies **who deposited**, while `msg.value` identifies **how much Ether was deposited**.
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+---
+
+## Q9. Can a contract hold Ether?
+
+**Answer:**
+
+Yes. A smart contract has its own Ethereum address and can hold Ether.
+
+Its balance can be checked with:
+
+```solidity
+address(this).balance
+```
+
+---
+
+## Q10. What happens if a non-payable function receives Ether?
+
+**Answer:**
+
+The call reverts because the function is not allowed to receive Ether.
+
+---
+
+# ⚡ Rapid Fire Interview Questions
+
+### Q11. What keyword allows ETH to be sent to a function?
+
+```solidity
+payable
+```
+
+### Q12. Who called the function?
+
+```solidity
+msg.sender
+```
+
+### Q13. How much ETH was sent?
+
+```solidity
+msg.value
+```
+
+### Q14. What is the contract's ETH balance?
+
+```solidity
+address(this).balance
+```
+
+### Q15. What is the user's ETH balance?
+
+```solidity
+address(user).balance
+```
+
+### Q16. What is a typical deposit statement?
+
+```solidity
+balances[msg.sender] += msg.value;
+```
+
+### Q17. Is `balances[msg.sender]` automatically the user's wallet balance?
+
+❌ No.
+
+### Q18. Can a smart contract hold Ether?
+
+✅ Yes.
+
+### Q19. What unit is Ether ultimately represented in on-chain?
+
+```text
+wei
+```
+
+### Q20. Easy memory trick?
+
+```text
+payable    → CAN RECEIVE ETH
+
+msg.sender → WHO?
+
+msg.value  → HOW MUCH?
+
+this.balance → CONTRACT HAS HOW MUCH?
+
+user.balance → USER HAS HOW MUCH?
+```
+
+---
+
+# 🎯 Interview Answer — 30 Seconds
+
+> **"`payable` is used when a Solidity function needs to receive Ether. `msg.sender` identifies the address making the call, while `msg.value` tells us how much Ether was sent with that call. A contract's actual Ether balance can be checked using `address(this).balance`, while an address's native Ether balance can be checked using `address(user).balance`. A simple deposit function commonly uses `balances[msg.sender] += msg.value` to record how much Ether each user has deposited."**
+
+---
+
+# 🧠 Final Memory Map
+
+```text
+                         💰 ETHER
+                            │
+                            ▼
+                       payable
+                            │
+                            ▼
+                    Function receives ETH
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+         msg.sender                   msg.value
+              │                           │
+              ▼                           ▼
+          WHO SENT?                   HOW MUCH?
+              │                           │
+              └─────────────┬─────────────┘
+                            ▼
+                 balances[msg.sender]
+                            │
+                            ▼
+                    User's deposit
+                            │
+                            ▼
+                 Contract holds ETH
+                            │
+                            ▼
+                address(this).balance
+```
+
+> ⭐ **Ultimate memory line:**
+>
+> **`payable` allows ETH → `msg.sender` tells WHO → `msg.value` tells HOW MUCH → `balances[msg.sender]` records the deposit → `address(this).balance` tells how much ETH the contract actually holds.**
