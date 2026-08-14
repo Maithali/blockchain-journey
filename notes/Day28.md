@@ -1,4 +1,4 @@
-💰 Payable & Ether Handling in Solidity — One Page Revision
+#💰 Payable & Ether Handling in Solidity — One Page Revision
 
 > 🎯 **Goal:** Understand how Solidity contracts receive and manage Ether using `payable`, `msg.value`, `address(this).balance`, `msg.sender`, and simple deposit/withdraw functions.
 
