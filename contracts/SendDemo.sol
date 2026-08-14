@@ -6,6 +6,8 @@ contract SendDemo {
 
     function withdraw (uint amount) public {
         require(address(this).balance >= amount, "Insufficient balance");
+
+        // send is deprecated
         bool success = payable(msg.sender).send(amount);
         require(success,"ether transfer failed");
     }
