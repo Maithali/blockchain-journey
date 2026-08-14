@@ -6,6 +6,8 @@ contract TransferDemo {
 
     function withdraw(uint amount) public {
         require(address(this).balance >= amount,"Insufficient balance");
+
+        //transfer is deprecated
         payable(msg.sender).transfer(amount);
     }
 
