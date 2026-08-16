@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 contract SecureBank {
     mapping(address => uint ) public balances;
     function deposit() public payable{
-        require(msg.value > 0, "Deposit must be greater tha zero");
+        require(msg.value > 0, "Deposit must be greater than zero");
 
         balances[msg.sender] += msg.value;
     }
