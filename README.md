@@ -1,214 +1,71 @@
-# 🚀 Blockchain Journey
+# Blockchain Journey
 
-Hi, I'm **Maithili** 👋
+Hi, I'm **Maithili**. This repository documents my hands-on journey through blockchain fundamentals, Ethereum, Solidity, and smart-contract development.
 
-Welcome to my Blockchain Journey repository.
+It contains revision notes, small Solidity examples, Hardhat exercises, JavaScript scripts, and mini-projects. The work is organized as a 30-day learning series and is still evolving.
 
-This repository documents my journey from learning Blockchain fundamentals to building production-ready Smart Contracts and Full Stack DApps.
+## What is here
 
-My goal is to become a **Full Stack Blockchain Developer** by learning one concept at a time and building projects every day.
+- 30 learning notes, from blockchain fundamentals through Solidity security
+- Solidity examples covering variables, functions, data types, arrays, structs, mappings, enums, data locations, errors, events, modifiers, inheritance, interfaces, abstract contracts, libraries, fallback and receive functions, Ether handling, and security
+- A Hardhat project configured for Solidity `0.8.20`
+- A tested `PiggyBank` contract
+- JavaScript and frontend experiments in `javascript/` and `mini-projects/`
 
----
+## Repository structure
 
-# 🎯 Goals
-
-- Learn Blockchain Fundamentals
-- Master Solidity
-- Learn Ethereum & EVM
-- Build Smart Contracts
-- Learn Hardhat
-- Learn Ethers.js
-- Build Full Stack DApps
-- Learn Web3 Security
-- Build Production Projects
-- Land my first Blockchain Developer Job
-
----
-
-# 🛠️ Tech Stack (Learning)
-
-### Blockchain
-
-- Blockchain Fundamentals
-- Ethereum
-- EVM
-
-### Smart Contract
-
-- Solidity
-
-### Tools
-
-- Remix IDE
-- Git
-- GitHub
-
-### Upcoming
-
-- Hardhat
-- Foundry
-- Ethers.js
-- React
-- Node.js
-- Express
-- MongoDB
-- IPFS
-- OpenZeppelin
-
----
-
-# 📂 Repository Structure
-
-```
+```text
 blockchain-journey/
-│
-├── contracts/
-├── notes/
-├── diagrams/
-├── javascript/
-├── README.md
+├── contracts/          Solidity learning examples
+├── notes/              Day 1 through Day 30 revision notes
+├── test/               Hardhat tests
+├── javascript/         JavaScript exercises
+├── mini-projects/      password-Hasher, variable, and wallet-UI
+├── diagrams/           Learning diagrams
+├── images/             Supporting images
+├── hardhat.config.js   Hardhat configuration
+└── package.json        Node.js dependencies and scripts
 ```
 
----
+## Learning progress
 
-# 📚 Learning Progress
+| Days  | Topics                                                                                                   | Status   |
+| ----- | -------------------------------------------------------------------------------------------------------- | -------- |
+| 1-5   | Blockchain, security, cryptography, consensus, Ethereum, and the EVM                                     | Complete |
+| 6-13  | Solidity fundamentals, variables, functions, data types, visibility, constructors, operators, and arrays | Complete |
+| 14-20 | Structs, loops, mappings, enums, data locations, error handling, and events                              | Complete |
+| 21-26 | Modifiers, inheritance, constructors with inheritance, interfaces, abstract contracts, and libraries     | Complete |
+| 27-30 | Fallback and receive functions, payable functions, Ether transfers, and security fundamentals            | Complete |
 
-| Day    | Topic                              | Status |
-| ------ | ---------------------------------- | ------ |
-| Day 1  | Blockchain Fundamentals            | ✅     |
-| Day 2  | Wallets, Keys & Digital Signatures | ✅     |
-| Day 3  | Cryptography & Hashing             | ✅     |
-| Day 4  | Blocks, Transactions & Consensus   | ✅     |
-| Day 5  | Ethereum, EVM & Smart Contracts    | ✅     |
-| Day 6  | Solidity Basics                    | ✅     |
-| Day 7  | Variables                          | ✅     |
-| Day 8  | Functions                          | ✅     |
-| Day 9  | Data Types                         | ✅     |
-| Day 10 | Visibility & State Mutability      | ✅     |
-| Day 11 | Constructors                       | ✅     |
-| Day 12 | Operators & Conditional Statements | ✅     |
-| Day 13 | Arrays                             | ✅     |
+See the full notes in [`notes/`](notes/).
 
----
+## Running the project
 
-# 💻 Projects Completed
+Install dependencies:
 
-### Blockchain Fundamentals
+```bash
+npm install
+```
 
-- Blockchain Notes
-- Hashing Notes
-- Wallet Notes
-- Ethereum Notes
-- Consensus Notes
+Compile the contracts:
 
-### Solidity
+```bash
+npx hardhat compile
+```
 
-- HelloBlockchain
-- StudentRecord
-- Bank
-- Voting
-- Variables
-- StudentProfile
-- EmployeeProfile
-- Functions
-- StudentInformation
-- Employee
-- DataTypes
-- EmployeeRecord
-- BookRecord
-- VisibilityDemo
-- StateMutability
-- MyWallet
-- Calculator
-- AgeChecker
-- StudentGrade
-- LoanEligibility
-- ConstructorDemo
-- ConstructorParameter
-- BookStore
-- FixedArray
-- DynamicArray
-- FavoriteBooks
-- FavoriteMovies
+Run the Hardhat test suite:
 
----
+```bash
+npx hardhat test
+```
 
-# 🚀 Current Focus
+The project uses Hardhat's local network by default. Contract artifacts are generated in `artifacts/` and the compiler cache is stored in `cache/`.
 
-Learning Solidity fundamentals and building small projects to strengthen core concepts before moving to advanced Smart Contract development.
+## Current focus
 
----
+The current codebase focuses on Solidity fundamentals, Ether transfers, contract security, and learning how to test contracts with Hardhat and ethers.js. Advanced application development, deployment, and larger DApps remain future areas of the journey.
 
-# 🛣️ Roadmap Progress
+## Connect
 
-- ✅ Blockchain Fundamentals
-- ✅ Ethereum & EVM
-- ✅ Solidity Basics
-- ✅ Variables
-- ✅ Functions
-- ✅ Data Types
-- ✅ Visibility
-- ✅ State Mutability
-- ✅ Constructors
-- ✅ Operators
-- ✅ Conditional Statements
-- ✅ Arrays
-- ⏳ Structs
-- ⏳ Loops
-- ⏳ Mappings
-- ⏳ Enums
-- ⏳ Events
-- ⏳ Error Handling
-- ⏳ Modifiers
-- ⏳ Inheritance
-- ⏳ Libraries
-- ⏳ Interfaces
-- ⏳ ERC-20
-- ⏳ ERC-721
-- ⏳ Hardhat
-- ⏳ Testing
-- ⏳ Deployment
-- ⏳ React + Ethers.js
-- ⏳ Full Stack DApps
-
----
-
-# 📈 GitHub Commit History
-
-Daily commits include:
-
-- 📖 Notes
-- 💻 Solidity Contracts
-- 🚀 Mini Projects
-- 📝 Assignments
-
----
-
-# 🌱 About This Repository
-
-This repository is a collection of my notes, Solidity smart contracts, mini projects, and assignments as I progress through a structured Full Stack Blockchain Developer Bootcamp.
-
-Each day's work follows the same format:
-
-- Theory
-- Notes
-- Coding Task
-- Mini Project
-- Assignment
-- Interview Questions
-- GitHub Commit
-- Revision
-
----
-
-# 📌 Connect With Me
-
-**GitHub**
-https://github.com/Maithali
-
-**LinkedIn**
-https://www.linkedin.com/in/maithali-gharde-77aa29191
-
----
-
-> **"Consistency beats intensity. One commit every day."** 🚀
+- [GitHub](https://github.com/Maithali)
+- [LinkedIn](https://www.linkedin.com/in/maithali-gharde-77aa29191)
