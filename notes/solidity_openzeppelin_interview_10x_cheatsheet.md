@@ -4,7 +4,7 @@
 
 > **Goal:** Move beyond memorized definitions. In a strong Solidity/OpenZeppelin interview, you should be able to explain **what**, **why**, **how**, **trade-offs**, and **security implications**.
 >
-> This guide targets modern Solidity and OpenZeppelin Contracts 5.x concepts. Always verify exact APIs against the version installed in your project. OpenZeppelin uses semantic versioning, and major versions should be treated as potentially incompatible for upgradeable storage layouts. citeturn0search3turn0search6
+> This guide targets modern Solidity and OpenZeppelin Contracts 5.x concepts. Always verify exact APIs against the version installed in your project. OpenZeppelin uses semantic versioning, and major versions should be treated as potentially incompatible for upgradeable storage layouts.
 
 ---
 
@@ -1143,7 +1143,7 @@ OpenZeppelin recommends upgrade tooling to help detect storage-layout incompatib
 
 For a live upgradeable contract, you should treat major-version storage layouts as incompatible.
 
-OpenZeppelin explicitly states that major releases should be assumed incompatible and that upgrading a live contract between major versions is unsafe. citeturn0search3turn0search6
+OpenZeppelin explicitly states that major releases should be assumed incompatible and that upgrading a live contract between major versions is unsafe.
 
 ---
 
