@@ -39,4 +39,36 @@ In the input box next to the Deploy button (labeled initialOwner), paste that ad
    Click transact.
    Re-check balanceOf(Account #2) -> drops.
     totalSupply permanently drops.
+
+6)Burn tokens from another account using approval
+        Switch back to Account #1 (Owner).Expand approve.
+         Set spender = Account #2, value = .
+          Click transact.
+          Switch active Remix wallet to Account #2.
+          Expand burnFrom. 
+          Set account = Account #1, value = . 
+          Click transact.
+          This burns 50 tokens directly out of Account #1's wallet using Account #2's burning allowance.
+7)Ensure your current owner address is selected in the Account dropdown.
+
+Under Deployed Contracts, expand transferOwnership.
+
+In the newOwner field, paste the address of the recipient wallet.
+
+Click transact (orange button).
+
+Verify: Click the blue owner button.
+
+8)renounceOwnership()
+Select the active owner account in the Account dropdown.
+
+Expand renounceOwnership under Deployed Contracts.
+
+Click transact (orange button).
+
+Verify: Click the blue owner button. It will now output 0x0000000000000000000000000000000000000000.
+
+Test Restriction: Try calling mint(). The transaction will revert because there is no longer an owner.
+
+
     */
