@@ -731,7 +731,8 @@ Think:
 
 ```text
               AccessManager
-              /     |                   /      |                 Token   Staking   Treasury
+              /       |        \
+          Token     Staking    Treasury
 ```
 
 Instead of managing fragmented permissions separately in every contract, the manager can map roles to target functions.
