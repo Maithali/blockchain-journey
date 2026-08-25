@@ -737,7 +737,7 @@ Think:
 
 Instead of managing fragmented permissions separately in every contract, the manager can map roles to target functions.
 
-OpenZeppelin describes `AccessManager` as a system-level permission manager using roles and target function selectors. citeturn0search0turn0search2
+OpenZeppelin describes `AccessManager` as a system-level permission manager using roles and target function selectors.
 
 ---
 
@@ -903,7 +903,7 @@ fix
 UNPAUSE
 ```
 
-OpenZeppelin's `Pausable` provides pause state and internal pause/unpause mechanisms; your contract must expose appropriately protected functions to control it. citeturn0search7
+OpenZeppelin's `Pausable` provides pause state and internal pause/unpause mechanisms; your contract must expose appropriately protected functions to control it.
 
 ---
 
@@ -927,7 +927,7 @@ function mint(...)
 
 And expose protected pause/unpause functions.
 
-OpenZeppelin explicitly notes that extensions such as `ERC721Pausable` do not automatically provide public pause/unpause functions. citeturn0search7
+OpenZeppelin explicitly notes that extensions such as `ERC721Pausable` do not automatically provide public pause/unpause functions.
 
 ---
 
@@ -1061,7 +1061,7 @@ Users interact with the proxy while logic lives in the implementation.
 
 The implementation can be replaced according to the upgrade mechanism.
 
-OpenZeppelin documents multiple proxy patterns and upgrade tooling. citeturn0search5
+OpenZeppelin documents multiple proxy patterns and upgrade tooling.
 
 ---
 
@@ -1093,7 +1093,7 @@ The proxy is the address users interact with.
 
 Constructor execution happens for the implementation deployment, not as initialization of proxy storage.
 
-Therefore OpenZeppelin's upgradeable contracts use initializer functions instead of constructors. citeturn0search1
+Therefore OpenZeppelin's upgradeable contracts use initializer functions instead of constructors.
 
 ---
 
@@ -1134,7 +1134,7 @@ slot 1 → owner
 
 That can corrupt state.
 
-OpenZeppelin recommends upgrade tooling to help detect storage-layout incompatibilities. citeturn0search6
+OpenZeppelin recommends upgrade tooling to help detect storage-layout incompatibilities.
 
 ---
 
@@ -1160,7 +1160,7 @@ UUPS
 
 UUPS can reduce proxy bytecode/storage overhead, but it puts upgrade authorization and upgrade logic inside the implementation.
 
-OpenZeppelin's current proxy API documents UUPS-specific security checks and ERC-1822 compatibility. citeturn0search5
+OpenZeppelin's current proxy API documents UUPS-specific security checks and ERC-1822 compatibility.
 
 ---
 
@@ -1543,7 +1543,7 @@ Timelock
 Protocol/Treasury
 ```
 
-OpenZeppelin provides governance building blocks in its Contracts library. citeturn0search8
+OpenZeppelin provides governance building blocks in its Contracts library. 8
 
 ---
 
@@ -1577,7 +1577,7 @@ Protocol
 
 The exact design depends on governance and operational requirements.
 
-OpenZeppelin's `TimelockController` is intended to add delay between ordering and execution of sensitive operations. citeturn0search0
+OpenZeppelin's `TimelockController` is intended to add delay between ordering and execution of sensitive operations. 0
 
 ---
 
@@ -1617,7 +1617,7 @@ _grantRole()
 
 ## Q75. What is `AccessControlDefaultAdminRules`?
 
-An OpenZeppelin extension designed to add stronger protections around `DEFAULT_ADMIN_ROLE`, including a single default admin and a two-step transfer with delay. citeturn0search0
+An OpenZeppelin extension designed to add stronger protections around `DEFAULT_ADMIN_ROLE`, including a single default admin and a two-step transfer with delay. 0
 
 ---
 
@@ -1625,7 +1625,7 @@ An OpenZeppelin extension designed to add stronger protections around `DEFAULT_A
 
 A contract module that lets a contract delegate permission decisions to an authority such as `AccessManager`.
 
-It provides the `restricted` modifier. citeturn0search2
+It provides the `restricted` modifier. 2
 
 ---
 
@@ -1643,7 +1643,7 @@ A reusable guard against reentrant calls to protected functions.
 
 ## Q79. What is `ERC721URIStorage`?
 
-An ERC-721 extension supporting per-token metadata URI storage. citeturn0search4
+An ERC-721 extension supporting per-token metadata URI storage. 4
 
 ---
 
@@ -1665,7 +1665,7 @@ Because standardized token behavior is security-sensitive and widely implemented
 
 Using OpenZeppelin reduces the amount of standard logic you have to implement yourself.
 
-OpenZeppelin recommends using its published library code rather than copy-pasting library source. citeturn0search3turn0search9
+OpenZeppelin recommends using its published library code rather than copy-pasting library source. 3turn0search9
 
 ---
 
@@ -1687,7 +1687,7 @@ Least privilege reduces blast radius.
 
 Because an ownership transfer can otherwise become operationally dangerous if the receiving address is incorrect or unable to interact.
 
-The new owner explicitly accepts ownership. citeturn0search0turn0search2
+The new owner explicitly accepts ownership. 0turn0search2
 
 ---
 
@@ -1805,7 +1805,7 @@ whenNotPaused
 
 must be applied where appropriate.
 
-OpenZeppelin's pausable token extensions also require developers to expose protected pause/unpause controls. citeturn0search7
+OpenZeppelin's pausable token extensions also require developers to expose protected pause/unpause controls.
 
 ---
 
@@ -1841,7 +1841,7 @@ Upgrade tooling
 Initializer logic
 ```
 
-OpenZeppelin recommends upgrade tooling to detect storage-layout incompatibilities. citeturn0search6
+OpenZeppelin recommends upgrade tooling to detect storage-layout incompatibilities. 6
 
 ---
 
@@ -1871,7 +1871,7 @@ This matters enormously for authorization design.
 
 # Q95. "You use AccessManager. Who may appear as msg.sender inside the managed function?"
 
-When execution goes through the manager's `execute` flow, the managed contract can see the AccessManager contract as the caller rather than the original external caller. OpenZeppelin explicitly highlights this as an important migration/integration consideration. citeturn0search0
+When execution goes through the manager's `execute` flow, the managed contract can see the AccessManager contract as the caller rather than the original external caller. OpenZeppelin explicitly highlights this as an important migration/integration consideration. 0
 
 ---
 
@@ -1975,7 +1975,7 @@ metadata URI
 only authorized minter
 ```
 
-OpenZeppelin provides ERC-721 implementations and extensions such as `ERC721URIStorage`. citeturn0search4turn0search8
+OpenZeppelin provides ERC-721 implementations and extensions such as `ERC721URIStorage`. 4turn0search8
 
 ---
 
@@ -2027,7 +2027,7 @@ upgrade authorization
 storage discipline
 ```
 
-OpenZeppelin's upgradeable package uses `Upgradeable` variants and initializer functions instead of constructors. citeturn0search1
+OpenZeppelin's upgradeable package uses `Upgradeable` variants and initializer functions instead of constructors. 1
 
 ---
 
@@ -2049,7 +2049,7 @@ OpenZeppelin's upgradeable package uses `Upgradeable` variants and initializer f
 
 ### Answer:
 
-> "I use OpenZeppelin because it provides reusable implementations of standardized and security-sensitive components. Rather than implementing ERC-20, access control, or upgrade patterns from scratch, I compose established modules and focus my custom code on business logic. I still treat the resulting system as my responsibility and test the composition and configuration." citeturn0search3turn0search9
+> "I use OpenZeppelin because it provides reusable implementations of standardized and security-sensitive components. Rather than implementing ERC-20, access control, or upgrade patterns from scratch, I compose established modules and focus my custom code on business logic. I still treat the resulting system as my responsibility and test the composition and configuration." 3turn0search9
 
 ---
 
@@ -2059,7 +2059,7 @@ OpenZeppelin's upgradeable package uses `Upgradeable` variants and initializer f
 
 ### Answer:
 
-> "First I'd minimize the admin's permissions. For simple systems I might use Ownable or Ownable2Step. For multiple responsibilities I'd use AccessControl. For a multi-contract production protocol I'd consider AccessManager. For high-impact operations I'd consider a multisig and timelock. The exact architecture depends on the threat model and governance requirements." citeturn0search0turn0search2
+> "First I'd minimize the admin's permissions. For simple systems I might use Ownable or Ownable2Step. For multiple responsibilities I'd use AccessControl. For a multi-contract production protocol I'd consider AccessManager. For high-impact operations I'd consider a multisig and timelock. The exact architecture depends on the threat model and governance requirements." 0turn0search2
 
 ---
 
@@ -2229,7 +2229,7 @@ Many contracts with centralized permissions?
  AccessManager
 ```
 
-This matches OpenZeppelin's current access-control model. citeturn0search0turn0search2
+This matches OpenZeppelin's current access-control model. 0turn0search2
 
 ---
 
@@ -2817,7 +2817,7 @@ If you can answer those questions confidently, you are demonstrating **smart-con
 - ERC-721: https://docs.openzeppelin.com/contracts/5.x/erc721
 - Backwards Compatibility: https://docs.openzeppelin.com/contracts/5.x/backwards-compatibility
 
-OpenZeppelin recommends using the published library code as-is rather than copy-pasting its source into projects. citeturn0search3turn0search9
+OpenZeppelin recommends using the published library code as-is rather than copy-pasting its source into projects. 3turn0search9
 
 ---
 
