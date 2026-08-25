@@ -39,7 +39,7 @@ Weak:
 
 Strong:
 
-> "`Ownable` is a simple access-control module for contracts with a single administrative owner. It provides ownership management and the `onlyOwner` modifier. I would use it for a simple admin-controlled contract, but for multiple independent permissions I'd prefer `AccessControl`. For higher-risk ownership transfers, `Ownable2Step` can reduce mistakes because the new owner must explicitly accept ownership." citeturn0search0turn0search2
+> "`Ownable` is a simple access-control module for contracts with a single administrative owner. It provides ownership management and the `onlyOwner` modifier. I would use it for a simple admin-controlled contract, but for multiple independent permissions I'd prefer `AccessControl`. For higher-risk ownership transfers, `Ownable2Step` can reduce mistakes because the new owner must explicitly accept ownership.
 
 ---
 
@@ -383,7 +383,7 @@ contract MyToken is ERC20, Ownable {
 }
 ```
 
-OpenZeppelin explicitly uses inheritance as a mechanism for modular smart-contract development. citeturn0search9
+OpenZeppelin explicitly uses inheritance as a mechanism for modular smart-contract development.
 
 ---
 
@@ -404,7 +404,7 @@ approve()
 transferFrom()
 ```
 
-OpenZeppelin provides an implementation rather than requiring you to implement the standard from scratch. citeturn0search3
+OpenZeppelin provides an implementation rather than requiring you to implement the standard from scratch.
 
 ---
 
@@ -569,7 +569,7 @@ Important:
 
 # Q24. What is OpenZeppelin?
 
-OpenZeppelin Contracts is a reusable Solidity library providing implementations and building blocks for standards and security-sensitive functionality, including ERC tokens, access control, utilities, governance, and proxy patterns. citeturn0search3turn0search8
+OpenZeppelin Contracts is a reusable Solidity library providing implementations and building blocks for standards and security-sensitive functionality, including ERC tokens, access control, utilities, governance, and proxy patterns.
 
 The key interview phrase:
 
@@ -602,7 +602,7 @@ Use when:
 one administrative authority
 ```
 
-OpenZeppelin documents `Ownable` as the basic single-owner access-control mechanism. citeturn0search0
+OpenZeppelin documents `Ownable` as the basic single-owner access-control mechanism.
 
 ---
 
@@ -624,7 +624,7 @@ new owner
 
 Why?
 
-It reduces mistakes where ownership is accidentally transferred to an unusable address. citeturn0search0turn0search2
+It reduces mistakes where ownership is accidentally transferred to an unusable address.
 
 ### Interview gold:
 
@@ -663,9 +663,7 @@ UPGRADER
 → upgrade
 ```
 
-OpenZeppelin recommends role-based access when granular permissions are needed. citeturn0search0
-
----
+## OpenZeppelin recommends role-based access when granular permissions are needed.
 
 # Q28. What is `AccessControl`?
 
@@ -686,7 +684,7 @@ function mint(...)
 }
 ```
 
-It supports granting, revoking, and checking roles. citeturn0search0turn0search2
+It supports granting, revoking, and checking roles.
 
 ---
 
@@ -698,7 +696,7 @@ This makes it highly sensitive.
 
 Interview answer:
 
-> "`DEFAULT_ADMIN_ROLE` is powerful because it can manage roles. I treat it as a high-value security key and consider stronger admin protections such as `AccessControlDefaultAdminRules`, multisig, or a governance/timelock architecture depending on the protocol." citeturn0search0
+> "`DEFAULT_ADMIN_ROLE` is powerful because it can manage roles. I treat it as a high-value security key and consider stronger admin protections such as `AccessControlDefaultAdminRules`, multisig, or a governance/timelock architecture depending on the protocol."
 
 ---
 
@@ -721,7 +719,7 @@ Treasurer → treasury
 Upgrader → upgrade
 ```
 
-OpenZeppelin specifically highlights least privilege as a security practice in its access-control documentation. citeturn0search0
+OpenZeppelin specifically highlights least privilege as a security practice in its access-control documentation.
 
 ---
 
