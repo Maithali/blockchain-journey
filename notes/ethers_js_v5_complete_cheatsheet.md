@@ -8,61 +8,6 @@
 
 ---
 
-# 📚 Table of Contents
-
-1. What is ethers.js?
-2. Architecture
-3. Installation
-4. Importing
-5. Providers
-6. Signers
-7. Wallets
-8. MetaMask
-9. Networks
-10. Blocks
-11. Balances
-12. Ether Units
-13. BigNumber
-14. Transactions
-15. Gas
-16. Contracts
-17. ABI
-18. Contract Reads
-19. Contract Writes
-20. Contract Deployment
-21. ContractFactory
-22. Events
-23. Event Filters
-24. Interface
-25. ABI Encoding/Decoding
-26. Function Selectors
-27. Message Signing
-28. ENS
-29. Addresses
-30. Bytes
-31. Hashing
-32. Solidity Hashing
-33. HD Wallets
-34. Mnemonics
-35. Nonces
-36. Static Calls
-37. Overrides
-38. ETH Transfers
-39. ERC-20
-40. ERC-721
-41. ERC-1155
-42. React + MetaMask
-43. Error Handling
-44. Security
-45. Hardhat
-46. Testing
-47. v5 vs v6
-48. Interview Questions
-49. 60-Second Revision
-50. Golden Rules
-
----
-
 # ⚡ 1. What is ethers.js?
 
 **ethers.js** is a JavaScript/TypeScript library for interacting with Ethereum and its ecosystem.
@@ -188,10 +133,7 @@ import { ethers } from "ethers";
 ## JsonRpcProvider
 
 ```javascript
-const provider =
-  new ethers.providers.JsonRpcProvider(
-    RPC_URL
-  );
+const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 ```
 
 Useful for:
@@ -209,10 +151,7 @@ Custom RPC endpoints
 Used in ethers v5 for browser wallets such as MetaMask:
 
 ```javascript
-const provider =
-  new ethers.providers.Web3Provider(
-    window.ethereum
-  );
+const provider = new ethers.providers.Web3Provider(window.ethereum);
 ```
 
 ## WebSocketProvider
@@ -220,10 +159,7 @@ const provider =
 Useful when you need WebSocket-based subscriptions:
 
 ```javascript
-const provider =
-  new ethers.providers.WebSocketProvider(
-    WS_URL
-  );
+const provider = new ethers.providers.WebSocketProvider(WS_URL);
 ```
 
 ## Other v5 providers
@@ -246,21 +182,13 @@ JsonRpcBatchProvider
 # 🦊 6. MetaMask
 
 ```javascript
-const provider =
-  new ethers.providers.Web3Provider(
-    window.ethereum
-  );
+const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-await provider.send(
-  "eth_requestAccounts",
-  []
-);
+await provider.send("eth_requestAccounts", []);
 
-const signer =
-  provider.getSigner();
+const signer = provider.getSigner();
 
-const address =
-  await signer.getAddress();
+const address = await signer.getAddress();
 
 console.log(address);
 ```
@@ -286,8 +214,7 @@ Contract
 # ✍️ 7. Signers
 
 ```javascript
-const signer =
-  provider.getSigner();
+const signer = provider.getSigner();
 ```
 
 Get address:
@@ -301,16 +228,14 @@ Send transaction:
 ```javascript
 await signer.sendTransaction({
   to: recipient,
-  value: ethers.utils.parseEther("0.1")
+  value: ethers.utils.parseEther("0.1"),
 });
 ```
 
 Sign message:
 
 ```javascript
-await signer.signMessage(
-  "Hello Ethereum"
-);
+await signer.signMessage("Hello Ethereum");
 ```
 
 ---
@@ -320,27 +245,19 @@ await signer.signMessage(
 Create from private key:
 
 ```javascript
-const wallet =
-  new ethers.Wallet(
-    PRIVATE_KEY
-  );
+const wallet = new ethers.Wallet(PRIVATE_KEY);
 ```
 
 Connect to provider:
 
 ```javascript
-const wallet =
-  new ethers.Wallet(
-    PRIVATE_KEY,
-    provider
-  );
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 ```
 
 Create random wallet:
 
 ```javascript
-const wallet =
-  ethers.Wallet.createRandom();
+const wallet = ethers.Wallet.createRandom();
 ```
 
 ### Security
@@ -356,16 +273,13 @@ const wallet =
 # 🌍 9. Networks
 
 ```javascript
-const network =
-  await provider.getNetwork();
+const network = await provider.getNetwork();
 ```
 
 Get chain ID:
 
 ```javascript
-const {
-  chainId
-} = await provider.getNetwork();
+const { chainId } = await provider.getNetwork();
 ```
 
 Typical:
@@ -386,26 +300,19 @@ Always verify the expected network in a DApp.
 Current block:
 
 ```javascript
-const blockNumber =
-  await provider.getBlockNumber();
+const blockNumber = await provider.getBlockNumber();
 ```
 
 Get block:
 
 ```javascript
-const block =
-  await provider.getBlock(
-    blockNumber
-  );
+const block = await provider.getBlock(blockNumber);
 ```
 
 Get block with transactions:
 
 ```javascript
-const block =
-  await provider.getBlockWithTransactions(
-    blockNumber
-  );
+const block = await provider.getBlockWithTransactions(blockNumber);
 ```
 
 ---
@@ -413,19 +320,13 @@ const block =
 # 💰 11. Balances
 
 ```javascript
-const balance =
-  await provider.getBalance(
-    address
-  );
+const balance = await provider.getBalance(address);
 ```
 
 Convert:
 
 ```javascript
-const ether =
-  ethers.utils.formatEther(
-    balance
-  );
+const ether = ethers.utils.formatEther(balance);
 ```
 
 ---
@@ -453,17 +354,11 @@ ethers.utils.formatEther(value);
 Gwei:
 
 ```javascript
-ethers.utils.parseUnits(
-  "20",
-  "gwei"
-);
+ethers.utils.parseUnits("20", "gwei");
 ```
 
 ```javascript
-ethers.utils.formatUnits(
-  value,
-  "gwei"
-);
+ethers.utils.formatUnits(value, "gwei");
 ```
 
 ### Remember
@@ -483,10 +378,7 @@ Human value
 Ethers v5 uses `BigNumber` for large integer values.
 
 ```javascript
-const amount =
-  ethers.BigNumber.from(
-    "1000000000000000000"
-  );
+const amount = ethers.BigNumber.from("1000000000000000000");
 ```
 
 Arithmetic:
@@ -523,11 +415,10 @@ Avoid unsafe JavaScript number conversions for large blockchain integers.
 # 💸 14. Transactions
 
 ```javascript
-const tx =
-  await signer.sendTransaction({
-    to: recipient,
-    value: ethers.utils.parseEther("0.1")
-  });
+const tx = await signer.sendTransaction({
+  to: recipient,
+  value: ethers.utils.parseEther("0.1"),
+});
 ```
 
 Transaction response can provide:
@@ -548,14 +439,12 @@ chainId
 # ⏳ 15. Waiting for Transactions
 
 ```javascript
-const tx =
-  await signer.sendTransaction({
-    to: recipient,
-    value: ethers.utils.parseEther("0.1")
-  });
+const tx = await signer.sendTransaction({
+  to: recipient,
+  value: ethers.utils.parseEther("0.1"),
+});
 
-const receipt =
-  await tx.wait();
+const receipt = await tx.wait();
 ```
 
 ### Flow
@@ -579,30 +468,23 @@ TransactionReceipt
 Estimate ETH transfer:
 
 ```javascript
-const gas =
-  await provider.estimateGas({
-    from: sender,
-    to: recipient,
-    value
-  });
+const gas = await provider.estimateGas({
+  from: sender,
+  to: recipient,
+  value,
+});
 ```
 
 Contract gas:
 
 ```javascript
-const gas =
-  await contract.estimateGas
-    .transfer(
-      recipient,
-      amount
-    );
+const gas = await contract.estimateGas.transfer(recipient, amount);
 ```
 
 Fee information:
 
 ```javascript
-const feeData =
-  await provider.getFeeData();
+const feeData = await provider.getFeeData();
 ```
 
 ---
@@ -622,23 +504,13 @@ Provider or Signer
 Read-only:
 
 ```javascript
-const contract =
-  new ethers.Contract(
-    address,
-    abi,
-    provider
-  );
+const contract = new ethers.Contract(address, abi, provider);
 ```
 
 Write-capable:
 
 ```javascript
-const contract =
-  new ethers.Contract(
-    address,
-    abi,
-    signer
-  );
+const contract = new ethers.Contract(address, abi, signer);
 ```
 
 ---
@@ -653,7 +525,7 @@ Example human-readable ABI:
 const abi = [
   "function balanceOf(address) view returns (uint256)",
   "function transfer(address,uint256) returns (bool)",
-  "event Transfer(address indexed from, address indexed to, uint256 value)"
+  "event Transfer(address indexed from, address indexed to, uint256 value)",
 ];
 ```
 
@@ -686,8 +558,7 @@ function getMessage()
 Ethers:
 
 ```javascript
-const message =
-  await contract.getMessage();
+const message = await contract.getMessage();
 ```
 
 Read-only calls do not submit a blockchain transaction.
@@ -699,21 +570,13 @@ Read-only calls do not submit a blockchain transaction.
 Connect the contract to a signer:
 
 ```javascript
-const contract =
-  new ethers.Contract(
-    address,
-    abi,
-    signer
-  );
+const contract = new ethers.Contract(address, abi, signer);
 ```
 
 Call:
 
 ```javascript
-const tx =
-  await contract.updateMessage(
-    "Hello"
-  );
+const tx = await contract.updateMessage("Hello");
 
 await tx.wait();
 ```
@@ -749,19 +612,13 @@ Signer
 ```
 
 ```javascript
-const factory =
-  new ethers.ContractFactory(
-    abi,
-    bytecode,
-    signer
-  );
+const factory = new ethers.ContractFactory(abi, bytecode, signer);
 ```
 
 Deploy:
 
 ```javascript
-const contract =
-  await factory.deploy();
+const contract = await factory.deploy();
 ```
 
 Wait:
@@ -773,19 +630,13 @@ await contract.deployed();
 Address:
 
 ```javascript
-console.log(
-  contract.address
-);
+console.log(contract.address);
 ```
 
 With constructor arguments:
 
 ```javascript
-const contract =
-  await factory.deploy(
-    "My Token",
-    "MTK"
-  );
+const contract = await factory.deploy("My Token", "MTK");
 
 await contract.deployed();
 ```
@@ -797,25 +648,20 @@ await contract.deployed();
 `ContractFactory` is used to deploy contracts.
 
 ```javascript
-const factory =
-  new ethers.ContractFactory(
-    abi,
-    bytecode,
-    signer
-  );
+const factory = new ethers.ContractFactory(abi, bytecode, signer);
 ```
 
 Useful properties include deployment information such as:
 
 ```javascript
-factory.interface
-factory.bytecode
+factory.interface;
+factory.bytecode;
 ```
 
 After deployment:
 
 ```javascript
-contract.deployTransaction
+contract.deployTransaction;
 ```
 
 ---
@@ -835,23 +681,17 @@ event Transfer(
 Listen:
 
 ```javascript
-contract.on(
-  "Transfer",
-  (from, to, value) => {
-    console.log(from);
-    console.log(to);
-    console.log(value.toString());
-  }
-);
+contract.on("Transfer", (from, to, value) => {
+  console.log(from);
+  console.log(to);
+  console.log(value.toString());
+});
 ```
 
 Remove:
 
 ```javascript
-contract.off(
-  "Transfer",
-  listener
-);
+contract.off("Transfer", listener);
 ```
 
 ---
@@ -859,31 +699,19 @@ contract.off(
 # 🔎 24. Event Filters
 
 ```javascript
-const filter =
-  contract.filters.Transfer(
-    userAddress,
-    null
-  );
+const filter = contract.filters.Transfer(userAddress, null);
 ```
 
 Query historical events:
 
 ```javascript
-const events =
-  await contract.queryFilter(
-    filter
-  );
+const events = await contract.queryFilter(filter);
 ```
 
 Block range:
 
 ```javascript
-const events =
-  await contract.queryFilter(
-    filter,
-    fromBlock,
-    toBlock
-  );
+const events = await contract.queryFilter(filter, fromBlock, toBlock);
 ```
 
 ---
@@ -891,47 +719,34 @@ const events =
 # 🧩 25. Interface
 
 ```javascript
-const iface =
-  new ethers.utils.Interface(
-    abi
-  );
+const iface = new ethers.utils.Interface(abi);
 ```
 
 Encode function:
 
 ```javascript
-const data =
-  iface.encodeFunctionData(
-    "transfer",
-    [recipient, amount]
-  );
+const data = iface.encodeFunctionData("transfer", [recipient, amount]);
 ```
 
 Decode function result:
 
 ```javascript
-const decoded =
-  iface.decodeFunctionResult(
-    "balanceOf",
-    data
-  );
+const decoded = iface.decodeFunctionResult("balanceOf", data);
 ```
 
 Parse transaction:
 
 ```javascript
-const parsed =
-  iface.parseTransaction({
-    data,
-    value
-  });
+const parsed = iface.parseTransaction({
+  data,
+  value,
+});
 ```
 
 Parse log:
 
 ```javascript
-const parsed =
-  iface.parseLog(log);
+const parsed = iface.parseLog(log);
 ```
 
 ---
@@ -939,28 +754,19 @@ const parsed =
 # 🔗 26. ABI Encoding / Decoding
 
 ```javascript
-const coder =
-  new ethers.utils.AbiCoder();
+const coder = new ethers.utils.AbiCoder();
 ```
 
 Encode:
 
 ```javascript
-const encoded =
-  coder.encode(
-    ["uint256", "address"],
-    [100, userAddress]
-  );
+const encoded = coder.encode(["uint256", "address"], [100, userAddress]);
 ```
 
 Decode:
 
 ```javascript
-const decoded =
-  coder.decode(
-    ["uint256", "address"],
-    encoded
-  );
+const decoded = coder.decode(["uint256", "address"], encoded);
 ```
 
 ---
@@ -972,10 +778,7 @@ A Solidity function selector is derived from the first 4 bytes of its Keccak-256
 Example:
 
 ```javascript
-const selector =
-  ethers.utils
-    .id("transfer(address,uint256)")
-    .slice(0, 10);
+const selector = ethers.utils.id("transfer(address,uint256)").slice(0, 10);
 ```
 
 Conceptually:
@@ -995,20 +798,13 @@ transfer(address,uint256)
 # ✍️ 28. Message Signing
 
 ```javascript
-const signature =
-  await signer.signMessage(
-    "Hello Ethereum"
-  );
+const signature = await signer.signMessage("Hello Ethereum");
 ```
 
 Verify:
 
 ```javascript
-const recovered =
-  ethers.utils.verifyMessage(
-    "Hello Ethereum",
-    signature
-  );
+const recovered = ethers.utils.verifyMessage("Hello Ethereum", signature);
 ```
 
 ### Flow
@@ -1032,19 +828,13 @@ Recovered Address
 Resolve ENS:
 
 ```javascript
-const address =
-  await provider.resolveName(
-    "alice.eth"
-  );
+const address = await provider.resolveName("alice.eth");
 ```
 
 Reverse lookup:
 
 ```javascript
-const name =
-  await provider.lookupAddress(
-    address
-  );
+const name = await provider.lookupAddress(address);
 ```
 
 ENS names can be used in places where ethers accepts Ethereum addresses.
@@ -1056,17 +846,13 @@ ENS names can be used in places where ethers accepts Ethereum addresses.
 Validate:
 
 ```javascript
-ethers.utils.isAddress(
-  address
-);
+ethers.utils.isAddress(address);
 ```
 
 Checksum/normalize:
 
 ```javascript
-ethers.utils.getAddress(
-  address
-);
+ethers.utils.getAddress(address);
 ```
 
 Create contract address:
@@ -1074,18 +860,14 @@ Create contract address:
 ```javascript
 ethers.utils.getContractAddress({
   from: deployer,
-  nonce
+  nonce,
 });
 ```
 
 Create CREATE2 address:
 
 ```javascript
-ethers.utils.getCreate2Address(
-  from,
-  salt,
-  initCodeHash
-);
+ethers.utils.getCreate2Address(from, salt, initCodeHash);
 ```
 
 ---
@@ -1099,21 +881,11 @@ ethers.utils.arrayify(value);
 
 ethers.utils.hexlify(value);
 
-ethers.utils.hexZeroPad(
-  value,
-  length
-);
+ethers.utils.hexZeroPad(value, length);
 
-ethers.utils.concat([
-  bytes1,
-  bytes2
-]);
+ethers.utils.concat([bytes1, bytes2]);
 
-ethers.utils.hexDataSlice(
-  data,
-  start,
-  end
-);
+ethers.utils.hexDataSlice(data, start, end);
 ```
 
 ---
@@ -1123,33 +895,25 @@ ethers.utils.hexDataSlice(
 Keccak:
 
 ```javascript
-ethers.utils.keccak256(
-  data
-);
+ethers.utils.keccak256(data);
 ```
 
 SHA-256:
 
 ```javascript
-ethers.utils.sha256(
-  data
-);
+ethers.utils.sha256(data);
 ```
 
 RIPEMD-160:
 
 ```javascript
-ethers.utils.ripemd160(
-  data
-);
+ethers.utils.ripemd160(data);
 ```
 
 UTF-8:
 
 ```javascript
-ethers.utils.toUtf8Bytes(
-  "Hello"
-);
+ethers.utils.toUtf8Bytes("Hello");
 ```
 
 ---
@@ -1157,19 +921,13 @@ ethers.utils.toUtf8Bytes(
 # 🧮 33. Solidity Hashing
 
 ```javascript
-ethers.utils.solidityKeccak256(
-  ["address", "uint256"],
-  [userAddress, amount]
-);
+ethers.utils.solidityKeccak256(["address", "uint256"], [userAddress, amount]);
 ```
 
 Packed encoding:
 
 ```javascript
-ethers.utils.solidityPack(
-  ["address", "uint256"],
-  [userAddress, amount]
-);
+ethers.utils.solidityPack(["address", "uint256"], [userAddress, amount]);
 ```
 
 ### Security
@@ -1183,20 +941,13 @@ Be careful with `abi.encodePacked`-style ambiguous encodings, especially with mu
 Ethers v5 supports hierarchical deterministic wallets.
 
 ```javascript
-const wallet =
-  ethers.Wallet.fromMnemonic(
-    mnemonic
-  );
+const wallet = ethers.Wallet.fromMnemonic(mnemonic);
 ```
 
 Specific derivation path:
 
 ```javascript
-const wallet =
-  ethers.Wallet.fromMnemonic(
-    mnemonic,
-    "m/44'/60'/0'/0/0"
-  );
+const wallet = ethers.Wallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0");
 ```
 
 ---
@@ -1206,20 +957,19 @@ const wallet =
 Create random wallet:
 
 ```javascript
-const wallet =
-  ethers.Wallet.createRandom();
+const wallet = ethers.Wallet.createRandom();
 ```
 
 Mnemonic:
 
 ```javascript
-wallet.mnemonic.phrase
+wallet.mnemonic.phrase;
 ```
 
 Private key:
 
 ```javascript
-wallet.privateKey
+wallet.privateKey;
 ```
 
 ⚠️ Never expose these values publicly.
@@ -1231,20 +981,13 @@ wallet.privateKey
 Get nonce:
 
 ```javascript
-const nonce =
-  await provider.getTransactionCount(
-    address
-  );
+const nonce = await provider.getTransactionCount(address);
 ```
 
 Pending nonce:
 
 ```javascript
-const nonce =
-  await provider.getTransactionCount(
-    address,
-    "pending"
-  );
+const nonce = await provider.getTransactionCount(address, "pending");
 ```
 
 Explicit nonce:
@@ -1253,7 +996,7 @@ Explicit nonce:
 await signer.sendTransaction({
   to,
   value,
-  nonce
+  nonce,
 });
 ```
 
@@ -1266,11 +1009,7 @@ Nonce is important for transaction ordering and replay protection.
 Simulate a contract operation without submitting the state-changing transaction:
 
 ```javascript
-await contract.callStatic
-  .transfer(
-    recipient,
-    amount
-  );
+await contract.callStatic.transfer(recipient, amount);
 ```
 
 Useful for:
@@ -1289,8 +1028,7 @@ Example:
 
 ```javascript
 await contract.deposit({
-  value:
-    ethers.utils.parseEther("1")
+  value: ethers.utils.parseEther("1"),
 });
 ```
 
@@ -1298,13 +1036,7 @@ Common fields:
 
 ```javascript
 {
-  gasLimit,
-  gasPrice,
-  maxFeePerGas,
-  maxPriorityFeePerGas,
-  nonce,
-  value,
-  from
+  gasLimit, gasPrice, maxFeePerGas, maxPriorityFeePerGas, nonce, value, from;
 }
 ```
 
@@ -1315,12 +1047,10 @@ Use only fields appropriate to the transaction/provider.
 # 💸 39. Sending ETH
 
 ```javascript
-const tx =
-  await signer.sendTransaction({
-    to: recipient,
-    value:
-      ethers.utils.parseEther("0.1")
-  });
+const tx = await signer.sendTransaction({
+  to: recipient,
+  value: ethers.utils.parseEther("0.1"),
+});
 
 await tx.wait();
 ```
@@ -1329,8 +1059,7 @@ Payable contract function:
 
 ```javascript
 await contract.deposit({
-  value:
-    ethers.utils.parseEther("0.5")
+  value: ethers.utils.parseEther("0.5"),
 });
 ```
 
@@ -1350,60 +1079,40 @@ const erc20Abi = [
   "function decimals() view returns (uint8)",
   "function symbol() view returns (string)",
   "event Transfer(address indexed,address indexed,uint256)",
-  "event Approval(address indexed,address indexed,uint256)"
+  "event Approval(address indexed,address indexed,uint256)",
 ];
 ```
 
 Create contract:
 
 ```javascript
-const token =
-  new ethers.Contract(
-    tokenAddress,
-    erc20Abi,
-    signer
-  );
+const token = new ethers.Contract(tokenAddress, erc20Abi, signer);
 ```
 
 Balance:
 
 ```javascript
-const balance =
-  await token.balanceOf(
-    userAddress
-  );
+const balance = await token.balanceOf(userAddress);
 ```
 
 Decimals:
 
 ```javascript
-const decimals =
-  await token.decimals();
+const decimals = await token.decimals();
 ```
 
 Format:
 
 ```javascript
-ethers.utils.formatUnits(
-  balance,
-  decimals
-);
+ethers.utils.formatUnits(balance, decimals);
 ```
 
 Transfer:
 
 ```javascript
-const amount =
-  ethers.utils.parseUnits(
-    "10",
-    decimals
-  );
+const amount = ethers.utils.parseUnits("10", decimals);
 
-const tx =
-  await token.transfer(
-    recipient,
-    amount
-  );
+const tx = await token.transfer(recipient, amount);
 
 await tx.wait();
 ```
@@ -1411,19 +1120,13 @@ await tx.wait();
 Approve:
 
 ```javascript
-await token.approve(
-  spender,
-  amount
-);
+await token.approve(spender, amount);
 ```
 
 Allowance:
 
 ```javascript
-await token.allowance(
-  owner,
-  spender
-);
+await token.allowance(owner, spender);
 ```
 
 ---
@@ -1435,25 +1138,18 @@ Example:
 ```javascript
 const nftAbi = [
   "function ownerOf(uint256) view returns (address)",
-  "function tokenURI(uint256) view returns (string)"
+  "function tokenURI(uint256) view returns (string)",
 ];
 ```
 
 ```javascript
-const nft =
-  new ethers.Contract(
-    nftAddress,
-    nftAbi,
-    provider
-  );
+const nft = new ethers.Contract(nftAddress, nftAbi, provider);
 ```
 
 ```javascript
-const owner =
-  await nft.ownerOf(tokenId);
+const owner = await nft.ownerOf(tokenId);
 
-const uri =
-  await nft.tokenURI(tokenId);
+const uri = await nft.tokenURI(tokenId);
 ```
 
 ---
@@ -1465,16 +1161,12 @@ Example:
 ```javascript
 const abi = [
   "function balanceOf(address,uint256) view returns (uint256)",
-  "function uri(uint256) view returns (string)"
+  "function uri(uint256) view returns (string)",
 ];
 ```
 
 ```javascript
-const balance =
-  await contract.balanceOf(
-    user,
-    tokenId
-  );
+const balance = await contract.balanceOf(user, tokenId);
 ```
 
 ---
@@ -1485,33 +1177,22 @@ const balance =
 import { ethers } from "ethers";
 
 async function connectWallet() {
-
   if (!window.ethereum) {
-    throw new Error(
-      "Wallet not installed"
-    );
+    throw new Error("Wallet not installed");
   }
 
-  const provider =
-    new ethers.providers.Web3Provider(
-      window.ethereum
-    );
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-  await provider.send(
-    "eth_requestAccounts",
-    []
-  );
+  await provider.send("eth_requestAccounts", []);
 
-  const signer =
-    provider.getSigner();
+  const signer = provider.getSigner();
 
-  const address =
-    await signer.getAddress();
+  const address = await signer.getAddress();
 
   return {
     provider,
     signer,
-    address
+    address,
   };
 }
 ```
@@ -1538,29 +1219,22 @@ Ethereum
 
 ```javascript
 try {
-
-  const tx =
-    await contract.withdraw(
-      amount
-    );
+  const tx = await contract.withdraw(amount);
 
   await tx.wait();
-
 } catch (error) {
-
   console.error(error);
-
 }
 ```
 
 Useful information can include:
 
 ```javascript
-error.code
-error.reason
-error.message
-error.transaction
-error.receipt
+error.code;
+error.reason;
+error.message;
+error.transaction;
+error.receipt;
 ```
 
 Do not assume every error object contains every property.
@@ -1581,13 +1255,10 @@ Do not assume every error object contains every property.
 ## Validate network
 
 ```javascript
-const network =
-  await provider.getNetwork();
+const network = await provider.getNetwork();
 
 if (network.chainId !== expectedChainId) {
-  throw new Error(
-    "Wrong network"
-  );
+  throw new Error("Wrong network");
 }
 ```
 
@@ -1595,9 +1266,7 @@ if (network.chainId !== expectedChainId) {
 
 ```javascript
 if (!ethers.utils.isAddress(address)) {
-  throw new Error(
-    "Invalid address"
-  );
+  throw new Error("Invalid address");
 }
 ```
 
@@ -1650,32 +1319,22 @@ npx hardhat test
 Deployment:
 
 ```javascript
-const { ethers } =
-  require("hardhat");
+const { ethers } = require("hardhat");
 
 async function main() {
+  const Contract = await ethers.getContractFactory("MyContract");
 
-  const Contract =
-    await ethers.getContractFactory(
-      "MyContract"
-    );
-
-  const contract =
-    await Contract.deploy();
+  const contract = await Contract.deploy();
 
   await contract.deployed();
 
-  console.log(
-    "Contract:",
-    contract.address
-  );
+  console.log("Contract:", contract.address);
 }
 
-main()
-  .catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
-  });
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
 ```
 
 ---
@@ -1685,29 +1344,21 @@ main()
 Example:
 
 ```javascript
-const {
-  expect
-} = require("chai");
+const { expect } = require("chai");
 
-const {
-  ethers
-} = require("hardhat");
+const { ethers } = require("hardhat");
 ```
 
 Get factory:
 
 ```javascript
-const Vault =
-  await ethers.getContractFactory(
-    "Vault"
-  );
+const Vault = await ethers.getContractFactory("Vault");
 ```
 
 Deploy:
 
 ```javascript
-const vault =
-  await Vault.deploy();
+const vault = await Vault.deploy();
 
 await vault.deployed();
 ```
@@ -1715,11 +1366,7 @@ await vault.deployed();
 Test:
 
 ```javascript
-expect(
-  await vault.owner()
-).to.equal(
-  owner.address
-);
+expect(await vault.owner()).to.equal(owner.address);
 ```
 
 ---
@@ -1731,33 +1378,31 @@ This cheat sheet is **v5**.
 ### v5
 
 ```javascript
-ethers.providers.Web3Provider
+ethers.providers.Web3Provider;
 ```
 
 ### v6
 
 ```javascript
-new ethers.BrowserProvider(
-  window.ethereum
-)
+new ethers.BrowserProvider(window.ethereum);
 ```
 
 ### v5
 
 ```javascript
-ethers.utils.parseEther("1")
+ethers.utils.parseEther("1");
 ```
 
 ### v6
 
 ```javascript
-ethers.parseEther("1")
+ethers.parseEther("1");
 ```
 
 ### v5
 
 ```javascript
-ethers.BigNumber.from("100")
+ethers.BigNumber.from("100");
 ```
 
 ### v6
@@ -1794,36 +1439,23 @@ The Application Binary Interface describing how contract functions, parameters, 
 ### Q5. How do you connect MetaMask in ethers v5?
 
 ```javascript
-const provider =
-  new ethers.providers.Web3Provider(
-    window.ethereum
-  );
+const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-await provider.send(
-  "eth_requestAccounts",
-  []
-);
+await provider.send("eth_requestAccounts", []);
 
-const signer =
-  provider.getSigner();
+const signer = provider.getSigner();
 ```
 
 ### Q6. How do you read a contract?
 
 ```javascript
-await contract.balanceOf(
-  address
-);
+await contract.balanceOf(address);
 ```
 
 ### Q7. How do you write to a contract?
 
 ```javascript
-const tx =
-  await contract.transfer(
-    to,
-    amount
-  );
+const tx = await contract.transfer(to, amount);
 
 await tx.wait();
 ```
@@ -1851,59 +1483,51 @@ It simulates a contract operation without submitting a state-changing transactio
 ### Q13. How do you listen to an event?
 
 ```javascript
-contract.on(
-  "Transfer",
-  callback
-);
+contract.on("Transfer", callback);
 ```
 
 ### Q14. How do you sign a message?
 
 ```javascript
-await signer.signMessage(
-  "Hello"
-);
+await signer.signMessage("Hello");
 ```
 
 ### Q15. How do you recover the signer?
 
 ```javascript
-ethers.utils.verifyMessage(
-  "Hello",
-  signature
-);
+ethers.utils.verifyMessage("Hello", signature);
 ```
 
 ---
 
 # ⚡ 50. 60-Second Revision
 
-| Topic | One-Line Summary |
-|---|---|
-| ⚡ ethers.js | JS/TS Ethereum library |
-| 🌐 Provider | Read blockchain |
-| ✍️ Signer | Sign/write |
-| 👛 Wallet | Private-key account |
-| 📜 Contract | Address + ABI + provider/signer |
-| 🧾 ABI | Contract communication format |
-| 🏭 ContractFactory | Deploy contracts |
-| 🔢 BigNumber | Large integers in v5 |
-| 💱 parseEther | ETH → Wei |
-| 💱 formatEther | Wei → ETH |
-| ⛽ Gas | Execution cost |
-| 💸 Transaction | Blockchain state-changing operation |
-| ⏳ tx.wait() | Wait for mining |
-| 📢 Events | Contract logs/activity |
-| 🧩 Interface | ABI encoding/decoding/parsing |
-| ✍️ signMessage | Off-chain signing |
-| 🔎 verifyMessage | Recover signer |
-| 🌐 ENS | Human-readable names |
-| 🔐 keccak256 | Ethereum hashing |
-| 🌳 HD Wallet | Hierarchical wallet |
-| 🦊 Web3Provider | Browser wallet in v5 |
-| 🪙 ERC-20 | Fungible token interaction |
-| 🖼️ ERC-721 | NFT interaction |
-| 🎮 ERC-1155 | Multi-token interaction |
+| Topic              | One-Line Summary                    |
+| ------------------ | ----------------------------------- |
+| ⚡ ethers.js       | JS/TS Ethereum library              |
+| 🌐 Provider        | Read blockchain                     |
+| ✍️ Signer          | Sign/write                          |
+| 👛 Wallet          | Private-key account                 |
+| 📜 Contract        | Address + ABI + provider/signer     |
+| 🧾 ABI             | Contract communication format       |
+| 🏭 ContractFactory | Deploy contracts                    |
+| 🔢 BigNumber       | Large integers in v5                |
+| 💱 parseEther      | ETH → Wei                           |
+| 💱 formatEther     | Wei → ETH                           |
+| ⛽ Gas             | Execution cost                      |
+| 💸 Transaction     | Blockchain state-changing operation |
+| ⏳ tx.wait()       | Wait for mining                     |
+| 📢 Events          | Contract logs/activity              |
+| 🧩 Interface       | ABI encoding/decoding/parsing       |
+| ✍️ signMessage     | Off-chain signing                   |
+| 🔎 verifyMessage   | Recover signer                      |
+| 🌐 ENS             | Human-readable names                |
+| 🔐 keccak256       | Ethereum hashing                    |
+| 🌳 HD Wallet       | Hierarchical wallet                 |
+| 🦊 Web3Provider    | Browser wallet in v5                |
+| 🪙 ERC-20          | Fungible token interaction          |
+| 🖼️ ERC-721         | NFT interaction                     |
+| 🎮 ERC-1155        | Multi-token interaction             |
 
 ---
 
