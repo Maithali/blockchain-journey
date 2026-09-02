@@ -220,7 +220,7 @@ But object contents can still be changed:
 
 ```js
 const user = {
-  name: "Alice"
+  name: "Alice",
 };
 
 user.name = "Bob";
@@ -277,7 +277,7 @@ const huge = 12345678901234567890n;
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 ```
 
@@ -306,7 +306,7 @@ Variables holding objects contain references to those objects.
 
 ```js
 const user1 = {
-  name: "Alice"
+  name: "Alice",
 };
 
 const user2 = user1;
@@ -333,9 +333,9 @@ variable → reference → object
 ## Explicit conversion
 
 ```js
-Number("123");       // 123
-String(123);         // "123"
-Boolean(1);          // true
+Number("123"); // 123
+String(123); // "123"
+Boolean(1); // true
 ```
 
 ## String to number
@@ -543,7 +543,7 @@ Use for enumerable object keys:
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 
 for (const key in user) {
@@ -728,11 +728,7 @@ Closures are important for:
 Arrays store ordered collections.
 
 ```js
-const fruits = [
-  "apple",
-  "banana",
-  "orange"
-];
+const fruits = ["apple", "banana", "orange"];
 ```
 
 Access:
@@ -767,46 +763,43 @@ Creates a new array.
 ```js
 const numbers = [1, 2, 3];
 
-const doubled = numbers.map(n => n * 2);
+const doubled = numbers.map((n) => n * 2);
 ```
 
 ## filter
 
 ```js
-const adults = users.filter(user => user.age >= 18);
+const adults = users.filter((user) => user.age >= 18);
 ```
 
 ## find
 
 ```js
-const user = users.find(user => user.id === 10);
+const user = users.find((user) => user.id === 10);
 ```
 
 ## findIndex
 
 ```js
-const index = users.findIndex(user => user.id === 10);
+const index = users.findIndex((user) => user.id === 10);
 ```
 
 ## some
 
 ```js
-const hasAdmin = users.some(user => user.role === "admin");
+const hasAdmin = users.some((user) => user.role === "admin");
 ```
 
 ## every
 
 ```js
-const allAdults = users.every(user => user.age >= 18);
+const allAdults = users.every((user) => user.age >= 18);
 ```
 
 ## reduce
 
 ```js
-const total = numbers.reduce(
-  (sum, n) => sum + n,
-  0
-);
+const total = numbers.reduce((sum, n) => sum + n, 0);
 ```
 
 ## includes
@@ -852,7 +845,7 @@ Objects store key-value properties.
 const user = {
   name: "Alice",
   age: 25,
-  active: true
+  active: true,
 };
 ```
 
@@ -887,7 +880,7 @@ Computed property:
 const key = "name";
 
 const user = {
-  [key]: "Alice"
+  [key]: "Alice",
 };
 ```
 
@@ -906,7 +899,7 @@ Example:
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 
 console.log(Object.keys(user));
@@ -918,7 +911,7 @@ Convert entries:
 ```js
 Object.fromEntries([
   ["name", "Alice"],
-  ["age", 25]
+  ["age", 25],
 ]);
 ```
 
@@ -929,7 +922,7 @@ const copy = { ...user };
 
 const merged = {
   ...user,
-  active: true
+  active: true,
 };
 ```
 
@@ -950,7 +943,7 @@ const [a, b] = numbers;
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 
 const { name, age } = user;
@@ -996,7 +989,7 @@ Object:
 ```js
 const user2 = {
   ...user1,
-  active: true
+  active: true,
 };
 ```
 
@@ -1028,16 +1021,16 @@ const name = "JavaScript";
 Useful methods:
 
 ```js
-name.length
-name.toUpperCase()
-name.toLowerCase()
-name.includes("Script")
-name.startsWith("Java")
-name.endsWith("Script")
-name.slice(0, 4)
-name.substring(0, 4)
-name.replace("Java", "Type")
-name.split("")
+name.length;
+name.toUpperCase();
+name.toLowerCase();
+name.includes("Script");
+name.startsWith("Java");
+name.endsWith("Script");
+name.slice(0, 4);
+name.substring(0, 4);
+name.replace("Java", "Type");
+name.split("");
 ```
 
 Template literals:
@@ -1083,7 +1076,7 @@ Math.pow(2, 3);
 Important:
 
 ```js
-0.1 + 0.2 !== 0.3
+0.1 + 0.2 !== 0.3;
 ```
 
 For financial applications, use appropriate integer/fixed-point or decimal strategies rather than assuming binary floating point is exact.
@@ -1193,8 +1186,8 @@ const name = user.name ?? "Guest";
 Difference:
 
 ```js
-0 ?? 10       // 0
-0 || 10       // 10
+0 ?? 10; // 0
+0 || 10; // 10
 ```
 
 Use `??` when only null/undefined should trigger the fallback.
@@ -1213,7 +1206,7 @@ const user = {
 
   greet() {
     console.log(this.name);
-  }
+  },
 };
 
 user.greet();
@@ -1243,7 +1236,7 @@ function greet(city) {
 }
 
 const user = {
-  name: "Alice"
+  name: "Alice",
 };
 ```
 
@@ -1469,7 +1462,7 @@ Object:
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 ```
 
@@ -1570,7 +1563,7 @@ scroll
 Event object:
 
 ```js
-button.addEventListener("click", event => {
+button.addEventListener("click", (event) => {
   console.log(event.target);
 });
 ```
@@ -1602,7 +1595,7 @@ event.stopPropagation();
 Attach one listener to a parent.
 
 ```js
-list.addEventListener("click", event => {
+list.addEventListener("click", (event) => {
   if (event.target.matches("button")) {
     console.log("Button clicked");
   }
@@ -1616,7 +1609,7 @@ Useful for dynamic lists.
 # 36. 📝 Forms
 
 ```js
-form.addEventListener("submit", event => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
@@ -1650,14 +1643,9 @@ localStorage.removeItem("name");
 Objects:
 
 ```js
-localStorage.setItem(
-  "user",
-  JSON.stringify(user)
-);
+localStorage.setItem("user", JSON.stringify(user));
 
-const user = JSON.parse(
-  localStorage.getItem("user")
-);
+const user = JSON.parse(localStorage.getItem("user"));
 ```
 
 ## sessionStorage
@@ -1687,11 +1675,11 @@ BOM = Browser Object Model.
 Examples:
 
 ```js
-window
-location
-history
-navigator
-screen
+window;
+location;
+history;
+navigator;
+screen;
 ```
 
 Navigation:
@@ -1762,10 +1750,7 @@ function processUser(user, callback) {
   callback(user);
 }
 
-processUser(
-  { name: "Alice" },
-  user => console.log(user.name)
-);
+processUser({ name: "Alice" }, (user) => console.log(user.name));
 ```
 
 Problem:
@@ -1816,10 +1801,10 @@ Consume:
 
 ```js
 promise
-  .then(result => {
+  .then((result) => {
     console.log(result);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
   })
   .finally(() => {
@@ -1933,9 +1918,7 @@ Timer callbacks are tasks.
 Basic:
 
 ```js
-const response = await fetch(
-  "https://example.com/api/users"
-);
+const response = await fetch("https://example.com/api/users");
 
 const data = await response.json();
 ```
@@ -1947,12 +1930,12 @@ const response = await fetch("/api/users", {
   method: "POST",
 
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   },
 
   body: JSON.stringify({
-    name: "Alice"
-  })
+    name: "Alice",
+  }),
 });
 ```
 
@@ -2110,7 +2093,7 @@ Instead of changing existing data:
 ```js
 const user = {
   name: "Alice",
-  age: 25
+  age: 25,
 };
 ```
 
@@ -2119,25 +2102,20 @@ When an immutable update is appropriate:
 ```js
 const updatedUser = {
   ...user,
-  age: 26
+  age: 26,
 };
 ```
 
 Array:
 
 ```js
-const updated = [
-  ...items,
-  newItem
-];
+const updated = [...items, newItem];
 ```
 
 Remove:
 
 ```js
-const updated = items.filter(
-  item => item.id !== id
-);
+const updated = items.filter((item) => item.id !== id);
 ```
 
 ---
@@ -2245,7 +2223,7 @@ Can be used as object keys:
 const id = Symbol("id");
 
 const user = {
-  [id]: 123
+  [id]: 123,
 };
 ```
 
@@ -2465,7 +2443,7 @@ forEach → executes side effects, returns undefined
 ## 4. Forgetting `return`
 
 ```js
-const double = numbers.map(n => {
+const double = numbers.map((n) => {
   n * 2;
 });
 ```
@@ -2475,7 +2453,7 @@ Wrong.
 Correct:
 
 ```js
-const double = numbers.map(n => {
+const double = numbers.map((n) => {
   return n * 2;
 });
 ```
@@ -2483,7 +2461,7 @@ const double = numbers.map(n => {
 Or:
 
 ```js
-const double = numbers.map(n => n * 2);
+const double = numbers.map((n) => n * 2);
 ```
 
 ## 5. Misunderstanding async
@@ -2623,6 +2601,173 @@ const copy = structuredClone(original);
 
 Not every value is cloneable, so understand the API's limitations.
 
+## What is the temporal dead zone?
+
+The temporal dead zone (TDZ) is the period between entering a scope and the point where a `let`, `const`, or `class` declaration is initialized. Accessing the binding during this period throws a `ReferenceError`.
+
+## Why does a closure in a loop sometimes produce unexpected results?
+
+`var` creates one function-scoped binding, so callbacks can observe the final value after the loop ends. `let` creates a new block-scoped binding for each iteration.
+
+```js
+for (let index = 0; index < 3; index++) {
+  setTimeout(() => console.log(index), 0);
+}
+
+// 0 1 2
+```
+
+## What is the difference between lexical scope and dynamic scope?
+
+JavaScript uses lexical scope: variable lookup is determined by where code is written, not by which function calls it. Closures work because they preserve access to that lexical environment.
+
+## What is the difference between an arrow function and a regular function?
+
+Arrow functions have lexical `this`, do not have their own `arguments`, and cannot be used as constructors. Regular functions receive `this` from their call site and can be called with `new`.
+
+## How is `this` determined?
+
+For a regular function, `this` depends on the call form: `obj.method()` uses `obj`, `call` and `apply` explicitly set it, `new` creates a new instance context, and a bare call uses `undefined` in strict mode. Arrow functions inherit `this` from their surrounding scope.
+
+## What is the difference between a class and a prototype?
+
+Classes provide syntax for creating objects and setting up inheritance. Under the hood, method lookup still uses the prototype chain, and class methods are stored on the prototype rather than copied to every instance.
+
+## What is the difference between `Object.create()` and `new`?
+
+`Object.create(proto)` creates an object with the supplied prototype. `new Constructor()` creates an object linked to `Constructor.prototype`, binds `this` inside the constructor, and returns the constructed object unless the constructor returns another object.
+
+## What is the difference between `map()`, `forEach()`, and `reduce()`?
+
+```text
+map()     -> creates an array from transformed elements
+forEach() -> runs a callback for side effects and returns undefined
+reduce()  -> combines elements into one accumulated result
+```
+
+## Why can `0.1 + 0.2` be inaccurate?
+
+JavaScript numbers use IEEE 754 double-precision floating-point representation. Some decimal fractions cannot be represented exactly in binary, so calculations can produce values such as `0.30000000000000004`.
+
+## What is the difference between `||` and `??`?
+
+`||` falls back for every falsy value, including `0`, `false`, and `""`. `??` falls back only for `null` or `undefined`.
+
+```js
+0 || 10; // 10
+0 ?? 10; // 0
+```
+
+## What does an `async` function return?
+
+It always returns a Promise. A returned value becomes a fulfilled Promise, while a thrown error becomes a rejected Promise.
+
+## How do you handle multiple independent asynchronous operations?
+
+Use `Promise.all()` when every operation must succeed and results are needed together. It rejects as soon as one Promise rejects. Use `Promise.allSettled()` when each outcome should be inspected independently.
+
+## What is the difference between microtasks and tasks?
+
+Promise reactions and `queueMicrotask()` use the microtask queue. Timers, DOM events, and many I/O callbacks are tasks. After the current stack completes, the runtime drains microtasks before taking another task.
+
+## Does `fetch()` reject for a 404 response?
+
+No. A 404 or 500 is still a completed HTTP response. Check `response.ok` or `response.status`, then throw an error when the application considers the response unsuccessful.
+
+## What is event bubbling and how can it be stopped?
+
+After an event targets an element, it can propagate from that element toward ancestors. Call `event.stopPropagation()` to stop propagation. Use `event.preventDefault()` separately when you want to cancel the browser's default action.
+
+## What is the difference between `preventDefault()` and `stopPropagation()`?
+
+`preventDefault()` cancels a default browser behavior, such as form submission. `stopPropagation()` prevents the event from moving through the capture or bubble path; it does not cancel the default behavior.
+
+## How do memory leaks happen in browser JavaScript?
+
+Common causes include forgotten event listeners, active timers, subscriptions, detached DOM nodes still referenced by JavaScript, and unbounded caches. Remove listeners and cancel timers or subscriptions when their owning component is destroyed.
+
+## What is the difference between debounce and throttle in an input search?
+
+Debounce waits until typing pauses before sending a request, reducing requests during a burst. Throttle allows requests at a controlled maximum frequency, which is more useful for continuous events such as scrolling.
+
+## What is XSS and how can JavaScript code reduce its risk?
+
+Cross-site scripting (XSS) occurs when untrusted content is executed as code in a user's browser. Prefer `textContent` over `innerHTML` for plain text, sanitize unavoidable HTML, validate server-side, and use an appropriate Content Security Policy.
+
+## What is the difference between a module and a script?
+
+Modules have their own scope, support `import` and `export`, are deferred by default in browsers, and run in strict mode. A classic script shares more global scope and does not support static module imports.
+
+## Output question: what is logged?
+
+```js
+console.log(typeof null);
+console.log([] == false);
+console.log([] === false);
+```
+
+```text
+object
+true
+false
+```
+
+`typeof null` is a historical language quirk. Loose equality performs coercion; strict equality does not.
+
+## Output question: what is logged?
+
+```js
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+```
+
+```text
+A
+D
+C
+B
+```
+
+Synchronous code runs first, then microtasks, then timer tasks.
+
+## Rapid-Fire Questions
+
+1. **Is JavaScript single-threaded?** Yes, its main execution model uses one call stack; runtimes can provide workers and other background threads.
+2. **Is JavaScript interpreted or compiled?** Modern engines use a mix of interpretation, JIT compilation, and optimization.
+3. **What does `use strict` do?** It enables stricter parsing and runtime rules, including preventing accidental globals.
+4. **Does `const` make an object immutable?** No, it prevents reassignment of the binding; object properties can still change.
+5. **Does `map()` mutate the original array?** No, unless the callback explicitly mutates an element or another referenced object.
+6. **What does `filter()` return?** A new array containing elements whose callback result is truthy.
+7. **What does `find()` return when there is no match?** `undefined`.
+8. **What does `includes()` return?** A boolean indicating whether a value exists in an array or string.
+9. **What is `NaN`?** A number value representing an invalid numeric result; use `Number.isNaN()` to test it.
+10. **Is `NaN === NaN` true?** No. `Number.isNaN(NaN)` is true.
+11. **What is `Object.is()` useful for?** Precise sameness checks, including distinguishing `-0` from `0` and treating `NaN` as equal to itself.
+12. **What does `...` do?** It is spread syntax in values and rest syntax in parameters or destructuring.
+13. **What does optional chaining return on a missing link?** `undefined`.
+14. **What does `??=` do?** Assigns a fallback only when the left side is `null` or `undefined`.
+15. **What is an IIFE?** An immediately invoked function expression.
+16. **What is currying?** Transforming a function with multiple arguments into a sequence of one-argument functions.
+17. **What is memoization?** Caching function results for previously seen inputs.
+18. **What is a generator?** A function that can pause and resume with `yield` and returns an iterator.
+19. **What is an iterable?** A value that exposes `[Symbol.iterator]()` and can be consumed by `for...of`.
+20. **What does `for...in` iterate?** Enumerable property keys, including inherited enumerable keys.
+21. **What does `for...of` iterate?** Values produced by an iterable.
+22. **What is a `Symbol`?** A unique primitive commonly used for non-colliding property keys.
+23. **What is a `BigInt`?** An integer primitive for values larger than the safe integer range; it cannot be mixed directly with Number.
+24. **What is `AbortController` used for?** Cancelling abortable operations such as fetch requests.
+25. **What is CORS?** A browser security mechanism controlling cross-origin requests through server-provided headers.
+26. **What is localStorage's main limitation?** It is synchronous, string-only, origin-scoped, and unsuitable for secrets.
+27. **What is a Web Worker?** A background JavaScript execution context that communicates with the main thread by messages.
+28. **What is tree shaking?** Removing unused statically analyzable module exports during bundling.
+29. **What is code splitting?** Dividing a bundle into smaller chunks loaded when needed.
+30. **What is progressive enhancement?** Starting with a functional baseline and adding richer behavior where supported.
+
 ---
 
 # 60. 💻 Coding Practice
@@ -2676,10 +2821,7 @@ function frequency(arr) {
 
 ```js
 function sum(numbers) {
-  return numbers.reduce(
-    (total, n) => total + n,
-    0
-  );
+  return numbers.reduce((total, n) => total + n, 0);
 }
 ```
 
@@ -2687,7 +2829,7 @@ function sum(numbers) {
 
 ```js
 function adults(users) {
-  return users.filter(user => user.age >= 18);
+  return users.filter((user) => user.age >= 18);
 }
 ```
 
@@ -2695,7 +2837,7 @@ function adults(users) {
 
 ```js
 function findUser(users, id) {
-  return users.find(user => user.id === id);
+  return users.find((user) => user.id === id);
 }
 ```
 
@@ -2719,7 +2861,7 @@ function debounce(fn, delay) {
 
 ```js
 function delay(ms) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }
@@ -2861,40 +3003,40 @@ Full-Stack DApps
 
 # 🧠 62. 60-Second Revision
 
-| Topic | One-Line Summary |
-|---|---|
-| JavaScript | Dynamic programming language widely used for web applications |
-| Variable | Named binding to a value |
-| `let` | Block-scoped, reassignable binding |
-| `const` | Block-scoped, non-reassignable binding |
-| Primitive | Immutable language-level value |
-| Object | Mutable collection of properties |
-| Function | Reusable block of behavior |
-| Scope | Determines where bindings are accessible |
-| Closure | Function + retained lexical environment |
-| Hoisting | Declaration behavior during scope setup |
-| Array | Ordered collection |
-| Object | Key-value property collection |
-| Destructuring | Extract values from arrays/objects |
-| Spread | Expands iterable/object values |
-| Rest | Collects remaining values |
-| `this` | Call-context value for ordinary functions |
-| Prototype | Object used in prototype-chain lookup |
-| Class | Syntax for prototype-based object construction |
-| Module | File-level unit for imports/exports |
-| DOM | JavaScript representation of an HTML document |
-| Event | Browser/runtime notification of something happening |
-| Promise | Representation of eventual async result |
-| async/await | Syntax for working with Promises |
-| Event Loop | Coordinates synchronous work and async queues |
-| Fetch | API for HTTP requests |
-| Debounce | Run after activity settles |
-| Throttle | Limit execution frequency |
-| Map | Key-value collection |
-| Set | Unique-value collection |
-| Symbol | Unique primitive value |
-| BigInt | Arbitrary-precision integer |
-| JSON | Text format for structured data |
+| Topic         | One-Line Summary                                              |
+| ------------- | ------------------------------------------------------------- |
+| JavaScript    | Dynamic programming language widely used for web applications |
+| Variable      | Named binding to a value                                      |
+| `let`         | Block-scoped, reassignable binding                            |
+| `const`       | Block-scoped, non-reassignable binding                        |
+| Primitive     | Immutable language-level value                                |
+| Object        | Mutable collection of properties                              |
+| Function      | Reusable block of behavior                                    |
+| Scope         | Determines where bindings are accessible                      |
+| Closure       | Function + retained lexical environment                       |
+| Hoisting      | Declaration behavior during scope setup                       |
+| Array         | Ordered collection                                            |
+| Object        | Key-value property collection                                 |
+| Destructuring | Extract values from arrays/objects                            |
+| Spread        | Expands iterable/object values                                |
+| Rest          | Collects remaining values                                     |
+| `this`        | Call-context value for ordinary functions                     |
+| Prototype     | Object used in prototype-chain lookup                         |
+| Class         | Syntax for prototype-based object construction                |
+| Module        | File-level unit for imports/exports                           |
+| DOM           | JavaScript representation of an HTML document                 |
+| Event         | Browser/runtime notification of something happening           |
+| Promise       | Representation of eventual async result                       |
+| async/await   | Syntax for working with Promises                              |
+| Event Loop    | Coordinates synchronous work and async queues                 |
+| Fetch         | API for HTTP requests                                         |
+| Debounce      | Run after activity settles                                    |
+| Throttle      | Limit execution frequency                                     |
+| Map           | Key-value collection                                          |
+| Set           | Unique-value collection                                       |
+| Symbol        | Unique primitive value                                        |
+| BigInt        | Arbitrary-precision integer                                   |
+| JSON          | Text format for structured data                               |
 
 ---
 
