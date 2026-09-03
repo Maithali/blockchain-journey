@@ -31,6 +31,8 @@ A comprehensive, production-grade reference and deep-dive learning guide for **V
 11. [Advanced & EIP Standards (EIP-1559, EIP-4844 Blobs, EIP-7702)](#11-advanced--eip-standards)
 12. [Test Actions (Anvil / Hardhat / Ganache)](#12-test-actions)
 13. [Error Handling & Best Practices](#13-error-handling--best-practices)
+14. [Interview Questions & Answers (Q&A)](#14-interview-questions--answers-qa)
+15. [Rapid-Fire Revision Q&A](#15-rapid-fire-revision-qa)
 
 ---
 
@@ -968,3 +970,35 @@ export const myL2 = defineChain({
   },
 });
 ```
+
+---
+
+## 15. Rapid-Fire Revision Q&A
+
+| #      | Question                                           | Answer                                                                        |
+| ------ | -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **1**  | What is Viem?                                      | A lightweight, modular, tree-shakeable TypeScript interface for Ethereum/EVM. |
+| **2**  | Which team created Viem?                           | `wevm` (the team behind `wagmi`).                                             |
+| **3**  | Bundle size comparison vs Ethers v5?               | ~10x to 20x smaller (~15kB vs 100kB+ minified+gzipped).                       |
+| **4**  | Does Viem use custom `BigNumber` objects?          | No, it uses ES2020 native `BigInt` (e.g. `100n`).                             |
+| **5**  | What TS modifier is required on ABI arrays?        | `as const`.                                                                   |
+| **6**  | Which library powers Viem's static type inference? | `@wevm/abitype`.                                                              |
+| **7**  | Client used for read-only chain queries?           | `PublicClient` (`createPublicClient`).                                        |
+| **8**  | Client used for signing transactions & messages?   | `WalletClient` (`createWalletClient`).                                        |
+| **9**  | Client used for controlling local test nodes?      | `TestClient` (`createTestClient`).                                            |
+| **10** | How to convert 1.5 ETH to Wei in Viem?             | `parseEther('1.5')` (returns `1500000000000000000n`).                         |
+| **11** | How to convert Wei to an Ether string?             | `formatEther(1500000000000000000n)` (returns `'1.5'`).                        |
+| **12** | Transport for browser extensions (MetaMask)?       | `custom(window.ethereum)`.                                                    |
+| **13** | How to set up multi-RPC failover?                  | Wrap `http()` providers inside `fallback([...])`.                             |
+| **14** | Action to dry-run a write TX before sending?       | `publicClient.simulateContract()`.                                            |
+| **15** | How to wait for a transaction hash to be mined?    | `publicClient.waitForTransactionReceipt({ hash })`.                           |
+| **16** | Function to create account from private key hex?   | `privateKeyToAccount('0x...')`.                                               |
+| **17** | Function to parse human-readable ABI strings?      | `parseAbi(['function transfer(address, uint256)'])`.                          |
+| **18** | How to compute Keccak-256 hash in Viem?            | `keccak256(toHex('hello'))`.                                                  |
+| **19** | Method used to traverse nested Viem errors?        | `err.walk()`.                                                                 |
+| **20** | Function to resolve an ENS domain to address?      | `publicClient.getEnsAddress({ name: 'vitalik.eth' })`.                        |
+| **21** | How to impersonate an address in Anvil?            | `testClient.impersonateAccount({ address: '0x...' })`.                        |
+| **22** | How to enable HTTP JSON-RPC request batching?      | Pass `{ batch: true }` option to `http()`.                                    |
+| **23** | Standard introducing L2 Blob Transactions?         | EIP-4844 (Proto-Danksharding).                                                |
+| **24** | Action to sign EIP-712 structured typed data?      | `walletClient.signTypedData(...)`.                                            |
+| **25** | Function to construct a contract wrapper instance? | `getContract({ address, abi, client })`.                                      |
