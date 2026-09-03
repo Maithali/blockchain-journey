@@ -704,3 +704,267 @@ try {
 2. **Simulate transactions (`simulateContract`)** before calling `writeContract` to catch execution failures early without burning gas.
 3. **Use `fallback()` transport** in production to prevent single-point-of-failure RPC downtime.
 4. **Prefer `BigInt` (e.g. `100n`)** over strings/numbers for all EVM quantities, gas estimates, and token amounts.
+
+---
+
+## 14. Interview Questions & Answers (Q&A)
+
+### Q1: What is the main architectural difference between Viem and Ethers v5/v6?
+
+**Answer:**
+Ethers is monolithic and object-oriented (`new ethers.Contract()`, `new ethers.providers.Web3Provider()`). As a consequence, bundling tools cannot easily tree-shake unused utilities.
+
+Viem uses a **stateless, functional architecture**. Core actions (such as `getBalance`, `readContract`, `sendTransaction`) are exported as standalone pure functions that accept lightweight `Client` objects as their first parameter. This allows modern bundlers (Vite, Next.js, Webpack) to remove unused code, keeping bundle sizes under ~15kB compared to 100kB+ in traditional libraries.
+
+---
+
+### Q2: Why is `as const` mandatory when defining ABIs in Viem? How does `abitype` work under the hood?
+
+**Answer:**
+In TypeScript, arrays and objects are mutable by default, so TS infers ABI inputs as general strings (`type: string`) rather than literal types (`type: 'address'`).
+
+Adding `as const` forces TypeScript to treat the JSON ABI as immutable literal types. Viem leverages `@wevm/abitype` mapped generics under the hood to parse ABI inputs and outputs at compile-time. This provides instant IDE auto-completion for contract function names, argument types, and return values without requiring code generation tools like TypeChain.
+
+```ts
+// Without 'as const': TS sees string[]
+// With 'as const': TS sees exact function signature & parameter types!
+const abi = [
+  {
+    type: "function",
+    name: "balanceOf",
+    inputs: [{ name: "owner", type: "address" }],
+    outputs: [{ type: "uint256" }],
+    stateMutability: "view",
+  },
+] as const;
+```
+
+---
+
+### Q3: What is the difference between `readContract` and `simulateContract`? Why should you always call `simulateContract` before `writeContract`?
+
+**Answer:**
+
+- `readContract`: Executes `eth_call` for `pure` or `view` functions that do not alter blockchain state.
+- `simulateContract`: Performs an `eth_call` dry-run for state-changing functions (`nonpayable` or `payable`). It returns a prepared `request` object.
+
+Calling `simulateContract` before `writeContract` ensures that if the transaction will revert on-chain (e.g., due to insufficient balance, allowance, or unfulfilled contract conditions), the error is caught client-side **before broadcasting**. This prevents users from wasting real gas fees on failing transactions.
+
+```ts
+// 1. Dry run simulation
+const { request } = await publicClient.simulateContract({
+  account,
+  address: tokenAddress,
+  abi: erc20Abi,
+  functionName: "transfer",
+  args: [recipient, amount],
+});
+
+// 2. Broadcast only if simulation succeeds
+const hash = await walletClient.writeContract(request);
+```
+
+---
+
+### Q4: Explain the difference between JSON-RPC Accounts and Local Accounts in Viem.
+
+**Answer:**
+
+- **JSON-RPC Account**: Represented as a plain address string (`'0x...'`). Cryptographic key management and signing are handled externally by a wallet extension or node (e.g. MetaMask via EIP-1193 `eth_sendTransaction`).
+- **Local Account** (`privateKeyToAccount`, `mnemonicToAccount`): Holds the private key in local JavaScript memory. Cryptographic signing occurs directly inside your application process (ECDSA), and the signed payload is broadcast using `eth_sendRawTransaction`.
+
+---
+
+### Q5: How does Viem handle RPC node failure and rate limiting in production?
+
+**Answer:**
+Viem provides a native `fallback()` transport. Developers can list multiple HTTP or WebSocket RPC endpoints along with retry policies and latency ranking options.
+
+If the primary RPC endpoint returns HTTP 429 (Too Many Requests), times out, or experiences a network error, Viem automatically and transparently retries the JSON-RPC request on the next healthy provider in the fallback stack.
+
+```ts
+import { fallback, http } from "viem";
+
+const transport = fallback(
+  [
+    http("https://eth-mainnet.g.alchemy.com/v2/KEY"),
+    http("https://mainnet.infura.io/v3/KEY"),
+  ],
+  { rank: true },
+);
+```
+
+---
+
+### Q6: How do native JS `BigInt` values solve issues previously handled by Ethers' `BigNumber` library?
+
+**Answer:**
+Ethers v5 relied on a custom `BigNumber` wrapper class because JavaScript historical `Number` type lost precision past $2^{53} - 1$. This required verbose instance calls like `bn.add(other)`.
+
+Viem natively uses ES2020 `BigInt` primitives (e.g. `1000000000000000000n`). Native arithmetic operators (`+`, `-`, `*`, `/`, `<`, `>`) work directly without wrapper objects. Viem utilities (`parseEther`, `formatEther`, `parseUnits`) accept and return native `BigInt`s directly.
+
+---
+
+### Q7: How do you extract and handle custom contract revert errors in Viem?
+
+**Answer:**
+All Viem errors inherit from `BaseError`. You use the `err.walk()` method to recursively inspect the causal chain for `ContractFunctionRevertedError`. If found, you can read `revertError.data?.errorName` to identify custom Solidity error names.
+
+```ts
+try {
+  await walletClient.writeContract(request);
+} catch (err) {
+  if (err instanceof BaseError) {
+    const revertErr = err.walk(
+      (e) => e instanceof ContractFunctionRevertedError,
+    );
+    if (revertErr instanceof ContractFunctionRevertedError) {
+      console.error("Reverted with reason:", revertErr.data?.errorName);
+    }
+  }
+}
+```
+
+---
+
+### Q8: How do you listen to real-time smart contract events in Viem?
+
+**Answer:**
+Using `publicClient.watchContractEvent()`:
+
+```ts
+const unwatch = publicClient.watchContractEvent({
+  address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  abi: erc20Abi,
+  eventName: "Transfer",
+  onLogs: (logs) => {
+    logs.forEach((log) =>
+      console.log(log.args.from, log.args.to, log.args.value),
+    );
+  },
+});
+
+// Unsubscribe when done
+// unwatch()
+```
+
+---
+
+### Q9: How do you sign and verify EIP-712 Structured Typed Data in Viem?
+
+**Answer:**
+Use `walletClient.signTypedData()`:
+
+```ts
+const signature = await walletClient.signTypedData({
+  account,
+  domain: {
+    name: "MyApp",
+    version: "1",
+    chainId: 1,
+    verifyingContract: "0x...",
+  },
+  types: { Mail: [{ name: "contents", type: "string" }] },
+  primaryType: "Mail",
+  message: { contents: "Hello!" },
+});
+
+const valid = await publicClient.verifyTypedData({
+  address: account.address,
+  domain: {
+    name: "MyApp",
+    version: "1",
+    chainId: 1,
+    verifyingContract: "0x...",
+  },
+  types: { Mail: [{ name: "contents", type: "string" }] },
+  primaryType: "Mail",
+  message: { contents: "Hello!" },
+  signature,
+});
+```
+
+---
+
+### Q10: What are EIP-4844 Blob Transactions, and how does Viem support them?
+
+**Answer:**
+EIP-4844 introduced blob-carrying transactions ("Proto-Danksharding") to significantly reduce L2 rollup transaction fees. Viem provides native support by allowing developers to pass `blobs` (array of hex strings or bytes) and `kzg` commitments directly inside `sendTransaction`:
+
+```ts
+await walletClient.sendTransaction({
+  account,
+  to: "0x0000000000000000000000000000000000000000",
+  blobs: [stringToHex("Blob payload data")],
+  kzg,
+  maxFeePerBlobGas: 100n,
+});
+```
+
+---
+
+### Q11: How do `Test Actions` assist in writing deterministic integration tests with Anvil?
+
+**Answer:**
+Viem's `TestClient` exposes methods to control local nodes (Anvil/Hardhat):
+
+- `testClient.impersonateAccount({ address })`: Transact from any address without needing its private key.
+- `testClient.setBalance({ address, value })`: Set ETH balance arbitrarily.
+- `testClient.mine({ blocks: 5 })`: Mine blocks instantly.
+- `testClient.snapshot()` & `testClient.revert({ id })`: Save and reset node state between tests.
+
+---
+
+### Q12: What is EIP-7702 and how does Viem support account delegation?
+
+**Answer:**
+EIP-7702 allows standard EOAs (Externally Owned Accounts) to temporarily adopt Smart Contract Account code during transaction execution. Viem supports signing authorization tuples via `walletClient.signAuthorization()` and attaching `authorizationList` payloads to transaction requests.
+
+---
+
+### Q13: How do you batch multiple read requests in Viem to optimize network calls?
+
+**Answer:**
+
+1. **HTTP Batching**: Enable `batch: true` on `http()` transport to aggregate multiple JSON-RPC calls made in the same event loop tick into a single HTTP POST payload.
+2. **Multicall**: Use `publicClient.multicall({ contracts: [...] })` to aggregate multiple smart contract read calls into a single `eth_call` via MakerDAO's Multicall3 contract.
+
+---
+
+### Q14: What is the purpose of `getContract` in Viem?
+
+**Answer:**
+`getContract` creates a typed object-oriented wrapper around `publicClient` and `walletClient` for a specific contract address and ABI:
+
+```ts
+const contract = getContract({
+  address,
+  abi,
+  client: { public: publicClient, wallet: walletClient },
+});
+const balance = await contract.read.balanceOf(["0x..."]);
+const txHash = await contract.write.transfer(["0x...", 100n]);
+```
+
+It provides ergonomic convenience for object-style usage while preserving full static TypeScript inferencing.
+
+---
+
+### Q15: How do you define a custom EVM L2 chain in Viem if it is not present in `viem/chains`?
+
+**Answer:**
+Use `defineChain()`:
+
+```ts
+import { defineChain } from "viem";
+
+export const myL2 = defineChain({
+  id: 99999,
+  name: "My Custom Rollup",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: { default: { http: ["https://rpc.myl2.io"] } },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://explorer.myl2.io" },
+  },
+});
+```
