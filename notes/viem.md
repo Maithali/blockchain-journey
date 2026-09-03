@@ -1002,3 +1002,90 @@ export const myL2 = defineChain({
 | **23** | Standard introducing L2 Blob Transactions?         | EIP-4844 (Proto-Danksharding).                                                |
 | **24** | Action to sign EIP-712 structured typed data?      | `walletClient.signTypedData(...)`.                                            |
 | **25** | Function to construct a contract wrapper instance? | `getContract({ address, abi, client })`.                                      |
+
+## 16. Common Traps, Pitfalls & Tricky Gotchas Q&A
+
+### Trap 1: Omitting `as const` on ABI Definitions
+
+> **The Pitfall:** Defining an ABI as a standard JS array (`const abi = [...]`) instead of adding `as const`.
+> **What Happens:** TypeScript infers argument types as loose `string[]` or `any[]`. Ide auto-completion for `functionName` fails, and type safety on contract `args` is lost completely.
+> **The Solution:** Always append `as const` to ABI arrays: `const abi = [...] as const`.
+
+---
+
+### Trap 2: Hardcoding 18 Decimals for Non-ETH Tokens (e.g. USDC, WBTC)
+
+> **The Pitfall:** Calling `parseEther('100')` when transferring USDC or WBTC.
+> **What Happens:** `parseEther` assumes 18 decimal places ($10^{18}$). USDC uses 6 decimals ($10^6$) and WBTC uses 8 decimals ($10^8$). Using `parseEther` for USDC results in transferring $10^{12}\times$ more tokens than intended!
+> **The Solution:** Always call `parseUnits('100', 6)` or query the token's `decimals()` method first.
+
+---
+
+### Trap 3: Calling `writeContract` Directly Without Prior `simulateContract`
+
+> **The Pitfall:** Executing `walletClient.writeContract(...)` directly without dry-running it first.
+> **What Happens:** If the smart contract execution will revert (e.g., allowance exhausted, contract paused, invalid parameters), the user's wallet will still prompt and broadcast the transaction, burning real ETH gas on a guaranteed failing transaction.
+> **The Solution:** Always simulate write operations first using `publicClient.simulateContract()`.
+
+---
+
+### Trap 4: JS Floating Point Precision Bugs before `parseEther` / `parseUnits`
+
+> **The Pitfall:** Doing math calculations directly inside string conversion calls: `parseEther((0.1 + 0.2).toString())`.
+> **What Happens:** `(0.1 + 0.2)` in JavaScript evaluates to `0.30000000000000004`. Passing this string to `parseEther` throws `InvalidDecimalNumberError`.
+> **The Solution:** Perform numeric calculations using fixed-precision libraries (like `bignumber.js`) or compute values directly using `BigInt` operations before formatting strings.
+
+---
+
+### Trap 5: Hardcoding Single Public RPC Endpoints in Production
+
+> **The Pitfall:** Initializing `http('https://cloudflare-eth.com')` directly in production web apps.
+> **What Happens:** Public RPC endpoints strictly rate-limit traffic (HTTP status 429). During high traffic volume, user requests will fail randomly.
+> **The Solution:** Use Viem's `fallback()` transport with multiple RPC providers (Alchemy, Infura, QuickNode) and set `rank: true`.
+
+---
+
+### Trap 6: Catching Errors via Loose String Matching (`err.message.includes(...)`)
+
+> **The Pitfall:** Checking if `err.message` contains a substring like `"user rejected"` or `"revert"`.
+> **What Happens:** Wallet providers and RPC wrappers structure error messages differently. String matching breaks easily across different wallets (MetaMask, Coinbase Wallet, WalletConnect).
+> **The Solution:** Walk the error tree using `err.walk(e => e instanceof UserRejectedRequestError)` or `err.walk(e => e instanceof ContractFunctionRevertedError)`.
+
+---
+
+### Trap 7: Chain Mismatch Error (`ChainMismatchError`)
+
+> **The Pitfall:** Creating a wallet client with `chain: mainnet`, but the user's browser extension wallet is connected to Sepolia testnet.
+> **What Happens:** Viem throws a `ChainMismatchError` when attempting to send transactions.
+> **The Solution:** Check chain ID before transacting and prompt the user to switch networks using `walletClient.switchChain({ id: chainId })`.
+
+---
+
+### Trap 8: Event Subscription Memory Leaks in Frontend Frameworks
+
+> **The Pitfall:** Calling `publicClient.watchContractEvent(...)` inside a React `useEffect` without returning the cleanup callback.
+> **What Happens:** Every re-render creates duplicate active polling loops or WebSocket listeners, leading to high memory usage and duplicated toast notifications.
+> **The Solution:** Return the `unwatch` function returned by `watchContractEvent` in `useEffect` cleanup:
+>
+> ```ts
+> useEffect(() => {
+>   const unwatch = publicClient.watchContractEvent({ ... })
+>   return () => unwatch()
+> }, [])
+> ```
+
+---
+
+### Trap 9: Leaking Private Keys in Client-Side Browser Bundles
+
+> **The Pitfall:** Instantiating `privateKeyToAccount('0x...')` inside React/Vue browser components.
+> **What Happens:** Environment variables prefixed for client bundles (e.g. `NEXT_PUBLIC_` or `VITE_`) get compiled into public JavaScript assets, exposing private keys to anyone inspecting network requests or bundle source code.
+> **The Solution:** Never put private keys in browser code. Local accounts must only be used in Node.js server backends, serverless functions, or test scripts.
+
+---
+
+### Trap 10: Forgetting `account` Parameter on Un-bound Wallet Clients
+
+> **The Pitfall:** Initializing `const walletClient = createWalletClient({ chain, transport })` without a default `account`, and then calling `walletClient.writeContract({ address, abi, functionName })`.
+> **What Happens:** Viem throws an `AccountNotFoundError`.
+> **The Solution:** Either pass `account` during client creation or explicitly pass `account` in every wallet action call.
