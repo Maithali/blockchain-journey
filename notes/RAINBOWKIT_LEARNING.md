@@ -942,23 +942,27 @@ does not contain the contract's private source code or state; it tells
 the frontend how to encode a call and decode the result.
 
 ```tsx
-import { useReadContract } from 'wagmi'
+import { useReadContract } from "wagmi";
 
 const greetingAbi = [
   {
-    type: 'function',
-    name: 'greeting',
-    stateMutability: 'view',
+    type: "function",
+    name: "greeting",
+    stateMutability: "view",
     inputs: [],
-    outputs: [{ type: 'string' }],
+    outputs: [{ type: "string" }],
   },
-] as const
+] as const;
 
-const { data: greeting, isLoading, isError } = useReadContract({
-  address: '0xYourDeployedContractAddress',
+const {
+  data: greeting,
+  isLoading,
+  isError,
+} = useReadContract({
+  address: "0xYourDeployedContractAddress",
   abi: greetingAbi,
-  functionName: 'greeting',
-})
+  functionName: "greeting",
+});
 ```
 
 This is a read because the Solidity function is marked `view`. The
@@ -980,20 +984,17 @@ function setGreeting(string calldata newGreeting) external {
 The frontend can request that write with Wagmi:
 
 ```tsx
-import {
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from 'wagmi'
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 const greetingAbi = [
   {
-    type: 'function',
-    name: 'setGreeting',
-    stateMutability: 'nonpayable',
-    inputs: [{ name: 'newGreeting', type: 'string' }],
+    type: "function",
+    name: "setGreeting",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "newGreeting", type: "string" }],
     outputs: [],
   },
-] as const
+] as const;
 
 export function UpdateGreeting() {
   const {
@@ -1001,24 +1002,24 @@ export function UpdateGreeting() {
     error: writeError,
     isPending,
     writeContract,
-  } = useWriteContract()
+  } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({ hash })
+    useWaitForTransactionReceipt({ hash });
 
   function submitGreeting() {
     writeContract({
-      address: '0xYourDeployedContractAddress',
+      address: "0xYourDeployedContractAddress",
       abi: greetingAbi,
-      functionName: 'setGreeting',
-      args: ['Hello from my dApp!'],
-    })
+      functionName: "setGreeting",
+      args: ["Hello from my dApp!"],
+    });
   }
 
   return (
     <section>
       <button disabled={isPending} onClick={submitGreeting}>
-        {isPending ? 'Confirm in wallet...' : 'Update greeting'}
+        {isPending ? "Confirm in wallet..." : "Update greeting"}
       </button>
 
       {hash && <p>Transaction submitted: {hash}</p>}
@@ -1026,7 +1027,7 @@ export function UpdateGreeting() {
       {isConfirmed && <p>Greeting updated successfully.</p>}
       {writeError && <p>Transaction failed or was rejected.</p>}
     </section>
-  )
+  );
 }
 ```
 
