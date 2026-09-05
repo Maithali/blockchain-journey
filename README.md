@@ -41,6 +41,11 @@ See the full notes in [`notes/`](notes/).
 
 ## Running the project
 
+### Prerequisites
+
+- Node.js and npm installed
+- A terminal opened at the repository root
+
 Install dependencies:
 
 ```bash
@@ -59,7 +64,15 @@ Run the Hardhat test suite:
 npx hardhat test
 ```
 
-The project uses Hardhat's local network by default. Contract artifacts are generated in `artifacts/` and the compiler cache is stored in `cache/`.
+The test suite currently covers the `PiggyBank` contract in [`test/PiggyBank.js`](test/PiggyBank.js). The project uses Hardhat's local network by default, so no external blockchain node or wallet is required for compilation and tests.
+
+To run a specific test file:
+
+```bash
+npx hardhat test test/PiggyBank.js
+```
+
+Contract artifacts are generated in `artifacts/` and the compiler cache is stored in `cache/`. These generated directories can be recreated by running the compile command again.
 
 ## Current focus
 
